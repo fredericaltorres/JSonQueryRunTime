@@ -73,7 +73,7 @@ Operator supported:
 		} 
 	}
 ```	
-	- Proposal: Path("main.a") == 1
+	- Path("main.a") == 1
 
 ## Queries on property
 - Not implemented
@@ -90,6 +90,43 @@ json
 ## .NET Framework
 
 JSonQueryRuntime use dot net core 2.1.
+
+## C# Syntax
+
+
+```cs
+public class JsonQueryRuntime {
+	public JsonQueryRuntime(string whereClause);
+	/// <summary>
+	/// Evaluate a list of JSON string
+	/// </summary>
+	/// <param name="jsonStrings"></param>
+	/// <returns></returns>
+	public IEnumerable<string> Eval( IEnumerable<string> jsonStrings);
+	/// <summary>
+	/// Evaluate one JSON string
+	/// </summary>
+	/// <param name="jsonString"></param>
+	/// <returns></returns>	
+	public bool Eval(string jsonString);
+}
+
+```
+```cs
+public const string json0 = @"{ 
+	""name"" : ""ok"",""b"":true, ""n"":123, 
+	""wildText"" : ""ABCDE"" 
+}";
+
+  [TestMethod]
+public void Test() {
+
+	Assert.IsTrue(new JsonQueryRuntime(@"name = ""ok"" ").Eval(json0));
+	Assert.IsTrue(new JsonQueryRuntime(@"name = ""ok"" AND b = true ").Eval(json0));
+	Assert.IsTrue(new JsonQueryRuntime(@"name = ""ok"" AND b = true AND n = 123").Eval(json0));
+	Assert.IsTrue(new JsonQueryRuntime(@" Wildcard(wildText, ""ABCDE"") ").Eval(json0));
+}
+```
 
 ## Reference
 

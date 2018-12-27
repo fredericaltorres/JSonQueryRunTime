@@ -10,6 +10,7 @@ namespace JSonQueryRunTime_UnitTests
     {
         Expression _expression;
         Engine _engine;
+
         public JsonQueryRuntime(string whereClause)
         {
             _engine = new Engine();
@@ -28,6 +29,11 @@ namespace JSonQueryRunTime_UnitTests
             _expression = _engine.Parse(whereClause.Replace(Environment.NewLine, ""));
             
         }
+        /// <summary>
+        /// Evaluate a list of JSON string
+        /// </summary>
+        /// <param name="jsonStrings"></param>
+        /// <returns></returns>
         public IEnumerable<string> Eval( IEnumerable<string> jsonStrings)
         {
             var l = new List<string>();
@@ -40,6 +46,11 @@ namespace JSonQueryRunTime_UnitTests
         }
         public static JObject _currentJsonObject;
 
+        /// <summary>
+        /// Evaluate one JSON string
+        /// </summary>
+        /// <param name="jsonString"></param>
+        /// <returns></returns>
         public bool Eval(string jsonString)
         {
             _currentJsonObject = JObject.Parse(jsonString);
