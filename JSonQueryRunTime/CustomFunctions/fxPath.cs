@@ -17,28 +17,20 @@ namespace JSonQueryRunTime_UnitTests
         public override Literal Execute(IConstruct[] arguments)
         {
             base.EnsureArgumentCountIs(arguments, 1);
-            try{
-    		    string pathExpression = base.GetTransformedArgument<Text>(arguments, argumentIndex: 0);
-                var tokens = pathExpression.Split('.');
+            try
+            {
+                string pathExpression = base.GetTransformedArgument<Text>(arguments, argumentIndex: 0);
 
-                JObject rootObj = JsonQueryRuntime._currentJsonObject;
-                JToken lastValue = null;
-                foreach(var token in tokens)
-                {
-                    var prop = rootObj.Properties().FirstOrDefault( p => p.Name == token);
-                    var jToken = prop.Value;
-                    rootObj  = jToken as JObject;
-                    lastValue = jToken;
-                }
-                if(lastValue.Type == JTokenType.Float || lastValue.Type == JTokenType.Integer)
+                JToken lastValue = EvalPath(pathExpression);
+
+                if (lastValue.Type == JTokenType.Float || lastValue.Type == JTokenType.Integer)
                     return new HiSystems.Interpreter.Number((decimal)lastValue);
-                if(lastValue.Type == JTokenType.Boolean)
+                if (lastValue.Type == JTokenType.Boolean)
                     return new HiSystems.Interpreter.Boolean((bool)lastValue);
-
                 // As Default return as string
                 return new HiSystems.Interpreter.Text(lastValue.ToString());
             }
-            catch(System.InvalidOperationException ioEx)
+            catch (System.InvalidOperationException ioEx)
             {
                 return new HiSystems.Interpreter.Boolean(false);
             }
@@ -46,6 +38,27 @@ namespace JSonQueryRunTime_UnitTests
             {
                 throw ex;
             }
+        }
+        public static JToken EvalPath(string pathExpression)
+        {
+            var tokens = pathExpression.Split('.');
+            JObject rootObj = JsonQueryRuntime._currentJsonObject;
+            JToken lastValue = null;
+            foreach (var token in tokens)
+            {
+                var prop = rootObj.Properties().FirstOrDefault(p => p.Name == token);
+                if(prop == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    var jToken = prop.Value;
+                    rootObj = jToken as JObject;
+                    lastValue = jToken;
+                }
+            }
+            return lastValue;
         }
     }
 }

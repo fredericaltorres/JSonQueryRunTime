@@ -182,11 +182,18 @@ namespace JSonQueryRunTime_UnitTests
         [TestMethod]
         public void Execute_IsString()
         {
-            Assert.IsTrue(new JsonQueryRuntime(@"IsString(name)").Eval(json0));
+            Assert.IsTrue( new JsonQueryRuntime(@"IsString(name)").Eval(json0));
             Assert.IsFalse(new JsonQueryRuntime(@"IsString(n)").Eval(json0));
             Assert.IsFalse(new JsonQueryRuntime(@"IsString(b)").Eval(json0));
             Assert.IsFalse(new JsonQueryRuntime(@"IsString(now)").Eval(json0));
             Assert.IsFalse(new JsonQueryRuntime(@"IsString(nil)").Eval(json0));
+        }
+
+        [TestMethod]
+        public void Execute_IsString_Path()
+        {
+            Assert.IsTrue( new JsonQueryRuntime(@"IsString(name)").Eval(json0));
+            Assert.IsTrue( new JsonQueryRuntime(@"IsString(""obj0.name"")").Eval(json0));            
         }
 
         [TestMethod]
@@ -215,6 +222,11 @@ namespace JSonQueryRunTime_UnitTests
             Assert.IsFalse(new JsonQueryRuntime(@"IsObject(nil)").Eval(json0));
         }
         [TestMethod]
+        public void Execute_IsObject_Path()
+        {
+            Assert.IsTrue(new JsonQueryRuntime(@"IsObject(""obj0.obj00"")").Eval(json0));
+        }
+        [TestMethod]
         public void Execute_Path_String()
         {
             //= ""ok""//
@@ -239,6 +251,7 @@ namespace JSonQueryRunTime_UnitTests
         public void Execute_Path_Boolean()
         {
             Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.b"") = true ").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.b"")  ").Eval(json0));
         }
     }
 }

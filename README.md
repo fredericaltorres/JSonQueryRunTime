@@ -22,13 +22,19 @@ The JSON Query Runtime allows to filter JSON lines based on a where clause like 
 ```
 ## Query Samples
 
-`n = 1 AND s = "string" AND b <> true` returns true if the json properties match each expression 
+`n = 1 AND s = "string" AND b = true` returns true if the json properties match each expression 
 
-Operator supported: 
+**Operator supported:** 
 
 ```
 =, <>, <, <=, >, >=, OR, AND, (, )
 ```
+
+**Date support:**
+
+- `timestamp = #2018-12-20T14:16:00#` returns true is property timestamp is equal to the date+time value
+
+- `timestamp >= #2018-12-20T14:16:00# and timestamp <= #2018-12-20T14:16:59#` returns true is property timestamp in in the date range (See DateRange() function).
 
 **Functions:**
 
@@ -36,9 +42,6 @@ Operator supported:
 
 - `Regex(name, "s.r.*")` # todo returns true if the regular expression match the content of the string property name
 
-- `timestamp = #2018-12-20T14:16:00#` returns true is property timestamp is equal to the date+time value
-
-- `timestamp >= #2018-12-20T14:16:00# and timestamp <= #2018-12-20T14:16:59#` returns true is property timestamp in in the date range
 
 - `DateRange(timestamp, #2018-12-20T14:16:00#, #2018-12-20T14:16:59#)` returns true if the date in property timestamp is between the 2 date
 
@@ -50,7 +53,8 @@ Operator supported:
 
 - `ContainString(name, "substring")` # todo returns true if the value of the property name contains the sub-string "substring"
 
-- `IsObject(o), IsNumber(n), IsString(s), IsBoolean(b), IsDate(d), IsNull(nil), IsArray(a)` # todo return true is the property type match the function
+- `IsObject(o), IsNumber(n), IsString(s), IsBoolean(b), IsDate(d), IsNull(nil), IsArray(a)` # todo return true is the property value type match the function or the parameter
+can be a Json path to evaluate `IsObject("a.b")`
 
 - `ContainArrayNumber(arrOfNumber, Array(12, 24, 48))` returns true if property arrOfNumber which is an array of number contains the values 12, 24, 48
 
@@ -127,7 +131,7 @@ public void Test() {
 	Assert.IsTrue(new JsonQueryRuntime(@"name = ""ok"" AND b = true AND n = 123").Eval(json0));
 
 	Assert.IsTrue(new JsonQueryRuntime(@"name = ""ok"" AND Wildcard(wildText, ""ABCDE"") ").Eval(json0));
-	
+
 	Assert.IsTrue(new JsonQueryRuntime(@"IsObject(obj0) AND Path(""obj0.name"")  = ""okk"" ").Eval(json0));
 }
 ```

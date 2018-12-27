@@ -20,8 +20,21 @@ namespace JSonQueryRunTime_UnitTests
             base.EnsureArgumentCountIs(arguments, 1);
             try{
     		    string jsonString = base.GetTransformedArgument<Text>(arguments, argumentIndex: 0);
-                JObject jsonObj = JObject.Parse(jsonString);
-                return new HiSystems.Interpreter.Boolean(true);
+
+                // Check if it is a json string
+                if(jsonString.TrimStart().StartsWith("{"))
+                {
+                    JObject jsonObj = JObject.Parse(jsonString);
+                    return new HiSystems.Interpreter.Boolean(true);
+                }                
+                else // Should be json path
+                {
+                    JToken lastValue = fxPath.EvalPath(jsonString);
+                    if(lastValue == null) // The jsonString does not contains a path, but a property name that eval to something which is not an object
+                        return new HiSystems.Interpreter.Boolean(false);
+                    else
+                        return new HiSystems.Interpreter.Boolean(lastValue.Type == JTokenType.Object);                    
+                }
             }
             catch(JsonReaderException jrEx)
             {
