@@ -7,10 +7,14 @@ namespace JSonQueryRunTime_UnitTests
     public class JSonQueryRunTime_EvalOneJsonString_UnitTests
     {
         public const string json0 = @"{ ""name"" : ""ok"", ""b"":true, ""n"":123, ""wildText"" : ""ABCDE"", ""now"":""2018-12-25T20:23:49.0-05:00"", ""utcnow"" : ""2018-12-26T01:24:46.0"", ""nil"": null, arrNumber:[1,2,3], arrString:[""a"", ""b"", ""c""], arrBoolean:[true, false, true],
-                                            ""obj0"": { ""name"" : ""ok"", ""b"":true, ""n"":123, ""wildText"" : ""ABCDE"", ""now"":""2018-12-25T20:23:49.0-05:00"", ""utcnow"" : ""2018-12-26T01:24:46.0"", ""nil"": null } 
+                                            ""obj0"": { ""name"" : ""okk"", ""b"":true, ""n"":124, ""wildText"" : ""ABCDE"", ""now"":""2018-12-25T20:23:49.0-05:00"", ""utcnow"" : ""2018-12-26T01:24:46.0"", ""nil"": null ,
+
+                                                ""obj00"": { ""name"" : ""okkk"", ""b"":false, ""n"":1234, ""wildText"" : ""ABCDE"", ""now"":""2018-12-25T20:23:49.0-05:00"", ""utcnow"" : ""2018-12-26T01:24:46.0"", ""nil"": null }
+
+                                            } 
                                       }";
         public const string json1 = @"{ ""name"" : ""ko"", ""b"":false,""n"":124, ""wildText"" : ""XYZ"", ""now"":""2018-12-31T20:23:49.0-05:00"", ""utcnow"" : ""2018-12-31T01:24:46.0"", ""nil"": null, arrNumber:[4,5,6], arrString:[""x"", ""y"", ""z""], arrBoolean:[false, true, false],
-                                        ""obj0"": { ""name"" : ""ko"", ""b"":false,""n"":124, ""wildText"" : ""XYZ"", ""now"":""2018-12-31T20:23:49.0-05:00"", ""utcnow"" : ""2018-12-31T01:24:46.0"", ""nil"": null } 
+                                        ""obj0"": { ""name"" : ""koo"", ""b"":false,""n"":124, ""wildText"" : ""XYZ"", ""now"":""2018-12-31T20:23:49.0-05:00"", ""utcnow"" : ""2018-12-31T01:24:46.0"", ""nil"": null } 
                                     }";
 
         [TestMethod]
@@ -201,6 +205,40 @@ namespace JSonQueryRunTime_UnitTests
         public void Execute_ContainArrayBoolean()
         {
             Assert.IsTrue(new JsonQueryRuntime(@"ContainArrayBoolean(arrBoolean, Array(true, false))").Eval(json0));
+        }
+        [TestMethod]
+        public void Execute_IsObject()
+        {
+            Assert.IsTrue(new JsonQueryRuntime(@"IsObject(obj0)").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@"IsObject(name)").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@"IsObject(n)").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@"IsObject(nil)").Eval(json0));
+        }
+        [TestMethod]
+        public void Execute_Path_String()
+        {
+            //= ""ok""//
+            Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.name"")  = ""okk"" ").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@"IsObject(obj0) AND Path(""obj0.name"")  = ""okk"" ").Eval(json0));
+        }
+        [TestMethod]
+        public void Execute_Path_DoubleNested_String()
+        {
+            Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.obj00.name"") = ""okkk"" ").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.obj00.n"") = 1234 ").Eval(json0));
+
+            Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.obj00.name"") = ""okkk"" AND Path(""obj0.obj00.n"") = 1234 ").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" ( Path(""obj0.obj00.name"") = ""okkk"" ) AND ( Path(""obj0.obj00.n"") = 1234 ) ").Eval(json0));
+        }
+        [TestMethod]
+        public void Execute_Path_Number()
+        {
+            Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.n"") = 124 ").Eval(json0));
+        }
+        [TestMethod]
+        public void Execute_Path_Boolean()
+        {
+            Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.b"") = true ").Eval(json0));
         }
     }
 }

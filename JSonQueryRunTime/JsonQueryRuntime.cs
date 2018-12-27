@@ -22,7 +22,8 @@ namespace JSonQueryRunTime_UnitTests
             _engine.Register(new fxContainArrayNumber());
             _engine.Register(new fxContainArrayString());
             _engine.Register(new fxContainArrayBoolean());
-            
+            _engine.Register(new fxIsObject());
+            _engine.Register(new fxPath());
             
             _expression = _engine.Parse(whereClause.Replace(Environment.NewLine, ""));
             
@@ -37,12 +38,13 @@ namespace JSonQueryRunTime_UnitTests
             }
             return l;
         }
+        public static JObject _currentJsonObject;
 
         public bool Eval(string jsonString)
         {
-            JObject jsonObj = JObject.Parse(jsonString);
+            _currentJsonObject = JObject.Parse(jsonString);
 
-            foreach (JProperty prop in jsonObj.Properties())
+            foreach (JProperty prop in _currentJsonObject.Properties())
             {
                 var n = prop.Name;
                 if(_expression.Variables.ContainsKey(n)) {
@@ -62,6 +64,14 @@ namespace JSonQueryRunTime_UnitTests
                         case JTokenType.Date:
                             _expression.Variables[n].Value = new HiSystems.Interpreter.DateTime((System.DateTime)v);
                             break;
+
+                        case JTokenType.Object: {
+                                // Pass the sub object are the JSON represenation
+                            var s = v.ToString(Newtonsoft.Json.Formatting.None);
+                            _expression.Variables[n].Value = new HiSystems.Interpreter.Text(s);
+                         }
+                         break;
+
                         // Assume array contains the same item type Number or String
                         // Can only be used with ContainArrayNumber() and ContainArrayString()
                         case JTokenType.Array:
