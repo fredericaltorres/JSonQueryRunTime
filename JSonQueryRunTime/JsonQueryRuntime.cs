@@ -25,6 +25,8 @@ namespace JSonQueryRunTime_UnitTests
             _engine.Register(new fxContainArrayBoolean());
             _engine.Register(new fxIsObject());
             _engine.Register(new fxPath());
+            _engine.Register(new fxRegex());
+            
             
             _expression = _engine.Parse(whereClause.Replace(Environment.NewLine, ""));
             

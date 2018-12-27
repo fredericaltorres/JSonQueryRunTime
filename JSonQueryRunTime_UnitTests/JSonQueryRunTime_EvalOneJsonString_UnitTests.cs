@@ -98,6 +98,28 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
+        public void Execute_RegexFunction()
+        {
+            Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, ""ABCDE"") ").Eval(json0));
+
+            Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, ""^ABCDE"") ").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, ""^ABC"") ").Eval(json0));
+
+            Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, ""ABCDE$"") ").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, ""CDE$"") ").Eval(json0));
+
+            Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, ""^ABCDE$"") ").Eval(json0));
+
+            Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, "".BCD."") ").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, "".B.D."") ").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, ""A.*E"") ").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, ""A.*C.*E"") ").Eval(json0));
+
+            Assert.IsFalse(new JsonQueryRuntime(@" Regex(wildText, "".B-D."") ").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@" Regex(wildText, ""A.*-"") ").Eval(json0));
+        }
+
+        [TestMethod]
         public void Execute_StringBooleanNumeric_Equal_AND()
         {
             Assert.IsTrue(new JsonQueryRuntime(@"name = ""ok"" ").Eval(json0));
