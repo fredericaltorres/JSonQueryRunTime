@@ -115,16 +115,18 @@ public class JsonQueryRuntime {
 ```cs
 public const string json0 = @"{ 
 	""name"" : ""ok"",""b"":true, ""n"":123, 
-	""wildText"" : ""ABCDE"" 
+	""wildText"" : ""ABCDE"",
+	""obj0"": { ""name"" : ""okk"" } 
 }";
 
-  [TestMethod]
+[TestMethod]
 public void Test() {
 
 	Assert.IsTrue(new JsonQueryRuntime(@"name = ""ok"" ").Eval(json0));
 	Assert.IsTrue(new JsonQueryRuntime(@"name = ""ok"" AND b = true ").Eval(json0));
 	Assert.IsTrue(new JsonQueryRuntime(@"name = ""ok"" AND b = true AND n = 123").Eval(json0));
 	Assert.IsTrue(new JsonQueryRuntime(@" Wildcard(wildText, ""ABCDE"") ").Eval(json0));
+	Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.name"")  = ""okk"" ").Eval(json0));
 }
 ```
 
