@@ -125,8 +125,8 @@ public void Test() {
 	Assert.IsTrue(new JsonQueryRuntime(@"name = ""ok"" ").Eval(json0));
 	Assert.IsTrue(new JsonQueryRuntime(@"name = ""ok"" AND b = true ").Eval(json0));
 	Assert.IsTrue(new JsonQueryRuntime(@"name = ""ok"" AND b = true AND n = 123").Eval(json0));
-	Assert.IsTrue(new JsonQueryRuntime(@" Wildcard(wildText, ""ABCDE"") ").Eval(json0));
-	Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.name"")  = ""okk"" ").Eval(json0));
+	Assert.IsTrue(new JsonQueryRuntime(@"name = ""ok"" AND Wildcard(wildText, ""ABCDE"") ").Eval(json0));
+	Assert.IsTrue(new JsonQueryRuntime(@"IsObject(obj0) AND Path(""obj0.name"")  = ""okk"" ").Eval(json0));
 }
 ```
 
