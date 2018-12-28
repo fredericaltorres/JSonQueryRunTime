@@ -166,7 +166,8 @@ namespace HiSystems.Interpreter
         private static ReservedWord[] reservedWords = new [] 
         {
             new ReservedWord() { Word = "true", Construct = new Boolean(true) },
-            new ReservedWord() { Word = "false", Construct = new Boolean(false) }
+            new ReservedWord() { Word = "false", Construct = new Boolean(false) },
+            new ReservedWord() { Word = "null", Construct = new Null(null) }
         };
 
         /// <summary>

@@ -23,10 +23,15 @@ namespace JSonQueryRunTime_UnitTests
 
                 JToken lastValue = EvalPath(pathExpression);
 
+                if(lastValue == null)
+                    return new HiSystems.Interpreter.Null(null);
+
                 if (lastValue.Type == JTokenType.Float || lastValue.Type == JTokenType.Integer)
                     return new HiSystems.Interpreter.Number((decimal)lastValue);
+
                 if (lastValue.Type == JTokenType.Boolean)
                     return new HiSystems.Interpreter.Boolean((bool)lastValue);
+
                 // As Default return as string
                 return new HiSystems.Interpreter.Text(lastValue.ToString());
             }

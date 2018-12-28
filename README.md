@@ -40,7 +40,7 @@ The JSON Query Runtime allows to filter JSON lines based on a where clause like 
 
 - `Wildcard(name,"s?r*")` returns true if the wildcard match thecontent of the string property name
 
-- `Regex(name, "s.r.*")` # todo returns true if the regular expression match the content of the string property name
+- `Regex(name, "s.r.*")` returns true if the regular expression match the content of the string property name
 
 *Range*:
 
@@ -155,3 +155,4 @@ public void Test() {
 
 * https://stackoverflow.com/questions/36340266/querying-json-from-c-sharp
 * https://jack-vanlightly.com/blog/2016/2/11/implementing-a-dsl-parser
+

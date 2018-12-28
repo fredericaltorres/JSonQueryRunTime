@@ -48,6 +48,9 @@ namespace HiSystems.Interpreter
             var argument1Transformed = base.GetTransformedConstruct<Literal>(argument1);
             var argument2Transformed = base.GetTransformedConstruct<Literal>(argument2);
 
+            if (argument1Transformed is Null && argument2Transformed is Null)
+                return new Boolean(true);
+
             if (argument1Transformed is Number && argument2Transformed is Number)
                 return ((Number)argument1Transformed) == ((Number)argument2Transformed);
             else if (argument1Transformed is Boolean && argument2Transformed is Boolean)

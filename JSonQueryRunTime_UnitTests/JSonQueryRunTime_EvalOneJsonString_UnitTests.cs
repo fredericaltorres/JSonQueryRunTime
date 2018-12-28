@@ -62,12 +62,12 @@ namespace JSonQueryRunTime_UnitTests
                 utcnow >= #2018-12-27# AND
                 utcnow <= #2018-12-31# ").Eval(json0));
         }
-        
+
         [TestMethod]
         public void Execute_DateRangeFunction_Utc()
         {
             //#2018-12-26 01:24:46# ").Eval(json0));
-           
+
             Assert.IsTrue(new JsonQueryRuntime(@"
                 DateRange(utcnow, #2018-12-01 01:24:46#, #2018-12-31 01:24:46#)
             ").Eval(json0));
@@ -119,9 +119,9 @@ namespace JSonQueryRunTime_UnitTests
             Assert.IsFalse(new JsonQueryRuntime(@" Regex(wildText, "".B-D."") ").Eval(json0));
             Assert.IsFalse(new JsonQueryRuntime(@" Regex(wildText, ""A.*-"") ").Eval(json0));
 
-            Assert.IsTrue(JSonQueryRunTime.fxRegex.RegexCache.Count ==  12);
+            Assert.IsTrue(JSonQueryRunTime.fxRegex.RegexCache.Count == 12);
             JSonQueryRunTime.fxRegex.RegexCache.Clear();
-            Assert.IsTrue(JSonQueryRunTime.fxRegex.RegexCache.Count ==  0);
+            Assert.IsTrue(JSonQueryRunTime.fxRegex.RegexCache.Count == 0);
         }
 
         [TestMethod]
@@ -152,12 +152,6 @@ namespace JSonQueryRunTime_UnitTests
         {
             Assert.IsTrue(new JsonQueryRuntime(@"len(name) = 2").Eval(json0));
         }
-
-        //[TestMethod]
-        //public void Execute_String_LessThan_GreaterThan_OrEqual()
-        //{
-        //    Assert.IsTrue(new JsonQueryRuntime(@"name < 1000 ").Eval(json0));
-        //}
 
         [TestMethod]
         public void Execute_Numeric_LessThan_GreaterThan_OrEqual()
@@ -209,7 +203,7 @@ namespace JSonQueryRunTime_UnitTests
         [TestMethod]
         public void Execute_IsString()
         {
-            Assert.IsTrue( new JsonQueryRuntime(@"IsString(name)").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@"IsString(name)").Eval(json0));
             Assert.IsFalse(new JsonQueryRuntime(@"IsString(n)").Eval(json0));
             Assert.IsFalse(new JsonQueryRuntime(@"IsString(b)").Eval(json0));
             Assert.IsFalse(new JsonQueryRuntime(@"IsString(now)").Eval(json0));
@@ -219,8 +213,8 @@ namespace JSonQueryRunTime_UnitTests
         [TestMethod]
         public void Execute_IsString_Path()
         {
-            Assert.IsTrue( new JsonQueryRuntime(@"IsString(name)").Eval(json0));
-            Assert.IsTrue( new JsonQueryRuntime(@"IsString(""obj0.name"")").Eval(json0));            
+            Assert.IsTrue(new JsonQueryRuntime(@"IsString(name)").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@"IsString(""obj0.name"")").Eval(json0));
         }
 
         [TestMethod]
@@ -253,13 +247,14 @@ namespace JSonQueryRunTime_UnitTests
         {
             Assert.IsTrue(new JsonQueryRuntime(@"IsObject(""obj0.obj00"")").Eval(json0));
         }
+
         [TestMethod]
         public void Execute_Path_String()
         {
-            //= ""ok""//
             Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.name"")  = ""okk"" ").Eval(json0));
             Assert.IsTrue(new JsonQueryRuntime(@"IsObject(obj0) AND Path(""obj0.name"")  = ""okk"" ").Eval(json0));
         }
+
         [TestMethod]
         public void Execute_Path_DoubleNested_String()
         {
@@ -269,16 +264,42 @@ namespace JSonQueryRunTime_UnitTests
             Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.obj00.name"") = ""okkk"" AND Path(""obj0.obj00.n"") = 1234 ").Eval(json0));
             Assert.IsTrue(new JsonQueryRuntime(@" ( Path(""obj0.obj00.name"") = ""okkk"" ) AND ( Path(""obj0.obj00.n"") = 1234 ) ").Eval(json0));
         }
+
         [TestMethod]
         public void Execute_Path_Number()
         {
             Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.n"") = 124 ").Eval(json0));
         }
+
         [TestMethod]
         public void Execute_Path_Boolean()
         {
             Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.b"") = true ").Eval(json0));
             Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.b"")  ").Eval(json0));
         }
+
+        [TestMethod]
+        public void Execute_Path_Empty()
+        {
+            Assert.IsTrue(new JsonQueryRuntime(@" Path("""") = null ").Eval(json0));
+        }
+        
+        [TestMethod]
+        public void Execute_IsNull()
+        {
+            Assert.IsTrue(new JsonQueryRuntime(@" IsNull(null) ").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" IsNull(nil) ").Eval(json0));
+
+            
+            Assert.IsFalse(new JsonQueryRuntime(@" IsNull(name) ").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@" IsNull(n) ").Eval(json0));
+
+            Assert.IsFalse(new JsonQueryRuntime(@" IsNull(1) ").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@" IsNull(true) ").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@" IsNull(false) ").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@" IsNull(#2018-12-26 01:24:46#) ").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@" IsNull(""aaa"") ").Eval(json0));
+        }
     }
 }
+

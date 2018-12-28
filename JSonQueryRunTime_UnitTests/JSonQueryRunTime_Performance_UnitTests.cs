@@ -7,9 +7,8 @@ using System.Diagnostics;
 namespace JSonQueryRunTime_UnitTests
 {
     [TestClass]
-    public class JSonQueryRunTime_Performance_UnitTests {
-    
-
+    public class JSonQueryRunTime_Performance_UnitTests
+    {
         public IEnumerable<string> GetJsonLines1()
         {
             var l = new List<string>();
@@ -33,7 +32,5 @@ namespace JSonQueryRunTime_UnitTests
             Assert.AreEqual(expectedCount, resultLines.Count);
             Assert.IsTrue(sw.Elapsed < new System.TimeSpan(0,0,3));            
         }    
-
-        
     }
 }

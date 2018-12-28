@@ -7,8 +7,8 @@ using System.Diagnostics;
 namespace JSonQueryRunTime_UnitTests
 {
     [TestClass]
-    public class JSonQueryRunTime_EvalJsonLines_UnitTests {
-    
+    public class JSonQueryRunTime_EvalJsonLines_UnitTests
+    {
         public IEnumerable<string> GetJsonLines0()
         {
             var l = new List<string>();
@@ -19,7 +19,6 @@ namespace JSonQueryRunTime_UnitTests
             return l;
         }
 
-
         [TestMethod]
         public void Execute_String_Equal()
         {
@@ -27,7 +26,8 @@ namespace JSonQueryRunTime_UnitTests
             Assert.AreEqual(3, resultLines.Count);
             resultLines = new JsonQueryRuntime(@"name = ""foo"" ").Eval(GetJsonLines0()).ToList();
             Assert.AreEqual(0, resultLines.Count);
-        }        
+        }
+
         [TestMethod]
         public void Execute_String_Equal_Or()
         {
@@ -38,12 +38,13 @@ namespace JSonQueryRunTime_UnitTests
             resultLines = new JsonQueryRuntime(@"name = ""ok"" AND name = ""ko"" ").Eval(GetJsonLines0()).ToList();
             Assert.AreEqual(0, resultLines.Count);
         }
+
         [TestMethod]
         public void Execute_String_Equal_And()
         {
             var resultLines = new JsonQueryRuntime(@"name = ""ok"" AND b = true ").Eval(GetJsonLines0()).ToList();
             Assert.AreEqual(3, resultLines.Count);
-            
+
             resultLines = new JsonQueryRuntime(@"name = ""ok"" AND name = ""ko"" ").Eval(GetJsonLines0()).ToList();
             Assert.AreEqual(0, resultLines.Count);
         }
