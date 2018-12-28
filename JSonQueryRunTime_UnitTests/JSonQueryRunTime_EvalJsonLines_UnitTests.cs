@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace JSonQueryRunTime_UnitTests
 {
@@ -17,6 +18,7 @@ namespace JSonQueryRunTime_UnitTests
             l.Add(JSonQueryRunTime_EvalOneJsonString_UnitTests.json1);
             return l;
         }
+
 
         [TestMethod]
         public void Execute_String_Equal()
