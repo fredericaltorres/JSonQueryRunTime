@@ -118,6 +118,10 @@ namespace JSonQueryRunTime_UnitTests
 
             Assert.IsFalse(new JsonQueryRuntime(@" Regex(wildText, "".B-D."") ").Eval(json0));
             Assert.IsFalse(new JsonQueryRuntime(@" Regex(wildText, ""A.*-"") ").Eval(json0));
+
+            Assert.IsTrue(JSonQueryRunTime.fxRegex.RegexCache.Count ==  12);
+            JSonQueryRunTime.fxRegex.RegexCache.Clear();
+            Assert.IsTrue(JSonQueryRunTime.fxRegex.RegexCache.Count ==  0);
         }
 
         [TestMethod]

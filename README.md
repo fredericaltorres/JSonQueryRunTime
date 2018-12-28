@@ -34,7 +34,7 @@ The JSON Query Runtime allows to filter JSON lines based on a where clause like 
 
 - `timestamp = #2018-12-20T14:16:00#` returns true is property timestamp is equal to the date+time value
 
-- `timestamp >= #2018-12-20T14:16:00# and timestamp <= #2018-12-20T14:16:59#` returns true is property timestamp in in the date range (See DateRange() function).
+- `timestamp >= #2018-12-20T14:16:00# and timestamp <= #2018-12-20T14:16:59#` returns true is property timestamp is in the date range (See DateRange() function).
 
 **Functions:**
 
@@ -42,25 +42,36 @@ The JSON Query Runtime allows to filter JSON lines based on a where clause like 
 
 - `Regex(name, "s.r.*")` # todo returns true if the regular expression match the content of the string property name
 
+*Range*:
 
 - `DateRange(timestamp, #2018-12-20T14:16:00#, #2018-12-20T14:16:59#)` returns true if the date in property timestamp is between the 2 date
 
 - `NumberRange(val, 1, 10)` returns true if the numeric value in property val is between 1 and 10
 
+*In*:
+
 - `InString(name, Array("A", "B", "C"))` returns true if the value of the property name is included in the array
 
 - `InNumber(amount, Array(12, 24, 48))` returns true if the value of the property amount is included in the array
 
+*String*:
+
 - `ContainString(name, "substring")` # todo returns true if the value of the property name contains the sub-string "substring"
+
+*Is-xxxxx*:
 
 - `IsObject(o), IsNumber(n), IsString(s), IsBoolean(b), IsDate(d), IsNull(nil), IsArray(a)` # todo return true is the property value type match the function or the parameter
 can be a Json path to evaluate `IsObject("a.b")`
+
+*Contain*:
 
 - `ContainArrayNumber(arrOfNumber, Array(12, 24, 48))` returns true if property arrOfNumber which is an array of number contains the values 12, 24, 48
 
 - `ContainArrayString(arrOfString, Array("a", "b", "c"))` returns true if property arrOfString which is an array of string contains the values "a", "b", "c"
 
 - `ContainArrayBoolean(arrOfBoolean, Array(true, false))` returns true if property arrOfBoolean which is an array of boolean contains the values true and false
+
+*EqualArray*:
 
 - `EqualArrayNumber(arrOfNumber, Array(12, 24, 48))` # todo returns true if property arrOfNumber which is an array of number contains and only contains the values 12, 24, 48
 
@@ -76,7 +87,7 @@ can be a Json path to evaluate `IsObject("a.b")`
 	} 
 }
 ```	
-The function Path return the value at the end of the path.
+The function `Path()` returns the value at the end of the path.
 ```js
 Path("main.a") = 1
 ```
@@ -91,7 +102,11 @@ json
 		} 
 	}
 ```
-Proposal: main.`?`.z == 1 will match main.`a`.z:1
+Proposal: 
+
+	- Path("main.?.z") = 1
+	The function Path() will run throuh allpossible path to evaluate main.?.z and stop and
+	return true at the first one resulting to 1
 
 ## .NET Framework
 

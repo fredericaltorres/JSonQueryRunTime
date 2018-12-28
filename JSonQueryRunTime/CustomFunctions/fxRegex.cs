@@ -5,7 +5,7 @@ using WildCardExercice.net;
 
 namespace JSonQueryRunTime
 {
-    class fxRegex: Function
+    public class fxRegex: Function
     {
         public override string Name 
         {
