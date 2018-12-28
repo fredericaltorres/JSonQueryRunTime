@@ -101,6 +101,7 @@ namespace JSonQueryRunTime_UnitTests
         public void Execute_RegexFunction()
         {
             Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, ""ABCDE"") ").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, ""ABCDE"") ").Eval(json0));
 
             Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, ""^ABCDE"") ").Eval(json0));
             Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, ""^ABC"") ").Eval(json0));

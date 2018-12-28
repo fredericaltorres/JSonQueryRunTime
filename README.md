@@ -20,7 +20,7 @@ The JSON Query Runtime allows to filter JSON lines based on a where clause like 
 	"o":{ "name":"foo" }, "a":[1,2,3] 
 }
 ```
-## Query Samples
+### Query Samples
 
 `n = 1 AND s = "string" AND b = true` returns true if the json properties match each expression 
 
@@ -68,18 +68,20 @@ can be a Json path to evaluate `IsObject("a.b")`
 
 - `EqualArrayBoolean(arrOfBoolean, Array(true, false, true))` # todo returns true if property arrOfBoolean which is an array of boolean contains the following values in the exact order true, false, true
 
-## Queries on the second level of properties
-	- Not implemented
+### Queries on the second level of properties
 ```js
-	{ 
-		"main": { 
-			"a":1 
-		} 
-	}
+{ 
+	"main": { 
+		"a":1 
+	} 
+}
 ```	
-	- Path("main.a") == 1
+The function Path return the value at the end of the path.
+```js
+Path("main.a") = 1
+```
 
-## Queries on property
+### Queries on unknown property
 - Not implemented
 json
 ```js
@@ -89,14 +91,13 @@ json
 		} 
 	}
 ```
-    Proposal:where main.?.z == 1 will match main.a.z:1
+Proposal: main.`?`.z == 1 will match main.`a`.z:1
 
 ## .NET Framework
 
 JSonQueryRuntime use dot net core 2.1.
 
 ## C# Syntax
-
 
 ```cs
 public class JsonQueryRuntime {
@@ -114,7 +115,6 @@ public class JsonQueryRuntime {
 	/// <returns></returns>	
 	public bool Eval(string jsonString);
 }
-
 ```
 ```cs
 public const string json0 = @"{ 
