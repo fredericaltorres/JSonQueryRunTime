@@ -44,15 +44,15 @@ The JSON Query Runtime allows to filter JSON lines based on a where clause like 
 
 *Range*:
 
-- `DateRange(timestamp, #2018-12-20T14:16:00#, #2018-12-20T14:16:59#)` returns true if the date in property timestamp is between the 2 date
+- `DateRange(timestamp, #2018-12-20T14:16:00#, #2018-12-20T14:16:59#)` returns true if the date in property timestamp is between the 2 dates
 
 - `NumberRange(val, 1, 10)` returns true if the numeric value in property val is between 1 and 10
 
 *In*:
 
-- `InString(name, Array("A", "B", "C"))` returns true if the value of the property name is included in the array
+- `In(name, Array("A", "B", "C"))` returns true if the value of the property name is included in the array
 
-- `InNumber(amount, Array(12, 24, 48))` returns true if the value of the property amount is included in the array
+- `In(amount, Array(12, 24, 48))` returns true if the value of the property amount is included in the array
 
 *String*:
 

@@ -3,8 +3,9 @@ using WildCardExercice.net;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using JSonQueryRunTimeNS;
 
-namespace JSonQueryRunTime_UnitTests
+namespace JSonQueryRunTime
 {
     class fxIsObject: Function
     {

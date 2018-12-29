@@ -4,7 +4,7 @@ using System.Linq;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 
-namespace JSonQueryRunTime_UnitTests
+namespace JSonQueryRunTime
 {
     class fxIsNull: Function
     {

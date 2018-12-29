@@ -3,8 +3,9 @@ using WildCardExercice.net;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using JSonQueryRunTimeNS;
 
-namespace JSonQueryRunTime_UnitTests
+namespace JSonQueryRunTime
 {
     class fxPath: Function
     {
@@ -16,9 +17,16 @@ namespace JSonQueryRunTime_UnitTests
         }
 
 
-        public JTokenType ConvertInterpreterTypeIntoJTokenType(IConstruct l)
+        public static JTokenType ConvertInterpreterTypeIntoJTokenType(IConstruct l)
         {
+            
             string expectedValueType = l.GetType().Name;
+            if(expectedValueType == "Variable")
+            {
+                Variable v = l as Variable;
+                return ConvertInterpreterTypeIntoJTokenType(v.Value);
+            }
+
             if(expectedValueType == "Number")
                 return JTokenType.Float;
             if(expectedValueType == "Text")

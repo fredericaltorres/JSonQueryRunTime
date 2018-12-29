@@ -1,5 +1,6 @@
 ﻿using HiSystems.Interpreter;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using JSonQueryRunTimeNS;
 
 namespace JSonQueryRunTime_UnitTests
 {
@@ -177,15 +178,15 @@ namespace JSonQueryRunTime_UnitTests
         [TestMethod]
         public void Execute_InString_Function()
         {
-            Assert.IsTrue(new JsonQueryRuntime(@"InString(name, Array(""ok"", ""ko"")) ").Eval(json0));
-            Assert.IsFalse(new JsonQueryRuntime(@"InString(name, Array(""a"", ""b"")) ").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@"In(name, Array(""ok"", ""ko"")) ").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@"In(name, Array(""a"", ""b"")) ").Eval(json0));
         }
 
         [TestMethod]
         public void Execute_InNumber_Function()
         {
-            Assert.IsTrue(new JsonQueryRuntime(@"InNumber(n, Array(122, 123, 124)) ").Eval(json0));
-            Assert.IsFalse(new JsonQueryRuntime(@"InNumber(n, Array(122, 124)) ").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@"In(n, Array(122, 123, 124)) ").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@"In(n, Array(122, 124)) ").Eval(json0));
         }
 
         [TestMethod]

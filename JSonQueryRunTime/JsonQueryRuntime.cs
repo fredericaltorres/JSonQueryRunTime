@@ -4,7 +4,7 @@ using HiSystems.Interpreter;
 using JSonQueryRunTime;
 using Newtonsoft.Json.Linq;
 
-namespace JSonQueryRunTime_UnitTests
+namespace JSonQueryRunTimeNS
 {
     public class JsonQueryRuntime
     {
@@ -22,7 +22,7 @@ namespace JSonQueryRunTime_UnitTests
             _engine = new Engine();
             _engine.Register(new fxWildCard());
             _engine.Register(new fxDateRange());
-            _engine.Register(new fxInString());
+            _engine.Register(new fxIn());
             _engine.Register(new fxNumberRange());
             _engine.Register(new fxInNumber());
             _engine.Register(new fxIsString());
