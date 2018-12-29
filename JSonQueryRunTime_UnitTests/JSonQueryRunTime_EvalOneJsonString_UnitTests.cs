@@ -321,6 +321,14 @@ namespace JSonQueryRunTime_UnitTests
             Assert.IsFalse(new JsonQueryRuntime(@" IsNull(#2018-12-26 01:24:46#) ").Eval(json0));
             Assert.IsFalse(new JsonQueryRuntime(@" IsNull(""aaa"") ").Eval(json0));
         }
+
+        [TestMethod]
+        public void CompareString()
+        {
+            Assert.IsTrue(string.Compare("bb", "aa") == 1);
+            Assert.IsTrue(string.Compare("bb", "aaa") == 1);
+            Assert.IsTrue(string.Compare("a", "b") == -1);
+        }
     }
 }
 
