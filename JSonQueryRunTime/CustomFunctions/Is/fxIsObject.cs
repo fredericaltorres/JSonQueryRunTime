@@ -28,14 +28,15 @@ namespace JSonQueryRunTime
                     JObject jsonObj = JObject.Parse(jsonString);
                     return new HiSystems.Interpreter.Boolean(true);
                 }                
-                else // Should be json path
-                {
-                    JToken lastValue = fxPath.EvalJsonDotNetPath(jsonString);
-                    if(lastValue == null) // The jsonString does not contains a path, but a property name that eval to something which is not an object
-                        return new HiSystems.Interpreter.Boolean(false);
-                    else
-                        return new HiSystems.Interpreter.Boolean(lastValue.Type == JTokenType.Object);                    
-                }
+                else return new HiSystems.Interpreter.Boolean(false);
+                //else // Should be json path
+                //{
+                //    JToken lastValue = fxPath.EvalJsonDotNetPath(jsonString);
+                //    if(lastValue == null) // The jsonString does not contains a path, but a property name that eval to something which is not an object
+                //        return new HiSystems.Interpreter.Boolean(false);
+                //    else
+                //        return new HiSystems.Interpreter.Boolean(lastValue.Type == JTokenType.Object);                    
+                //}
             }
             catch(JsonReaderException jrEx)
             {

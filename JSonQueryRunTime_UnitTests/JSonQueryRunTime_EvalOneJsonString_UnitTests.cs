@@ -245,8 +245,8 @@ namespace JSonQueryRunTime_UnitTests
         [TestMethod]
         public void Execute_IsString_Path()
         {
-            Assert.IsTrue(new JsonQueryRuntime(@"IsString(name)").Eval(json0));
-            Assert.IsTrue(new JsonQueryRuntime(@"IsString(""obj0.name"")").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@"IsString( Path( ""name"" ) )").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@"IsString( Path ( ""obj0.name"" ) )").Eval(json0));
         }
 
         [TestMethod]
@@ -279,11 +279,11 @@ namespace JSonQueryRunTime_UnitTests
             Assert.IsFalse(new JsonQueryRuntime(@"IsObject(null)").Eval(json0));
             Assert.IsFalse(new JsonQueryRuntime(@"IsObject(#1964-12-11#)").Eval(json0));
         }
-        [TestMethod]
-        public void Execute_IsObject_Path()
-        {
-            Assert.IsTrue(new JsonQueryRuntime(@"IsObject(""obj0.obj00"")").Eval(json0));
-        }
+        //[TestMethod]
+        //public void Execute_IsObject_Path()
+        //{
+        //    Assert.IsTrue(new JsonQueryRuntime(@"IsObject(""obj0.obj00"")").Eval(json0));
+        //}
 
         [TestMethod]
         public void Execute_Path_String()
@@ -337,11 +337,19 @@ namespace JSonQueryRunTime_UnitTests
             Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.?"", 124)  ").Eval(json0));
         }
 
+
+         [TestMethod]
+        public void Execute_IsObject_Path()
+        {
+            var queryManufacturer = "Manufacturers[?(@.Name == 'Acme Co')]";
+            Assert.IsTrue(new JsonQueryRuntime($@" IsObject( Path(""{queryManufacturer}"") )  ").Eval(json_store));
+        }
+
+
         [TestMethod]
         public void Execute_Path_QueryObjectInArray()
         {
             var queryManufacturer = "Manufacturers[?(@.Name == 'Acme Co')]";
-            Assert.IsTrue(new JsonQueryRuntime($@" IsObject(""{queryManufacturer}"")  ").Eval(json_store));
             Assert.IsTrue(new JsonQueryRuntime($@" IsObject( Path(""{queryManufacturer}"") )  ").Eval(json_store));
 
             Assert.IsTrue(new JsonQueryRuntime($@" Path(""{queryManufacturer}.Name"") = ""Acme Co"" ").Eval(json_store));

@@ -38,7 +38,7 @@ The JSON Query Runtime allows to filter JSON lines based on a where clause like 
 
 **Functions:**
 
-- `Wildcard(name,"s?r*")` returns true if the wildcard match thecontent of the string property name
+- `Wildcard(name,"s?r*")` returns true if the wildcard match the content of the string property name
 
 - `Regex(name, "s.r.*")` returns true if the regular expression match the content of the string property name
 
@@ -48,7 +48,7 @@ The JSON Query Runtime allows to filter JSON lines based on a where clause like 
 
 - `Range(val, 1, 10)` returns true if the numeric value in property val is between 1 and 10
 
-- `Range(s, "a", "d")` returns true if the string value in property s is between "a", "b", "c", "d"
+- `Range(s, "a", "d")` returns true if the string value in property s is between "a" and "d"
 
 *In*:
 
@@ -62,8 +62,7 @@ The JSON Query Runtime allows to filter JSON lines based on a where clause like 
 
 *Is-xxxxx*:
 
-- `IsObject(o), IsNumber(n), IsString(s), IsBoolean(b), IsDate(d), IsNull(nil), IsArray(a)` # todo return true is the property value type match the function or the parameter
-can be a Json path to evaluate `IsObject("a.b")`
+- `IsObject(o), IsNumber(n), IsString(s), IsBoolean(b), IsDate(d), IsNull(nil), IsArray(a)` # todo return true is the property value type match the function
 
 *Contain*:
 

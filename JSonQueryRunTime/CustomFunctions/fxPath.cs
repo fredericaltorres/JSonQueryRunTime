@@ -129,6 +129,10 @@ namespace JSonQueryRunTime
             if (lastValue.Type == JTokenType.Boolean)
                 return new HiSystems.Interpreter.Boolean((bool)lastValue);
 
+            // Return object as string that start with a '{'
+            if (lastValue.Type == JTokenType.Object)
+                return new HiSystems.Interpreter.Text(lastValue.ToString());
+
             // As Default return as string
             return new HiSystems.Interpreter.Text(lastValue.ToString());
         }
