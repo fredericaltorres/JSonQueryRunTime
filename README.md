@@ -93,7 +93,6 @@ Path("main.a") = 1
 ```
 
 ### Queries on unknown property or pattern matching on property name
-- Not implemented
 json
 ```js
 	{ 
@@ -106,13 +105,13 @@ Proposal:
 
 - Syntax: 
 ```
-Path(path-with-unknown, expected-value);
+Path(path-with-unknown, expected-value)
 ```
 - Sample: 
 ```
 Path("main.?.z", 1)
 ```
-The function Path() will run throuh all possible path to evaluate main.?.z and stop 
+The function Path() will run throuh all possible paths to evaluate `"main.?.z"` and stop 
 at the first path that return the value 1
 
 ## .NET Framework
