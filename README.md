@@ -81,10 +81,14 @@ can be a Json path to evaluate `IsObject("a.b")`
 
 ### Queries on the second level of properties
 
-The function `Path()` returns the value at the end of the path.
+The function `Path()` returns the value at the end of the path. 
+- [JsonPath](https://goessner.net/articles/JsonPath/) reference
+
 - Sample:
 ```js
-Path("main.a") = 1
+Path("$.main.a") = 1
+Path("$.Manufacturers[?(@.Name == 'Acme Co')].Price") = 99.95
+Path("$.Manufacturers[Name = 'Acme Co'].Price") = 99.95
 ```
 - JSON:
 ```js
@@ -166,3 +170,17 @@ public void Test() {
 * https://stackoverflow.com/questions/36340266/querying-json-from-c-sharp
 * https://jack-vanlightly.com/blog/2016/2/11/implementing-a-dsl-parser
 
+
+## Attribution
+
+* JSON.net ~ Newtonsoft.json
+MIT license and is free for commercial use.
+
+* HiSystems.Interpreter 
+
+```
+(c) Hi-Integrity Systems 2012. All rights reserved.
+www.hisystems.com.au - Toby Wicks
+github.com/hisystems/Interpreter
+Licensed under the Apache License, Version 2.0 (the "License");
+```

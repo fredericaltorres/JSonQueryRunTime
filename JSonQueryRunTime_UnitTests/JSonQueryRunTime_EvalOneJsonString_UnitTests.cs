@@ -18,6 +18,33 @@ namespace JSonQueryRunTime_UnitTests
                                         ""obj0"": { ""name"" : ""koo"", ""b"":false,""n"":124, ""wildText"" : ""XYZ"", ""now"":""2018-12-31T20:23:49.0-05:00"", ""utcnow"" : ""2018-12-31T01:24:46.0"", ""nil"": null } 
                                     }";
 
+        public const string json_store = @"{
+  'Stores': [
+    'Lambton Quay', 'Willis Street'
+  ],
+  'Manufacturers': [
+    {
+      'Name': 'Acme Co',
+      'Products': [
+        {
+          'Name': 'Anvil', 'Price': 50
+        }
+      ]
+    },
+    {
+      'Name': 'Contoso',
+      'Products': [
+        {
+          'Name': 'Elbow Grease', 'Price': 99.95
+        },
+        {
+          'Name': 'Headlight Fluid', 'Price': 4
+        }
+      ]
+    }
+  ]
+}";
+
         [TestMethod]
         public void Execute_Date_Utc()
         {
@@ -258,6 +285,7 @@ namespace JSonQueryRunTime_UnitTests
         public void Execute_Path_String()
         {
             Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.name"")  = ""okk"" ").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.name"")  = ""okk"" ").Eval(json0));
             Assert.IsTrue(new JsonQueryRuntime(@"IsObject(obj0) AND Path(""obj0.name"")  = ""okk"" ").Eval(json0));
         }
 
@@ -266,9 +294,8 @@ namespace JSonQueryRunTime_UnitTests
         {
             Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.obj00.name"") = ""okkk"" ").Eval(json0));
             Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.obj00.n"") = 1234 ").Eval(json0));
-
             Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.obj00.name"") = ""okkk"" AND Path(""obj0.obj00.n"") = 1234 ").Eval(json0));
-            Assert.IsTrue(new JsonQueryRuntime(@" ( Path(""obj0.obj00.name"") = ""okkk"" ) AND ( Path(""obj0.obj00.n"") = 1234 ) ").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" ( Path(""obj0.obj00.name"" ) = ""okkk"" ) AND ( Path(""obj0.obj00.n"") = 1234 ) ").Eval(json0));
         }
 
         [TestMethod]
@@ -293,7 +320,7 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
-        public void Execute_Path_WithUnknown()
+        public void Execute_Path_PatternMatching()
         {
             // property n
             Assert.IsTrue(new JsonQueryRuntime(@" Path(""?"", 123)   ").Eval(json0));
@@ -304,15 +331,31 @@ namespace JSonQueryRunTime_UnitTests
 
             Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.obj00.?"", 1234)   ").Eval(json0));
             Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.?"", 124)  ").Eval(json0));
-            
         }
-        
+
+        [TestMethod]
+        public void Execute_Path_QueryObjectInArray()
+        {
+            var queryManufacturer = "Manufacturers[?(@.Name == 'Acme Co')]";
+            Assert.IsTrue(new JsonQueryRuntime($@" IsObject(""{queryManufacturer}"")  ").Eval(json_store));
+            Assert.IsTrue(new JsonQueryRuntime($@" IsObject( Path(""{queryManufacturer}"") )  ").Eval(json_store));
+
+            Assert.IsTrue(new JsonQueryRuntime($@" Path(""{queryManufacturer}.Name"") = ""Acme Co"" ").Eval(json_store));
+            Assert.IsTrue(new JsonQueryRuntime($@" Path(""{queryManufacturer}.Name"") = ""Acme Co"" ").Eval(json_store));
+            Assert.IsTrue(new JsonQueryRuntime($@" Path(""{queryManufacturer}.Products[0].Price"") = 50 ").Eval(json_store));
+
+            var queryProductPerPrice = ".Products[?(@.Price == 4)]";
+            Assert.IsTrue(new JsonQueryRuntime($@" Path(""{queryProductPerPrice}.Name"") = ""Headlight Fluid"" ").Eval(json_store));
+            Assert.IsTrue(new JsonQueryRuntime($@" IsObject( Path(""{queryProductPerPrice}"") ) ").Eval(json_store));
+            Assert.IsTrue(new JsonQueryRuntime($@" Not( Not( IsObject( Path(""{queryProductPerPrice}"") ) ) )").Eval(json_store));
+        }
+
         [TestMethod]
         public void Execute_IsNull()
         {
             Assert.IsTrue(new JsonQueryRuntime(@" IsNull(null) ").Eval(json0));
             Assert.IsTrue(new JsonQueryRuntime(@" IsNull(nil) ").Eval(json0));
-            
+
             Assert.IsFalse(new JsonQueryRuntime(@" IsNull(name) ").Eval(json0));
             Assert.IsFalse(new JsonQueryRuntime(@" IsNull(n) ").Eval(json0));
             Assert.IsFalse(new JsonQueryRuntime(@" IsNull(1) ").Eval(json0));
@@ -328,6 +371,23 @@ namespace JSonQueryRunTime_UnitTests
             Assert.IsTrue(string.Compare("bb", "aa") == 1);
             Assert.IsTrue(string.Compare("bb", "aaa") == 1);
             Assert.IsTrue(string.Compare("a", "b") == -1);
+        }
+
+          [TestMethod]
+        public void Execute_Not()
+        {
+            Assert.IsTrue(new JsonQueryRuntime(@" Not(true) = false ").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Not(false) = true ").Eval(json0));
+            
+            Assert.IsFalse(new JsonQueryRuntime(@" Not(b) ").Eval(json0));
+
+            Assert.IsFalse(new JsonQueryRuntime(@" Not(IsNull(nil)) ").Eval(json0));
+
+            Assert.IsTrue(new JsonQueryRuntime(@" Not( IsNull(name) ) ").Eval(json0));
+
+            Assert.IsTrue(new JsonQueryRuntime(@" Not(Not(Not(true))) = false ").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Not(Not(Not(false))) = true ").Eval(json0));
+            
         }
     }
 }

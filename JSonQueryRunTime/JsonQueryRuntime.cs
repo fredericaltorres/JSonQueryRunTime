@@ -32,6 +32,8 @@ namespace JSonQueryRunTimeNS
             _engine.Register(new fxPath());
             _engine.Register(new fxRegex());
             _engine.Register(new fxIsNull());
+            _engine.Register(new fxNot());
+            
             
 
             _expression = _engine.Parse(whereClause.Replace(Environment.NewLine, ""));

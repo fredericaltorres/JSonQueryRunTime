@@ -30,7 +30,7 @@ namespace JSonQueryRunTime
                 }                
                 else // Should be json path
                 {
-                    JToken lastValue = fxPath.EvalPath(jsonString);
+                    JToken lastValue = fxPath.EvalJsonDotNetPath(jsonString);
                     if(lastValue == null) // The jsonString does not contains a path, but a property name that eval to something which is not an object
                         return new HiSystems.Interpreter.Boolean(false);
                     else

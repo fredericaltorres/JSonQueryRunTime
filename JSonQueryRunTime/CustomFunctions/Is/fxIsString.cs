@@ -31,7 +31,7 @@ namespace JSonQueryRunTime
                 {
                     // If we passed a Path tp evaluate
                     string jsonPath = base.GetTransformedArgument<Text>(arguments, argumentIndex: 0);
-                    JToken lastValue = fxPath.EvalPath(jsonPath);
+                    JToken lastValue = fxPath.EvalJsonDotNetPath(jsonPath);
                     if(lastValue == null) // The jsonString does not contains a path, but a property name that eval to something which is not an object
                         return new HiSystems.Interpreter.Boolean(false);
                     else
