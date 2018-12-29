@@ -92,16 +92,25 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
-        public void Execute_DateRangeFunction_Utc()
+        public void Execute_DateRange_Utc()
         {
             //#2018-12-26 01:24:46# ").Eval(json0));
 
-            Assert.IsTrue(new JsonQueryRuntime(@"
-                DateRange(utcnow, #2018-12-01 01:24:46#, #2018-12-31 01:24:46#)
-            ").Eval(json0));
-            Assert.IsFalse(new JsonQueryRuntime(@"
-                DateRange(utcnow, #2018-12-27 01:24:46#, #2018-12-31 01:24:46#)
-            ").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Range(utcnow, #2018-12-01 01:24:46#, #2018-12-31 01:24:46#) ").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@" Range(utcnow, #2018-12-27 01:24:46#, #2018-12-31 01:24:46#) ").Eval(json0));
+        }
+
+         [TestMethod]
+        public void Execute_Range_String()
+        {
+            //#2018-12-26 01:24:46# ").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Range(""b"", ""a"", ""d"") ").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Range(""aa"", ""a"", ""d"") ").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@" Range(""daa"", ""a"", ""d"") ").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@" Range(name, ""a"", ""d"") ").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Range(name, ""o"", ""p"") ").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Range(name, ""oa"", ""p"") ").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@" Range(name, ""ol"", ""p"") ").Eval(json0));
         }
 
         [TestMethod]
@@ -219,13 +228,8 @@ namespace JSonQueryRunTime_UnitTests
         [TestMethod]
         public void Execute_NumberRangeFunction()
         {
-            Assert.IsTrue(new JsonQueryRuntime(@"
-                NumberRange(n, 122, 124)
-            ").Eval(json0));
-
-            Assert.IsFalse(new JsonQueryRuntime(@"
-                NumberRange(n, 100, 110)
-            ").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Range(n, 122, 124) ").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@" Range(n, 100, 110) ").Eval(json0));
         }
 
         [TestMethod]

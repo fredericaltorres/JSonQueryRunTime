@@ -34,7 +34,7 @@ The JSON Query Runtime allows to filter JSON lines based on a where clause like 
 
 - `timestamp = #2018-12-20T14:16:00#` returns true is property timestamp is equal to the date+time value
 
-- `timestamp >= #2018-12-20T14:16:00# and timestamp <= #2018-12-20T14:16:59#` returns true is property timestamp is in the date range (See DateRange() function).
+- `timestamp >= #2018-12-20T14:16:00# and timestamp <= #2018-12-20T14:16:59#` returns true is property timestamp is in the date range (See Range() function).
 
 **Functions:**
 
@@ -44,9 +44,11 @@ The JSON Query Runtime allows to filter JSON lines based on a where clause like 
 
 *Range*:
 
-- `DateRange(timestamp, #2018-12-20T14:16:00#, #2018-12-20T14:16:59#)` returns true if the date in property timestamp is between the 2 dates
+- `Range(timestamp, #2018-12-20T14:16:00#, #2018-12-20T14:16:59#)` returns true if the date in property timestamp is between the 2 dates
 
-- `NumberRange(val, 1, 10)` returns true if the numeric value in property val is between 1 and 10
+- `Range(val, 1, 10)` returns true if the numeric value in property val is between 1 and 10
+
+- `Range(s, "a", "d")` returns true if the string value in property s is between "a", "b", "c", "d"
 
 *In*:
 
@@ -81,14 +83,16 @@ can be a Json path to evaluate `IsObject("a.b")`
 
 ### Queries on the second level of properties
 
-The function `Path()` returns the value at the end of the path. 
-- [JsonPath](https://goessner.net/articles/JsonPath/) reference
+The function `Path(string-path)` returns evaluate the string-path according 
+[JsonPath](https://goessner.net/articles/JsonPath/) 
+and return the value. The symbol "`$.`" is automatically added at the beginning of the `string-path`.
+
 
 - Sample:
 ```js
-Path("$.main.a") = 1
-Path("$.Manufacturers[?(@.Name == 'Acme Co')].Price") = 99.95
-Path("$.Manufacturers[Name = 'Acme Co'].Price") = 99.95
+Path("main.a") = 1
+Path("Manufacturers[?(@.Name == 'Acme Co')].Price") = 99.95
+Path(".Products[?(@.Price == 4)].Name") = "Headlight Fluid"
 ```
 - JSON:
 ```js
