@@ -13,7 +13,7 @@ The JSON Query Runtime allows to filter JSON lines based on a where clause like 
 
 ## JSON Query Syntax
 
-- A JSON sample
+- JSON sample
 ```json
 { 
 	"n":1, "b":true, "s":"string", "timestamp":"2018-12-20T14:16:32.4573737-05:00", 
@@ -80,6 +80,13 @@ can be a Json path to evaluate `IsObject("a.b")`
 - `EqualArrayBoolean(arrOfBoolean, Array(true, false, true))` # todo returns true if property arrOfBoolean which is an array of boolean contains the following values in the exact order true, false, true
 
 ### Queries on the second level of properties
+
+The function `Path()` returns the value at the end of the path.
+- Sample:
+```js
+Path("main.a") = 1
+```
+- JSON:
 ```js
 { 
 	"main": { 
@@ -87,20 +94,9 @@ can be a Json path to evaluate `IsObject("a.b")`
 	} 
 }
 ```	
-The function `Path()` returns the value at the end of the path.
-```js
-Path("main.a") = 1
-```
 
 ### Queries on unknown property or pattern matching on property name
-json
-```js
-	{ 
-		"main": { 
-			"a":{ "z":1}, "b":{ "z":2}, "c":{ "z":3 } 
-		} 
-	}
-```
+
 Proposal:
 
 - Syntax: 
@@ -110,6 +106,14 @@ Path(path-with-unknown, expected-value)
 - Sample: 
 ```
 Path("main.?.z", 1)
+```
+- JSON:
+```js
+	{ 
+		"main": { 
+			"a":{ "z":1}, "b":{ "z":2}, "c":{ "z":3 } 
+		} 
+	}
 ```
 The function Path() will run throuh all possible paths to evaluate `"main.?.z"` and stop 
 at the first path that return the value 1
