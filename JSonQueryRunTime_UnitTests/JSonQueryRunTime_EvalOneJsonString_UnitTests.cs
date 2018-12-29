@@ -241,6 +241,11 @@ namespace JSonQueryRunTime_UnitTests
             Assert.IsFalse(new JsonQueryRuntime(@"IsObject(name)").Eval(json0));
             Assert.IsFalse(new JsonQueryRuntime(@"IsObject(n)").Eval(json0));
             Assert.IsFalse(new JsonQueryRuntime(@"IsObject(nil)").Eval(json0));
+
+            Assert.IsFalse(new JsonQueryRuntime(@" IsObject(""aa"") ").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@"IsObject(1)").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@"IsObject(null)").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@"IsObject(#1964-12-11#)").Eval(json0));
         }
         [TestMethod]
         public void Execute_IsObject_Path()
@@ -275,6 +280,7 @@ namespace JSonQueryRunTime_UnitTests
         public void Execute_Path_Boolean()
         {
             Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.b"") = true ").Eval(json0));
+            // obj0.b return true, so Path() can be evaluate like that, only for boolean
             Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.b"")  ").Eval(json0));
         }
 
@@ -282,6 +288,22 @@ namespace JSonQueryRunTime_UnitTests
         public void Execute_Path_Empty()
         {
             Assert.IsTrue(new JsonQueryRuntime(@" Path("""") = null ").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" IsNull( Path("""") ) ").Eval(json0));
+        }
+
+        [TestMethod]
+        public void Execute_Path_WithUnknown()
+        {
+            // property n
+            Assert.IsTrue(new JsonQueryRuntime(@" Path(""?"", 123)   ").Eval(json0));
+            // property name
+            Assert.IsTrue(new JsonQueryRuntime(@" Path(""?"", ""ok"")   ").Eval(json0));
+            // property b
+            Assert.IsTrue(new JsonQueryRuntime(@" Path(""?"", true)   ").Eval(json0));
+
+            Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.obj00.?"", 1234)   ").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.?"", 124)  ").Eval(json0));
+            
         }
         
         [TestMethod]
@@ -289,11 +311,9 @@ namespace JSonQueryRunTime_UnitTests
         {
             Assert.IsTrue(new JsonQueryRuntime(@" IsNull(null) ").Eval(json0));
             Assert.IsTrue(new JsonQueryRuntime(@" IsNull(nil) ").Eval(json0));
-
             
             Assert.IsFalse(new JsonQueryRuntime(@" IsNull(name) ").Eval(json0));
             Assert.IsFalse(new JsonQueryRuntime(@" IsNull(n) ").Eval(json0));
-
             Assert.IsFalse(new JsonQueryRuntime(@" IsNull(1) ").Eval(json0));
             Assert.IsFalse(new JsonQueryRuntime(@" IsNull(true) ").Eval(json0));
             Assert.IsFalse(new JsonQueryRuntime(@" IsNull(false) ").Eval(json0));

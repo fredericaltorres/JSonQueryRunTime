@@ -92,7 +92,7 @@ The function `Path()` returns the value at the end of the path.
 Path("main.a") = 1
 ```
 
-### Queries on unknown property
+### Queries on unknown property or pattern matching on property name
 - Not implemented
 json
 ```js
@@ -102,11 +102,18 @@ json
 		} 
 	}
 ```
-Proposal: 
+Proposal:
 
-	- Path("main.?.z") = 1
-	The function Path() will run throuh allpossible path to evaluate main.?.z and stop and
-	return true at the first one resulting to 1
+- Syntax: 
+```
+Path(path-with-unknown, expected-value);
+```
+- Sample: 
+```
+Path("main.?.z", 1)
+```
+The function Path() will run throuh all possible path to evaluate main.?.z and stop 
+at the first path that return the value 1
 
 ## .NET Framework
 
