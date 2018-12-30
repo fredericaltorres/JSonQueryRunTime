@@ -26,7 +26,7 @@ returns true if the JSON properties match each expression
 **Operator supported:** 
 
 ```
-=, <>, <, <=, >, >=, OR, AND, (, )
+=, <>, <, <=, >, >=, OR, AND, (, ), Not()
 ```
 
 **Date support:**
@@ -63,19 +63,19 @@ returns true if the JSON properties match each expression
 
 - `IsObject(o), IsNumber(n), IsString(s), IsBoolean(b), IsDate(d), IsNull(nil), IsArray(a)` returns true is the property value type match the function #TODO
 
-*Contain*:
+*Contains*:
 
 - `Contains(arrOfNumber, Array(12, 24, 48))` returns true if property arrOfNumber which is an array of number contains the values 12, 24, 48. #TODO
 
 - `Contains(arrOfString, Array("a", "b", "c"))` returns true if property arrOfString which is an array of string contains the values "a", "b", "c" #TODO
 
-*EqualArray*:
+*ArrayEqual*:
 
-- `EqualArray(arrOfNumber, Array(12, 24, 48))` # todo returns true if property arrOfNumber which is an array of number contains and only contains the values 12, 24, 48. #TODO
+- `ArrayEqual(arrOfNumber, Array(12, 24, 48))` # todo returns true if property arrOfNumber which is an array of number contains and only contains the values 12, 24, 48. #TODO
 
-- `EqualArray(arrOfString, Array("a", "b", "c"))` # todo returns true if property arrOfString which is an array of string contains and only contains the values "a", "b", "c". #TODO
+- `ArrayEqual(arrOfString, Array("a", "b", "c"))` # todo returns true if property arrOfString which is an array of string contains and only contains the values "a", "b", "c". #TODO
 
-- `EqualArray(arrOfBoolean, Array(true, false, true))` # todo returns true if property arrOfBoolean which is an array of boolean contains the following values in the exact order true, false, true. #TODO
+- `ArrayEqual(arrOfBoolean, Array(true, false, true))` # todo returns true if property arrOfBoolean which is an array of boolean contains the following values in the exact order true, false, true. #TODO
 
 ### Queries on the second level of properties
 

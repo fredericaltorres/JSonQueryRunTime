@@ -87,7 +87,7 @@ namespace HiSystems.Interpreter
         /// Minimise the use of this function because it will traverse and execute the entire expression tree if the construct represents an operation or function.
         /// <param name="argumentIndex">0 based index - error messages are reported as 1 based indexes</param>
         /// </summary>
-        protected T[] GetTransformedArgumentArray<T>(IConstruct[] arguments, int argumentIndex) where T : Literal
+        public T[] GetTransformedArgumentArray<T>(IConstruct[] arguments, int argumentIndex) where T : Literal
         {
             var argument = GetArgument(arguments, argumentIndex);
             var transformedArgument = argument.Transform();

@@ -264,14 +264,39 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
+        public void Execute_EqualArrayNumber()
+        {
+            Assert.IsTrue (new JsonQueryRuntime(@"EqualArray(arrNumber, Array(1, 2, 3))").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@"EqualArray(arrNumber, Array(1, 2, 3, 4))").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@"EqualArray(arrNumber, Array(1, 2, 4))").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@"EqualArray(arrNumber, Array(1))").Eval(json0));
+        }
+
+        [TestMethod]
         public void Execute_ContainsArrayString()
         {
             Assert.IsTrue(new JsonQueryRuntime(@"Contains(arrString, Array(""a"", ""c""))").Eval(json0));
             Assert.IsFalse(new JsonQueryRuntime(@"Contains(arrString, Array(""a"", ""d""))").Eval(json0));
             Assert.IsTrue(new JsonQueryRuntime(@"Contains(arrString, Array(""a"", ""c"", ""b""))").Eval(json0));
             Assert.IsTrue(new JsonQueryRuntime(@"Contains(arrString, Array(""a""))").Eval(json0));
-            
         }
+
+        [TestMethod]
+        public void Execute_EqualArrayString()
+        {
+            Assert.IsTrue(new JsonQueryRuntime(@"EqualArray(arrString, Array(""a"", ""b"", ""c""))").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@"EqualArray(arrString, Array(""a"", ""b""))").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@"EqualArray(arrString, Array(""a"", ""c"", ""b""))").Eval(json0));
+        }
+
+        [TestMethod]
+        public void Execute_EqualArrayBoolean()
+        {
+            Assert.IsTrue(new JsonQueryRuntime(@"EqualArray(arrBoolean, Array(true, false, true))").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@"EqualArray(arrBoolean, Array(true))").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@"EqualArray(arrBoolean, Array(false))").Eval(json0));
+        }
+
         [TestMethod]
         public void Execute_ContainsArrayBoolean()
         {
@@ -279,6 +304,7 @@ namespace JSonQueryRunTime_UnitTests
             Assert.IsTrue(new JsonQueryRuntime(@"Contains(arrBoolean, Array(true))").Eval(json0));
             Assert.IsTrue(new JsonQueryRuntime(@"Contains(arrBoolean, Array(false))").Eval(json0));
         }
+
         [TestMethod]
         public void Execute_IsObject()
         {
