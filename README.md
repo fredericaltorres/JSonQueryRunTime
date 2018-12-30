@@ -7,9 +7,7 @@ JSonQueryRunTime is a .NET library to apply where clause like expression to
 - JSON string list 
 - JSON-Lines file.
 
-[JSON-Lines](http://jsonlines.org/) is a text format that contains line, each line is a valid json string. 
-
-The JSON Query Runtime allows to filter JSON lines based on a where clause like syntax.
+[JSON-Lines](http://jsonlines.org/) is a text format that contains line, each line is a valid JSON object. 
 
 ## JSON Query Syntax
 
@@ -22,7 +20,8 @@ The JSON Query Runtime allows to filter JSON lines based on a where clause like 
 ```
 ### Query Samples
 
-`n = 1 AND s = "string" AND b = true` returns true if the json properties match each expression 
+`n = 1 AND s = "string" AND b = true`
+returns true if the JSON properties match each expression 
 
 **Operator supported:** 
 
@@ -58,27 +57,25 @@ The JSON Query Runtime allows to filter JSON lines based on a where clause like 
 
 *String*:
 
-- `ContainString(name, "substring")` # todo returns true if the value of the property name contains the sub-string "substring"
+- `Contains(name, "substring")` returns true if the value of the property name contains the sub-string "substring" #TODO
 
 *Is-xxxxx*:
 
-- `IsObject(o), IsNumber(n), IsString(s), IsBoolean(b), IsDate(d), IsNull(nil), IsArray(a)` # todo return true is the property value type match the function
+- `IsObject(o), IsNumber(n), IsString(s), IsBoolean(b), IsDate(d), IsNull(nil), IsArray(a)` returns true is the property value type match the function #TODO
 
 *Contain*:
 
-- `ContainArrayNumber(arrOfNumber, Array(12, 24, 48))` returns true if property arrOfNumber which is an array of number contains the values 12, 24, 48
+- `Contains(arrOfNumber, Array(12, 24, 48))` returns true if property arrOfNumber which is an array of number contains the values 12, 24, 48. #TODO
 
-- `ContainArrayString(arrOfString, Array("a", "b", "c"))` returns true if property arrOfString which is an array of string contains the values "a", "b", "c"
-
-- `ContainArrayBoolean(arrOfBoolean, Array(true, false))` returns true if property arrOfBoolean which is an array of boolean contains the values true and false
+- `Contains(arrOfString, Array("a", "b", "c"))` returns true if property arrOfString which is an array of string contains the values "a", "b", "c" #TODO
 
 *EqualArray*:
 
-- `EqualArrayNumber(arrOfNumber, Array(12, 24, 48))` # todo returns true if property arrOfNumber which is an array of number contains and only contains the values 12, 24, 48
+- `EqualArray(arrOfNumber, Array(12, 24, 48))` # todo returns true if property arrOfNumber which is an array of number contains and only contains the values 12, 24, 48. #TODO
 
-- `EqualArrayString(arrOfString, Array("a", "b", "c"))` # todo returns true if property arrOfString which is an array of string contains and only contains the values "a", "b", "c"
+- `EqualArray(arrOfString, Array("a", "b", "c"))` # todo returns true if property arrOfString which is an array of string contains and only contains the values "a", "b", "c". #TODO
 
-- `EqualArrayBoolean(arrOfBoolean, Array(true, false, true))` # todo returns true if property arrOfBoolean which is an array of boolean contains the following values in the exact order true, false, true
+- `EqualArray(arrOfBoolean, Array(true, false, true))` # todo returns true if property arrOfBoolean which is an array of boolean contains the following values in the exact order true, false, true. #TODO
 
 ### Queries on the second level of properties
 

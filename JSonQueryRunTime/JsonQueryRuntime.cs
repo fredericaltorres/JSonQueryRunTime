@@ -24,9 +24,7 @@ namespace JSonQueryRunTimeNS
             _engine.Register(new fxRange());
             _engine.Register(new fxIn());
             _engine.Register(new fxIsString());
-            _engine.Register(new fxContainArrayNumber());
-            _engine.Register(new fxContainArrayString());
-            _engine.Register(new fxContainArrayBoolean());
+            _engine.Register(new fxContains());
             _engine.Register(new fxIsObject());
             _engine.Register(new fxPath());
             _engine.Register(new fxRegex());

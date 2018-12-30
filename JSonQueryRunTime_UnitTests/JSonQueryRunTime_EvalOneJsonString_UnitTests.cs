@@ -249,22 +249,35 @@ namespace JSonQueryRunTime_UnitTests
             Assert.IsTrue(new JsonQueryRuntime(@"IsString( Path ( ""obj0.name"" ) )").Eval(json0));
         }
 
-        [TestMethod]
-        public void Execute_ContainArrayNumber()
+        [TestMethod, ExpectedException(typeof(System.InvalidOperationException))]
+        public void Execute_ContainsEmptyArrayThrowArgumentException()
         {
-            Assert.IsTrue(new JsonQueryRuntime(@"ContainArrayNumber(arrNumber, Array(1, 3))").Eval(json0));
-            Assert.IsFalse(new JsonQueryRuntime(@"ContainArrayNumber(arrNumber, Array(1, 3, 4))").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@"Contains(arrNumber, Array())").Eval(json0));
+        }
+
+        [TestMethod]
+        public void Execute_ContainsArrayNumber()
+        {
+            Assert.IsTrue(new JsonQueryRuntime(@"Contains(arrNumber, Array(1, 3))").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@"Contains(arrNumber, Array(1, 2, 3))").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@"Contains(arrNumber, Array(1, 3, 4))").Eval(json0));
+        }
+
+        [TestMethod]
+        public void Execute_ContainsArrayString()
+        {
+            Assert.IsTrue(new JsonQueryRuntime(@"Contains(arrString, Array(""a"", ""c""))").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@"Contains(arrString, Array(""a"", ""d""))").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@"Contains(arrString, Array(""a"", ""c"", ""b""))").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@"Contains(arrString, Array(""a""))").Eval(json0));
+            
         }
         [TestMethod]
-        public void Execute_ContainArrayString()
+        public void Execute_ContainsArrayBoolean()
         {
-            Assert.IsTrue(new JsonQueryRuntime(@"ContainArrayString(arrString, Array(""a"", ""c""))").Eval(json0));
-            Assert.IsFalse(new JsonQueryRuntime(@"ContainArrayString(arrString, Array(""a"", ""d""))").Eval(json0));
-        }
-        [TestMethod]
-        public void Execute_ContainArrayBoolean()
-        {
-            Assert.IsTrue(new JsonQueryRuntime(@"ContainArrayBoolean(arrBoolean, Array(true, false))").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@"Contains(arrBoolean, Array(true, false))").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@"Contains(arrBoolean, Array(true))").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@"Contains(arrBoolean, Array(false))").Eval(json0));
         }
         [TestMethod]
         public void Execute_IsObject()
@@ -351,7 +364,7 @@ namespace JSonQueryRunTime_UnitTests
         {
             var queryManufacturer = "Manufacturers[?(@.Name == 'Acme Co')]";
             Assert.IsTrue(new JsonQueryRuntime($@" IsObject( Path(""{queryManufacturer}"") )  ").Eval(json_store));
-
+            
             Assert.IsTrue(new JsonQueryRuntime($@" Path(""{queryManufacturer}.Name"") = ""Acme Co"" ").Eval(json_store));
             Assert.IsTrue(new JsonQueryRuntime($@" Path(""{queryManufacturer}.Name"") = ""Acme Co"" ").Eval(json_store));
             Assert.IsTrue(new JsonQueryRuntime($@" Path(""{queryManufacturer}.Products[0].Price"") = 50 ").Eval(json_store));

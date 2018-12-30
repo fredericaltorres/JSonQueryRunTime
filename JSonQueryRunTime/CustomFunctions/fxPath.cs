@@ -17,6 +17,26 @@ namespace JSonQueryRunTime
             }
         }
 
+        public static JTokenType ConvertInterpreterArrayTypeIntoJTokenType(IConstruct l)
+        {
+            string expectedValueType = l.GetType().Name;
+            if (expectedValueType == "Variable")
+            {
+                Variable v = l as Variable;
+                return ConvertInterpreterArrayTypeIntoJTokenType(v.Value);
+            }
+            else if (expectedValueType == "Array")
+            {
+                var a = (l as HiSystems.Interpreter.Array).ToList();
+                if(a.Count > 0)
+                {
+                    return ConvertInterpreterTypeIntoJTokenType(a[0]);
+                }
+                else throw new System.ArgumentException($"ConvertInterpreterArrayTypeIntoJTokenType() cannot infer the type of the array because the array is empty, l:{l.ToString()} ");
+            }
+            else
+                throw new System.ArgumentException($"ConvertInterpreterArrayTypeIntoJTokenType() requires an array as first parameter, received:${l.ToString()}");
+        }
 
         public static JTokenType ConvertInterpreterTypeIntoJTokenType(IConstruct l)
         {
@@ -27,7 +47,8 @@ namespace JSonQueryRunTime
                 Variable v = l as Variable;
                 return ConvertInterpreterTypeIntoJTokenType(v.Value);
             }
-
+            if (expectedValueType == "Array")
+                return JTokenType.Array;
             if (expectedValueType == "Number")
                 return JTokenType.Float;
             if (expectedValueType == "Text")
