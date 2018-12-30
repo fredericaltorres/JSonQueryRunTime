@@ -47,6 +47,7 @@ namespace JSonQueryRunTime
                 }
                 else
                 {
+                    // EqualArray()
                     if(inStringArrays.Length == outStringArrays.Length)
                     {
                         for(var i=0; i<inStringArrays.Length; i++)
@@ -80,6 +81,7 @@ namespace JSonQueryRunTime
                 }
                 else
                 {
+                    // EqualArray()
                     if(inNumberArrays.Length == outNumberArrays.Length)
                     {
                         for(var i=0; i<inNumberArrays.Length; i++)
@@ -113,6 +115,7 @@ namespace JSonQueryRunTime
                 }
                 else
                 {
+                    // EqualArray()
                     if(inBooleanArrays.Length == outBooleanArrays.Length)
                     {
                         for(var i=0; i<inBooleanArrays.Length; i++)

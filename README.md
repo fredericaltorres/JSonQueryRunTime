@@ -7,7 +7,7 @@ JSonQueryRunTime is a .NET library to apply where clause like expression to
 - JSON string list 
 - JSON-Lines file.
 
-[JSON-Lines](http://jsonlines.org/) is a text format that contains line, each line is a valid JSON object. 
+[JSON-Lines](http://jsonlines.org/) is a text format that contains lines of JSON string, each line is a valid JSON object. 
 
 ## JSON Query Syntax
 
@@ -33,7 +33,7 @@ returns true if the JSON properties match each expression
 
 - `timestamp = #2018-12-20T14:16:00#` returns true is property timestamp is equal to the date+time value
 
-- `timestamp >= #2018-12-20T14:16:00# and timestamp <= #2018-12-20T14:16:59#` returns true is property timestamp is in the date range (See Range() function).
+- `timestamp >= #2018-12-20T14:16:00# and timestamp <= #2018-12-20T14:16:59#` returns true is property timestamp is in the date range (See Range() function aslo).
 
 **Functions:**
 
@@ -65,17 +65,17 @@ returns true if the JSON properties match each expression
 
 *Contains*:
 
-- `Contains(arrOfNumber, Array(12, 24, 48))` returns true if property arrOfNumber which is an array of number contains the values 12, 24, 48. #TODO
+- `Contains(arrOfNumber, Array(12, 24, 48))` returns true if property arrOfNumber which is an array of number contains the values 12, 24, 48.
 
-- `Contains(arrOfString, Array("a", "b", "c"))` returns true if property arrOfString which is an array of string contains the values "a", "b", "c" #TODO
+- `Contains(arrOfString, Array("a", "b", "c"))` returns true if property arrOfString which is an array of string contains the values "a", "b", "c".
 
 *ArrayEqual*:
 
-- `ArrayEqual(arrOfNumber, Array(12, 24, 48))` # todo returns true if property arrOfNumber which is an array of number contains and only contains the values 12, 24, 48. #TODO
+- `ArrayEqual(arrOfNumber, Array(12, 24, 48))` # todo returns true if property arrOfNumber which is an array of number contains and only contains the values 12, 24, 48.
 
-- `ArrayEqual(arrOfString, Array("a", "b", "c"))` # todo returns true if property arrOfString which is an array of string contains and only contains the values "a", "b", "c". #TODO
+- `ArrayEqual(arrOfString, Array("a", "b", "c"))` # todo returns true if property arrOfString which is an array of string contains and only contains the values "a", "b", "c".
 
-- `ArrayEqual(arrOfBoolean, Array(true, false, true))` # todo returns true if property arrOfBoolean which is an array of boolean contains the following values in the exact order true, false, true. #TODO
+- `ArrayEqual(arrOfBoolean, Array(true, false, true))` # todo returns true if property arrOfBoolean which is an array of boolean contains the following values in the exact order true, false, true.
 
 ### Queries on the second level of properties
 
