@@ -26,7 +26,7 @@ returns true if the JSON properties match each expression
 **Operator supported:** 
 
 ```
-=, <>, <, <=, >, >=, OR, AND, (, ), Not()
+=, <>, <, <=, >, >=, OR, AND, (, ) 
 ```
 
 **Date support:**
@@ -76,6 +76,8 @@ returns true if the JSON properties match each expression
 - `ArrayEqual(arrOfString, Array("a", "b", "c"))` # todo returns true if property arrOfString which is an array of string contains and only contains the values "a", "b", "c".
 
 - `ArrayEqual(arrOfBoolean, Array(true, false, true))` # todo returns true if property arrOfBoolean which is an array of boolean contains the following values in the exact order true, false, true.
+
+- `Not(other-expression)` returns the inversed boolean value
 
 ### Queries on the second level of properties
 

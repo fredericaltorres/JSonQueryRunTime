@@ -31,6 +31,12 @@ namespace JSonQueryRunTimeNS
             _engine.Register(new fxIsNull());
             _engine.Register(new fxNot());
             _engine.Register(new fxEqualArray());
+            _engine.Register(new fxIsNumber());
+            _engine.Register(new fxIsDate());
+            _engine.Register(new fxIsBoolean());
+            _engine.Register(new fxIsArray());
+            
+            
 
             _expression = _engine.Parse(whereClause.Replace(Environment.NewLine, ""));
         }

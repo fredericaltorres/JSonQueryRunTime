@@ -233,6 +233,71 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
+        public void Execute_IsNumber()
+        {
+            Assert.IsTrue(new JsonQueryRuntime(@"IsNumber(n)").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@"IsNumber(1)").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@"IsNumber(name)").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@"IsNumber(b)").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@"IsNumber(now)").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@"IsNumber(nil)").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@"Not( IsNumber(nil) )").Eval(json0));
+        }
+
+        [TestMethod]
+        public void Execute_IsBoolean()
+        {
+            Assert.IsTrue(new JsonQueryRuntime(@"IsBoolean(b)").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@"IsBoolean(true)").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@"IsBoolean(false)").Eval(json0));
+
+            Assert.IsTrue(new JsonQueryRuntime(@"IsBoolean( Not( b ) )").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@"IsBoolean( Not( false ) )").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@"IsBoolean( Not( true ) )").Eval(json0));
+            
+
+            Assert.IsFalse(new JsonQueryRuntime(@"IsBoolean(name)").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@"IsBoolean(now)").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@"IsBoolean(nil)").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@"Not( IsBoolean(nil) )").Eval(json0));
+        }
+
+        [TestMethod]
+        public void Execute_IsDate()
+        {
+            Assert.IsTrue(new JsonQueryRuntime(@"IsDate(#2018-12-26T01:24:46.0#)").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@"IsDate(now)").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@"IsDate(utcnow)").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@"IsDate(Today())").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@"IsDate(#2018-12-25T20:23:49.0-05:00#)").Eval(json0));
+
+            Assert.IsFalse(new JsonQueryRuntime(@"IsDate(name)").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@"IsDate(n)").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@"IsDate(b)").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@"IsDate(nil)").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@"Not( IsDate(nil) )").Eval(json0));
+        }
+
+        [TestMethod]
+        public void Execute_IsArray()
+        {
+            Assert.IsTrue(new JsonQueryRuntime(@"IsArray(arrString)").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@"IsArray(arrNumber)").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@"IsArray(arrBoolean)").Eval(json0));
+
+            Assert.IsFalse(new JsonQueryRuntime(@"IsArray(now)").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@"IsArray(utcnow)").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@"IsArray(Today())").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@"IsArray(#2018-12-25T20:23:49.0-05:00#)").Eval(json0));
+
+            Assert.IsFalse(new JsonQueryRuntime(@"IsArray(name)").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@"IsArray(n)").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@"IsArray(b)").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@"IsArray(nil)").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@"Not( IsArray(nil) )").Eval(json0));
+        }
+
+        [TestMethod]
         public void Execute_IsString()
         {
             Assert.IsTrue(new JsonQueryRuntime(@"IsString(name)").Eval(json0));
@@ -429,17 +494,19 @@ namespace JSonQueryRunTime_UnitTests
         {
             Assert.IsTrue(new JsonQueryRuntime(@" Not(true) = false ").Eval(json0));
             Assert.IsTrue(new JsonQueryRuntime(@" Not(false) = true ").Eval(json0));
+
+            Assert.IsTrue(new JsonQueryRuntime(@" Not( 1 = 1 ) = false ").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Not(false = true) = true ").Eval(json0));
             
             Assert.IsFalse(new JsonQueryRuntime(@" Not(b) ").Eval(json0));
-
             Assert.IsFalse(new JsonQueryRuntime(@" Not(IsNull(nil)) ").Eval(json0));
 
             Assert.IsTrue(new JsonQueryRuntime(@" Not( IsNull(name) ) ").Eval(json0));
-
             Assert.IsTrue(new JsonQueryRuntime(@" Not(Not(Not(true))) = false ").Eval(json0));
             Assert.IsTrue(new JsonQueryRuntime(@" Not(Not(Not(false))) = true ").Eval(json0));
             
         }
     }
 }
+
 
