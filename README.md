@@ -23,6 +23,11 @@ JSonQueryRunTime is a .NET library to apply where clause like expression to
 `n = 1 AND s = "string" AND b = true`
 returns true if the JSON properties match each expression 
 
+**C# Sample:**
+```csharp
+bool b = new JsonQueryRuntime(@"name = ""ok"" AND b = true ").Eval(json0));
+```
+
 **Operator supported:** 
 
 ```
