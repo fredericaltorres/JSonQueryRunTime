@@ -424,7 +424,6 @@ namespace JSonQueryRunTime_UnitTests
         public void Execute_Path_String()
         {
             Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.name"")  = ""okk"" ").Eval(json0));
-            Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.name"")  = ""okk"" ").Eval(json0));
             Assert.IsTrue(new JsonQueryRuntime(@"IsObject(obj0) AND Path(""obj0.name"")  = ""okk"" ").Eval(json0));
         }
 
@@ -520,13 +519,6 @@ namespace JSonQueryRunTime_UnitTests
             Assert.IsFalse(new JsonQueryRuntime(@" IsNull(""aaa"") ").Eval(json0));
         }
 
-        [TestMethod]
-        public void CompareString()
-        {
-            Assert.IsTrue(string.Compare("bb", "aa") == 1);
-            Assert.IsTrue(string.Compare("bb", "aaa") == 1);
-            Assert.IsTrue(string.Compare("a", "b") == -1);
-        }
 
         [TestMethod]
         public void Execute_Not()
