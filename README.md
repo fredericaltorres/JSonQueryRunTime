@@ -60,15 +60,13 @@ bool b = new JsonQueryRuntime(@"n = 1 AND s = ""string"" AND b = true").Eval(jso
 
 - `In(amount, Array(12, 24, 48))` returns true if the value of the property amount is included in the array
 
-*String*:
-
-- `Contains(name, "substring")` returns true if the value of the property name contains the sub-string "substring" #TODO
-
 *Is-xxxxx*:
 
-- `IsObject(o), IsNumber(n), IsString(s), IsBoolean(b), IsDate(d), IsNull(nil), IsArray(a)` returns true is the property value type match the function #TODO
+- `IsObject(o), IsNumber(n), IsString(s), IsBoolean(b), IsDate(d), IsNull(nil), IsArray(a)` returns true is the property value type match the function. 
 
 *Contains*:
+
+- `Contains(name, "substring")` returns true if the value of the property name contains the sub-string "substring" #TODO
 
 - `Contains(arrOfNumber, Array(12, 24, 48))` returns true if property arrOfNumber which is an array of number contains the values 12, 24, 48.
 

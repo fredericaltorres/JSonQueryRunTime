@@ -323,6 +323,20 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
+        public void Execute_ContainsString()
+        {
+            Assert.IsTrue(new JsonQueryRuntime(@"Contains(name, ""ok"")").Eval(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@"Contains(name, ""ok"")").Eval(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@"Contains(wildText, ""ok"")").Eval(json0));
+        }
+
+        [TestMethod,ExpectedException(typeof(System.ArgumentException))]
+        public void Execute_ContainsString_FirstArgumentNotAStringThrowException()
+        {
+            Assert.IsFalse(new JsonQueryRuntime(@"Contains(n, ""ok"")").Eval(json0));
+        }
+
+        [TestMethod]
         public void Execute_ContainsArrayNumber()
         {
             Assert.IsTrue(new JsonQueryRuntime(@"Contains(arrNumber, Array(1, 3))").Eval(json0));

@@ -17,15 +17,22 @@ namespace JSonQueryRunTime
         public override Literal Execute(IConstruct[] arguments)
         {
             base.EnsureArgumentCountIs(arguments, 2);
-            return ContainsArrayOrEqualArray(this, arguments, true);
+            return ContainsArrayOrEqualArrayOrContainsString(this, arguments, true);
         }
 
-        public static Literal ContainsArrayOrEqualArray(Function baseClass, IConstruct[] arguments, bool containsArray)
+        public static Literal ContainsArrayOrEqualArrayOrContainsString(Function baseClass, IConstruct[] arguments, bool containsArray)
         {
             // Verify that the first parameter is an array
             var jsonType = fxPath.ConvertInterpreterTypeIntoJTokenType(arguments[0]);
-            if (jsonType != JTokenType.Array)
-                throw new System.ArgumentException($"Function Contains() requires an array as the first parameter");
+            if (jsonType != JTokenType.Array && jsonType != JTokenType.String)
+                throw new System.ArgumentException($"Function Contains() requires an array or a string as the first parameter");
+
+            if (jsonType == JTokenType.String)
+            {
+                string text = baseClass.GetTransformedArgument<Text>(arguments, argumentIndex: 0);
+                string searchFor = baseClass.GetTransformedArgument<Text>(arguments, argumentIndex: 1);
+                return new HiSystems.Interpreter.Boolean(text.Contains(searchFor));
+            }
 
             // Extract the type of the array based on the type of the first value
             jsonType = fxPath.ConvertInterpreterArrayTypeIntoJTokenType(arguments[0]);

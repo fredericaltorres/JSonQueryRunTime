@@ -17,7 +17,7 @@ namespace JSonQueryRunTime
         public override Literal Execute(IConstruct[] arguments)
         {
             base.EnsureArgumentCountIs(arguments, 2);
-            return fxContains.ContainsArrayOrEqualArray(this, arguments, false);
+            return fxContains.ContainsArrayOrEqualArrayOrContainsString(this, arguments, false);
         }
     }
 }
