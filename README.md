@@ -100,14 +100,6 @@ Path("main.a") = 1
 Path("Manufacturers[?(@.Name == 'Acme Co')].Price") = 99.95
 Path(".Products[?(@.Price == 4)].Name") = "Headlight Fluid"
 ```
-- JSON:
-```js
-{ 
-	"main": { 
-		"a":1 
-	} 
-}
-```	
 
 ### Queries on unknown property or pattern matching on property name
 
@@ -184,6 +176,7 @@ public void Test() {
 ## Attribution
 
 * JSON.net ~ Newtonsoft.json
+
 MIT license and is free for commercial use.
 
 * HiSystems.Interpreter 
