@@ -42,9 +42,13 @@ bool b = new JsonQueryRuntime(@"n = 1 AND s = ""string"" AND b = true").Eval(jso
 
 **Functions:**
 
+*string*:
+
 - `Wildcard(name,"s?r*")` returns true if the wildcard match the content of the string property name
 
 - `Regex(name, "s.r.*")` returns true if the regular expression match the content of the string property name
+
+- `Contains(name, "substring")` returns true if the value of the property name contains the sub-string "substring"
 
 *Range*:
 
@@ -66,7 +70,6 @@ bool b = new JsonQueryRuntime(@"n = 1 AND s = ""string"" AND b = true").Eval(jso
 
 *Contains*:
 
-- `Contains(name, "substring")` returns true if the value of the property name contains the sub-string "substring" #TODO
 
 - `Contains(arrOfNumber, Array(12, 24, 48))` returns true if property arrOfNumber which is an array of number contains the values 12, 24, 48.
 
