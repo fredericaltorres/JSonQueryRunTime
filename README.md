@@ -34,6 +34,8 @@ bool b = new JsonQueryRuntime(@"n = 1 AND s = ""string"" AND b = true").Eval(jso
 =, <>, <, <=, >, >=, OR, AND, (, ) 
 ```
 
+Operators and function names are case sensitive.
+
 **Date support:**
 
 - `timestamp = #2018-12-20T14:16:00#` returns true is property timestamp is equal to the date+time value
@@ -77,11 +79,11 @@ bool b = new JsonQueryRuntime(@"n = 1 AND s = ""string"" AND b = true").Eval(jso
 
 *ArrayEqual*:
 
-- `ArrayEqual(arrOfNumber, Array(12, 24, 48))` # todo returns true if property arrOfNumber which is an array of number contains and only contains the values 12, 24, 48.
+- `ArrayEqual(arrOfNumber, Array(12, 24, 48))` returns true if property arrOfNumber which is an array of number contains and only contains the values 12, 24, 48.
 
-- `ArrayEqual(arrOfString, Array("a", "b", "c"))` # todo returns true if property arrOfString which is an array of string contains and only contains the values "a", "b", "c".
+- `ArrayEqual(arrOfString, Array("a", "b", "c"))` returns true if property arrOfString which is an array of string contains and only contains the values "a", "b", "c".
 
-- `ArrayEqual(arrOfBoolean, Array(true, false, true))` # todo returns true if property arrOfBoolean which is an array of boolean contains the following values in the exact order true, false, true.
+- `ArrayEqual(arrOfBoolean, Array(true, false, true))` returns true if property arrOfBoolean which is an array of boolean contains the following values in the exact order true, false, true.
 
 - `Not(other-expression)` returns the inversed boolean value
 
