@@ -66,7 +66,6 @@ namespace JSonQueryRunTime_UnitTests
         [TestMethod]
         public void Execute_TimeStamp_Range_Utc()
         {
-            //#2018-12-26 01:24:46# ").Eval(json0));
             Assert.IsTrue(new JsonQueryRuntime(@" 
                 utcnow >= #2018-12-01 01:24:46# AND
                 utcnow <= #2018-12-31 01:24:46# ").Eval(json0));
@@ -83,7 +82,6 @@ namespace JSonQueryRunTime_UnitTests
         [TestMethod]
         public void Execute_DateNoTime_Range_Utc()
         {
-            //#2018-12-26 01:24:46# ").Eval(json0));
             Assert.IsTrue(new JsonQueryRuntime(@" 
                 utcnow >= #2018-12-01# AND
                 utcnow <= #2018-12-31# ").Eval(json0));
@@ -96,8 +94,6 @@ namespace JSonQueryRunTime_UnitTests
         [TestMethod]
         public void Execute_DateRange_Utc()
         {
-            //#2018-12-26 01:24:46# ").Eval(json0));
-
             Assert.IsTrue(new JsonQueryRuntime(@" Range(utcnow, #2018-12-01 01:24:46#, #2018-12-31 01:24:46#) ").Eval(json0));
             Assert.IsFalse(new JsonQueryRuntime(@" Range(utcnow, #2018-12-27 01:24:46#, #2018-12-31 01:24:46#) ").Eval(json0));
         }
@@ -105,7 +101,6 @@ namespace JSonQueryRunTime_UnitTests
         [TestMethod]
         public void Execute_Range_String()
         {
-            //#2018-12-26 01:24:46# ").Eval(json0));
             Assert.IsTrue(new JsonQueryRuntime(@" Range(""b"", ""a"", ""d"") ").Eval(json0));
             Assert.IsTrue(new JsonQueryRuntime(@" Range(""aa"", ""a"", ""d"") ").Eval(json0));
             Assert.IsFalse(new JsonQueryRuntime(@" Range(""daa"", ""a"", ""d"") ").Eval(json0));
