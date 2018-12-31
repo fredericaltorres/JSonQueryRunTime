@@ -281,6 +281,8 @@ namespace JSonQueryRunTime_UnitTests
         [TestMethod]
         public void Execute_IsArray()
         {
+            Assert.IsTrue(new JsonQueryRuntime(@"IsArray(Array(1,2))").Eval(json0));
+
             Assert.IsTrue(new JsonQueryRuntime(@"IsArray(arrString)").Eval(json0));
             Assert.IsTrue(new JsonQueryRuntime(@"IsArray(arrNumber)").Eval(json0));
             Assert.IsTrue(new JsonQueryRuntime(@"IsArray(arrBoolean)").Eval(json0));

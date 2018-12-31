@@ -47,6 +47,8 @@ namespace JSonQueryRunTime
                 Variable v = l as Variable;
                 return ConvertInterpreterTypeIntoJTokenType(v.Value);
             }
+            if (expectedValueType == "FunctionOperation")
+                return ConvertInterpreterTypeIntoJTokenType(l.Transform());
             if (expectedValueType == "Array")
                 return JTokenType.Array;
             if (expectedValueType == "Number")
