@@ -25,7 +25,7 @@ returns true if the JSON properties match each expression
 
 **C# Sample:**
 ```csharp
-bool b = new JsonQueryRuntime(@"name = ""ok"" AND b = true ").Eval(json0));
+bool b = new JsonQueryRuntime(@"n = 1 AND s = ""string"" AND b = true").Eval(json0));
 ```
 
 **Operator supported:** 
