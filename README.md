@@ -79,11 +79,11 @@ Operators and function names are case sensitive.
 
 *ArrayEqual*:
 
-- `ArrayEqual(arrOfNumber, Array(12, 24, 48))` returns true if property arrOfNumber which is an array of number contains and only contains the values 12, 24, 48.
+- `ArrayEqual(arrOfNumber, Array(12, 24, 48))` returns true if property arrOfNumber which is an array of number contains and only contains the values 12, 24, 48 in that exact order.
 
-- `ArrayEqual(arrOfString, Array("a", "b", "c"))` returns true if property arrOfString which is an array of string contains and only contains the values "a", "b", "c".
+- `ArrayEqual(arrOfString, Array("a", "b", "c"))` returns true if property arrOfString which is an array of string contains and only contains the values "a", "b", "c" in that exact order.
 
-- `ArrayEqual(arrOfBoolean, Array(true, false, true))` returns true if property arrOfBoolean which is an array of boolean contains the following values in the exact order true, false, true.
+- `ArrayEqual(arrOfBoolean, Array(true, false, true))` returns true if property arrOfBoolean which is an array of boolean contains the following values in the exact order true, false, true in that exact order.
 
 - `Not(other-expression)` returns the inversed boolean value
 
