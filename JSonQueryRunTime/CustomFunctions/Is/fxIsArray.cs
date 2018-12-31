@@ -18,7 +18,7 @@ namespace JSonQueryRunTime
         {
             base.EnsureArgumentCountIs(arguments, 1);
             try {
-                if(fxPath.ConvertInterpreterTypeIntoJTokenType(arguments[0]) == JTokenType.Array)
+                if(fxUtils.ConvertInterpreterTypeIntoJTokenType(arguments[0]) == JTokenType.Array)
                     return new HiSystems.Interpreter.Boolean(true);
                 return new HiSystems.Interpreter.Boolean(false);
             }

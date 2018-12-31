@@ -18,7 +18,7 @@ namespace JSonQueryRunTime
         {
             base.EnsureArgumentCountIs(arguments, 2);
 
-            var jsonType = fxPath.ConvertInterpreterTypeIntoJTokenType(arguments[0]);
+            var jsonType = fxUtils.ConvertInterpreterTypeIntoJTokenType(arguments[0]);
 
             if(jsonType == JTokenType.String)
             {

@@ -23,7 +23,7 @@ namespace JSonQueryRunTime
         public static Literal ContainsArrayOrEqualArrayOrContainsString(Function baseClass, IConstruct[] arguments, bool containsArray)
         {
             // Verify that the first parameter is an array
-            var jsonType = fxPath.ConvertInterpreterTypeIntoJTokenType(arguments[0]);
+            var jsonType = fxUtils.ConvertInterpreterTypeIntoJTokenType(arguments[0]);
             if (jsonType != JTokenType.Array && jsonType != JTokenType.String)
                 throw new System.ArgumentException($"Function Contains() requires an array or a string as the first parameter");
 
@@ -35,7 +35,7 @@ namespace JSonQueryRunTime
             }
 
             // Extract the type of the array based on the type of the first value
-            jsonType = fxPath.ConvertInterpreterArrayTypeIntoJTokenType(arguments[0]);
+            jsonType = fxUtils.ConvertInterpreterArrayTypeIntoJTokenType(arguments[0]);
             if (jsonType == JTokenType.String)
             {
                 var outStringArrays = baseClass.GetTransformedArgumentArray<Text>(arguments, argumentIndex: 0);
