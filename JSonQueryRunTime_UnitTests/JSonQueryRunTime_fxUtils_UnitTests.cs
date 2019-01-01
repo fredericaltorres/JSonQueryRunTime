@@ -111,6 +111,14 @@ namespace JSonQueryRunTime_UnitTests
         public void RemoveFirstToken()
         {
             Assert.AreEqual("b.c", fxUtils.RemoveFirstToken("a.b.c"));
+            Assert.AreEqual("abc", fxUtils.RemoveFirstToken("abc"));
+            Assert.AreEqual("", fxUtils.RemoveFirstToken(""));
+        }
+
+        [TestMethod, ExpectedException(typeof(System.ArgumentException))]
+        public void RemoveFirstToken_NullParamater()
+        {
+            fxUtils.RemoveFirstToken(null);
         }
 
         [TestMethod]

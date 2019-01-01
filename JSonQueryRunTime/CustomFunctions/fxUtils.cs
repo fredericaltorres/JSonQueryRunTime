@@ -103,6 +103,9 @@ namespace JSonQueryRunTime
 
         public static string RemoveFirstToken(string s, char tokenSeparator = '.')
         {
+            if(s == null)
+                throw new System.ArgumentException("Parameter s cannot be null");
+
             var p = s.IndexOf(tokenSeparator);
             if (p == -1)
             {
