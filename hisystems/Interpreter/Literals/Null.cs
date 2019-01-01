@@ -71,7 +71,17 @@ namespace HiSystems.Interpreter
             if (ReferenceEquals(value1, null) || ReferenceEquals(value2, null))
                 return new Boolean(false);
             else
+            {
+                if(value1.value == null)
+                {
+                    if(value2.value == null)
+                        return new Boolean(true);
+                    else
+                        return new Boolean(false);
+                }
                 return new Boolean(value1.value.Equals(value2.value, StringComparison.InvariantCulture));
+            }
+                
         }
 
         public override int GetHashCode()

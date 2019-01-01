@@ -84,7 +84,6 @@ namespace JSonQueryRunTime
 
         public static Literal ResolveValueFromJToken(JToken lastValue)
         {
-
             if (lastValue == null)
                 return new HiSystems.Interpreter.Null(null);
 
@@ -150,9 +149,10 @@ namespace JSonQueryRunTime
         /// </summary>
         /// <param name="pathExpression"></param>
         /// <returns></returns>
-        public static JToken EvalJsonDotNetPath(string pathExpression)
+        public static JToken EvalJsonDotNetPath(string pathExpression, JObject rootObj = null)
         {
-            JObject rootObj = JsonQueryRuntime._currentJsonObject;
+            if(rootObj == null)
+                rootObj = JsonQueryRuntime._currentJsonObject;
             JToken r = rootObj.SelectToken(pathExpression);
             return r;
         }

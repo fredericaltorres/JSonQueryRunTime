@@ -85,7 +85,11 @@ Operators and function names are case sensitive.
 
 - `ArrayEqual(arrOfBoolean, Array(true, false, true))` returns true if property arrOfBoolean which is an array of boolean contains the following values in the exact order true, false, true in that exact order.
 
+*Miscellaneous*:
+
 - `Not(other-expression)` returns the inversed boolean value
+
+- `len(name)` returns the length of the property name which is a string
 
 ### Queries on the second level of properties
 
