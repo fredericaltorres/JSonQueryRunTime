@@ -26,7 +26,7 @@ namespace JSonQueryRunTime_UnitTests
             var lines = GetJsonLines1().ToList();
 
             var sw = Stopwatch.StartNew();
-                var resultLines = new JsonQueryRuntime(@"name = ""ok"" ").Eval(lines).ToList();
+                var resultLines = new JsonQueryRuntime(@"name = ""ok"" ").Execute(lines).ToList();
             sw.Stop();
 
             var expectedCount = lines.Count/2;

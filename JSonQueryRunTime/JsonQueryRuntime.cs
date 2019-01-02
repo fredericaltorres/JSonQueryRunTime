@@ -40,18 +40,61 @@ namespace JSonQueryRunTimeNS
 
             _expression = _engine.Parse(whereClause.Replace(Environment.NewLine, ""));
         }
+
+
+        public IEnumerable<string> ExecuteFile(string fileName, bool isJsonLine)
+        {
+            var json  = System.IO.File.ReadAllText(fileName);
+            if(isJsonLine)
+            {
+                return this.Execute(json.Split(Environment.NewLine, StringSplitOptions.None));
+            }
+            else
+            {
+                // expect a JSON array of object
+                if(json.Trim().StartsWith("["))
+                {
+                    var l = new List<string>();
+                    JArray a = JArray.Parse(json);
+                    foreach(JObject jObject in a) {
+                        if(this.Execute(jObject))
+                            l.Add(jObject.ToString());
+                    }
+                    return l;
+                }
+                else
+                {
+                    throw new ArgumentException($"{fileName} does not contains an JSON array of object and is not a JSON-LINE file");
+                }
+            }
+        }
+
         /// <summary>
         /// Evaluate a list of JSON string
         /// </summary>
         /// <param name="jsonStrings"></param>
         /// <returns></returns>
-        public IEnumerable<string> Eval(IEnumerable<string> jsonStrings)
+        public IEnumerable<string> Execute(IEnumerable<string> jsonStrings)
         {
             var l = new List<string>();
             foreach (var jsonString in jsonStrings)
-                if (this.Eval(jsonString))
+                if (this.Execute(jsonString))
                     l.Add(jsonString);
             return l;
+        }
+
+        public IEnumerable<string> Execute(List<JObject> jObjects)
+        {
+            var l = new List<string>();
+            foreach (var jo in jObjects)
+                if (this.Execute(jo))
+                    l.Add(jo.ToString());
+            return l;
+        }
+
+        public bool Execute(string jsonString)
+        {
+            return this.Execute(JObject.Parse(jsonString));
         }
 
         /// <summary>
@@ -59,9 +102,9 @@ namespace JSonQueryRunTimeNS
         /// </summary>
         /// <param name="jsonString"></param>
         /// <returns></returns>
-        public bool Eval(string jsonString)
+        public bool Execute(JObject o)
         {
-            _currentJsonObject = JObject.Parse(jsonString);
+            _currentJsonObject = o;
 
             foreach (JProperty prop in _currentJsonObject.Properties())
             {

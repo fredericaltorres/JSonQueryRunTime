@@ -23,9 +23,18 @@ JSonQueryRunTime is a .NET library to apply where clause like expression to
 `n = 1 AND s = "string" AND b = true`
 returns true if the JSON properties match each expression 
 
+**Complex Query**
+
+`eyeColor = "blue" AND
+age = 37 AND
+Path("name.first") = "Nancy" AND 
+Contains(tags, Array("laboris", "ea")) AND 
+EqualArray(range, Array(0,1,2,3,4,5,6,7,8,9))`
+
+
 **C# Sample:**
 ```csharp
-bool b = new JsonQueryRuntime(@"n = 1 AND s = ""string"" AND b = true").Eval(json0));
+bool b = new JsonQueryRuntime(@"n = 1 AND s = ""string"" AND b = true").Execute(json0));
 ```
 
 **Operator supported:** 
@@ -161,13 +170,13 @@ public const string json0 = @"{
 [TestMethod]
 public void Test() {
 
-	Assert.IsTrue(new JsonQueryRuntime(@"name = ""ok"" ").Eval(json0));
-	Assert.IsTrue(new JsonQueryRuntime(@"name = ""ok"" AND b = true ").Eval(json0));
-	Assert.IsTrue(new JsonQueryRuntime(@"name = ""ok"" AND b = true AND n = 123").Eval(json0));
+	Assert.IsTrue(new JsonQueryRuntime(@"name = ""ok"" ").Execute(json0));
+	Assert.IsTrue(new JsonQueryRuntime(@"name = ""ok"" AND b = true ").Execute(json0));
+	Assert.IsTrue(new JsonQueryRuntime(@"name = ""ok"" AND b = true AND n = 123").Execute(json0));
 
-	Assert.IsTrue(new JsonQueryRuntime(@"name = ""ok"" AND Wildcard(wildText, ""ABCDE"") ").Eval(json0));
+	Assert.IsTrue(new JsonQueryRuntime(@"name = ""ok"" AND Wildcard(wildText, ""ABCDE"") ").Execute(json0));
 
-	Assert.IsTrue(new JsonQueryRuntime(@"IsObject(obj0) AND Path(""obj0.name"")  = ""okk"" ").Eval(json0));
+	Assert.IsTrue(new JsonQueryRuntime(@"IsObject(obj0) AND Path(""obj0.name"")  = ""okk"" ").Execute(json0));
 }
 ```
 

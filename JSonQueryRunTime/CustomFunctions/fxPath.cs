@@ -71,10 +71,10 @@ namespace JSonQueryRunTime
                 JToken lastValue = fxUtils.EvalJsonDotNetPath("$." + pathExpression);
                 return fxUtils.ResolveValueFromJToken(lastValue);
             }
-            catch (System.InvalidOperationException ioEx)
-            {
-                return new HiSystems.Interpreter.Boolean(false);
-            }
+            //catch (System.InvalidOperationException ioEx)
+            //{
+            //    return new HiSystems.Interpreter.Boolean(false);
+            //}
             catch (System.Exception ex)
             {
                 throw ex;
