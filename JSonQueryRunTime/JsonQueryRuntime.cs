@@ -50,7 +50,7 @@ namespace JsonQueryRunTimeNS
             var json  = System.IO.File.ReadAllText(fileName);
             if(isJsonLine)
             {
-                return this.Execute(json.Split(Environment.NewLine, StringSplitOptions.None));
+                return this.Execute(json.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries));
             }
             else
             {
@@ -118,6 +118,35 @@ namespace JsonQueryRunTimeNS
         {
             _currentJsonObject = o;
 
+            this.SetVariables();
+            this.SetVariablesDefinedAsJsonNestedPath();
+
+            return _expression.Execute<HiSystems.Interpreter.Boolean>();
+        }
+
+        /// <summary>
+        /// Set the variables of the interpreter with the values extracted from the JSON object
+        /// The variable name are composed of nested JSON name, for example a.b.c
+        /// </summary>
+        private void SetVariablesDefinedAsJsonNestedPath()
+        {
+            // Look for variables name which are json path
+            foreach (var v in _expression.Variables)
+            {
+                if (v.Key.Contains("."))
+                {
+                    // Evaluate the expression using JSON.NET Path Api
+                    JToken lastValue = fxUtils.EvalJsonDotNetPath("$." + v.Key, _currentJsonObject);
+                    _expression.Variables[v.Key].Value = fxUtils.ResolveValueFromJToken(lastValue);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Set the variables of the interpreter with the values extracted from the JSON object
+        /// </summary>
+        private void SetVariables()
+        {
             foreach (JProperty prop in _currentJsonObject.Properties())
             {
                 var n = prop.Name;
@@ -143,18 +172,16 @@ namespace JsonQueryRunTimeNS
                             _expression.Variables[n].Value = new HiSystems.Interpreter.Null(null);
                             break;
                         case JTokenType.Object:
-                            {
-                                // Pass the sub object are the JSON represenation
-                                var s = v.ToString(Newtonsoft.Json.Formatting.None);
-                                _expression.Variables[n].Value = new HiSystems.Interpreter.Text(s);
-                            }
+                            // Pass the sub object are the JSON represenation
+                            _expression.Variables[n].Value = new HiSystems.Interpreter.Text(v.ToString(Newtonsoft.Json.Formatting.None));
                             break;
-                        // Assume array contains the same item type Number or String
-                        // Can only be used with ContainArrayNumber() and ContainArrayString()
+                        // Assume that array contains the same item type Number, String or Boolean for all items
+                        // Can only be used with Contains() and EqualArray()
                         case JTokenType.Array:
                             JArray a = prop.Value as JArray;
                             if (a.Count == 0)
                             {
+                                // Remark: I think empty HiSystems.Interpreter.Array throw an exception
                                 _expression.Variables[n].Value = new HiSystems.Interpreter.Array(new List<decimal>().ToArray());
                             }
                             else
@@ -187,18 +214,6 @@ namespace JsonQueryRunTimeNS
                     }
                 }
             }
-            // Look for variables name which are json path
-            foreach(var v in _expression.Variables)
-            {
-                if(v.Key.Contains("."))
-                {
-                    // Evaluate the expression using JSON.NET Path Api
-                    JToken lastValue = fxUtils.EvalJsonDotNetPath("$." + v.Key, _currentJsonObject);
-                    _expression.Variables[v.Key].Value = fxUtils.ResolveValueFromJToken(lastValue);
-                }
-            }
-            bool result = _expression.Execute<HiSystems.Interpreter.Boolean>();
-            return result;
         }
     }
 }

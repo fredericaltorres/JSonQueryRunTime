@@ -10,13 +10,54 @@ namespace JSonQueryRunTime_UnitTests
     [TestClass]
     public class JSonQueryRunTime_ExecuteFile_UnitTests
     {
-        const string jsonArrayOfObjectFileName = @".\Test Files\jsonArrayOfObject.json";
+        const string JsonArrayOfObjectFileName = @".\Test Files\jsonArrayOfObject.json";
+        const string JsonLinesFileName = @".\Test Files\json-lines.json";
+
 
         [TestMethod]
-        [DeploymentItem(jsonArrayOfObjectFileName)]
+        public void Execute_Execute_JsonLineFile()
+        {
+            const int expectedCount = 100;
+
+            var whereClauses = new List<string>()
+            {
+                @"name = 'ok'",
+                @"name = 'ok' AND utcnow >= #2018-12-26 01:24:46#",
+                @"name = 'ok' AND 
+                        utcnow >= #2018-12-01 01:24:46# AND 
+                        utcnow <= #2018-12-31 01:24:46# ",
+                @" Range(utcnow, #2018-12-01 01:24:46#, #2018-12-31 01:24:46#) ",
+                @" now = #2018-12-25 20:23:49# AND now <> #2018-12-25 20:23:50#",
+                @" Wildcard(wildText, 'ABCDE') AND 
+                   Wildcard(wildText, '?BCD?') AND
+                   Wildcard(wildText, '?B?D?') AND
+                   Wildcard(wildText, 'A*E')   AND
+                   Wildcard(wildText, 'A*C*E') AND
+                   Not( Wildcard(wildText, ""ABCDZ"") )
+                "
+            };
+
+            // Create on giant where clause based on all above where clauses
+            var allString = string.Empty;
+            foreach(var whereClause in whereClauses)
+                allString += $"{whereClause} AND ";
+            allString += " 1 = 1 ";
+            whereClauses.Add(allString);
+
+            foreach(var whereClause in whereClauses)
+            {
+                var resultLines = new JsonQueryRuntime(whereClause)
+                        .ExecuteFile(JsonLinesFileName, isJsonLine: true).ToList();
+                Assert.AreEqual(expectedCount, resultLines.Count);
+            }
+        }
+
+
+        [TestMethod]
+        [DeploymentItem(JsonArrayOfObjectFileName)]
         public void Execute_Execute_File_WithArrayOfObject()
         {
-            var resultLines = new JsonQueryRuntime(@" _id= ""5c2d299add266f6d68570885"" ").ExecuteFile(jsonArrayOfObjectFileName, isJsonLine: false).ToList();
+            var resultLines = new JsonQueryRuntime(@" _id= ""5c2d299add266f6d68570885"" ").ExecuteFile(JsonArrayOfObjectFileName, isJsonLine: false).ToList();
             Assert.AreEqual(1, resultLines.Count);
 
             resultLines = new JsonQueryRuntime(@"
@@ -25,10 +66,10 @@ namespace JSonQueryRunTime_UnitTests
                 name.first = 'Nancy' AND
                 Contains(tags, Array('laboris', 'ea')) AND
                 EqualArray(range, Array(0,1,2,3,4,5,6,7,8,9))
-            ").ExecuteFile(jsonArrayOfObjectFileName, isJsonLine: false).ToList();
+            ").ExecuteFile(JsonArrayOfObjectFileName, isJsonLine: false).ToList();
             Assert.AreEqual(1, resultLines.Count);
 
-            resultLines = new JsonQueryRuntime(@" eyeColor = 'blue' AND age = 37 AND Path('name.first') = ""Nancy"" AND Contains(tags, Array(""laboris"", ""ea"", ""BAD-VALUE""))").ExecuteFile(jsonArrayOfObjectFileName, isJsonLine: false).ToList();
+            resultLines = new JsonQueryRuntime(@" eyeColor = 'blue' AND age = 37 AND Path('name.first') = ""Nancy"" AND Contains(tags, Array(""laboris"", ""ea"", ""BAD-VALUE""))").ExecuteFile(JsonArrayOfObjectFileName, isJsonLine: false).ToList();
             Assert.AreEqual(0, resultLines.Count);
         }
 
@@ -38,8 +79,17 @@ namespace JSonQueryRunTime_UnitTests
             var resultLines = new JsonQueryRuntime(@"
                  IsObject ( Path ( ""friends[?(@.name == 'Harmon Blankenship')]"" ) ) OR
                  IsObject ( Path ( ""friends[?(@.name == 'Juanita Chapman')]"" ) ) 
-            ").ExecuteFile(jsonArrayOfObjectFileName, isJsonLine: false).ToList();
+            ").ExecuteFile(JsonArrayOfObjectFileName, isJsonLine: false).ToList();
             Assert.AreEqual(2, resultLines.Count);
+        }
+
+          [TestMethod]
+        public void Execute_Execute_File_WithArrayOfObject_QueryInString()
+        {
+            var resultLines = new JsonQueryRuntime(@"
+                in(company, Array('SQUISH', 'ZILLATIDE', 'SKINSERVE'))
+            ").ExecuteFile(JsonArrayOfObjectFileName, isJsonLine: false).ToList();
+            Assert.AreEqual(3, resultLines.Count);
         }
 
         

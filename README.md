@@ -38,7 +38,7 @@ EqualArray(range, Array(0,1,2,3,4,5,6,7,8,9))`
 
 **C# Sample:**
 ```csharp
-bool b = new JsonQueryRuntime("n = 1 AND s = 'string' AND b = true").Execute(json0));
+bool b = new JsonQueryRuntime("n = 1 AND s = 'string' AND b = true").Execute(jsonString));
 ```
 
 **Operator supported:** 
