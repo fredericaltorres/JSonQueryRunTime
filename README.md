@@ -14,7 +14,7 @@ JsonQueryRunTime is a .NET library to apply where clause like expression to
 **JSON sample**
 ```json
 { 
-	"n":1, "b":true, "s":"string", "timestamp":"2018-12-20T14:16:32.4573737-05:00", 
+	"n":1, "b":true, "s":"string", "timestamp":"2018-12-20T14:16:32", 
 	"o":{ "name":"foo", "b": true, "nil" : null }, "a":[1,2,3] 
 }
 ```
