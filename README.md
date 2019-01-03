@@ -107,7 +107,7 @@ Operators and function names are case sensitive.
 
 ### The Path() function
 
-The `Path(string-path)` function evaluate the string-path according 
+The `Path(string-path)` function evaluate the string-path according to
 [JsonPath](https://goessner.net/articles/JsonPath/) 
 and return the value. The symbol "`$.`" is automatically added at the beginning of the `string-path`.
 
@@ -120,8 +120,6 @@ Path(".Products[?(@.Price == 4)].Name") = "Headlight Fluid"
 ```
 
 ### Queries on unknown property or pattern matching on property name
-
-Proposal:
 
 - Syntax: 
 ```
@@ -140,7 +138,7 @@ Path("main.?.z", 1)
 	}
 ```
 The function Path() will run throuh all possible paths to evaluate `"main.?.z"` and stop 
-at the first path that return the value 1
+at the first path that return the value 1 and return true
 
 ## .NET Framework
 
