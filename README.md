@@ -25,7 +25,7 @@ returns true if the JSON properties match each expression
 
 **Nested Objects**
 
-`n = 1 AND o.name = "foo" AND o.b = true AND o.nil = null`
+`o.name = "foo" AND o.b = true AND o.nil = null`
 returns true if the JSON properties match each expression 
 
 **Complex Query**
