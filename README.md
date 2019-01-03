@@ -105,16 +105,16 @@ Operators and function names are case sensitive.
 
 - `len(name)` returns the length of the property name which is a string
 
-### Queries on the second level of properties
+### The Path() function
 
-The function `Path(string-path)` returns evaluate the string-path according 
+The `Path(string-path)` function evaluate the string-path according 
 [JsonPath](https://goessner.net/articles/JsonPath/) 
 and return the value. The symbol "`$.`" is automatically added at the beginning of the `string-path`.
 
+The `Path()` function should be used with query that search for an object into an array.
+For example
 
-- Sample:
 ```js
-Path("main.a") = 1
 Path("Manufacturers[?(@.Name == 'Acme Co')].Price") = 99.95
 Path(".Products[?(@.Price == 4)].Name") = "Headlight Fluid"
 ```
