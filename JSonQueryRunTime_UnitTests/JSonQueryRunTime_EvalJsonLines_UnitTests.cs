@@ -3,7 +3,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Diagnostics;
-using JSonQueryRunTimeNS;
+using JsonQueryRunTimeNS;
 
 namespace JSonQueryRunTime_UnitTests
 {

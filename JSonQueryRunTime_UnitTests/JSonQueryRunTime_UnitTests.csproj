@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\hisystems\Interpreter\hisystems_Interpreter_Core20.csproj" />
-    <ProjectReference Include="..\JSonQueryRunTime\JSonQueryRunTime.csproj" />
+    <ProjectReference Include="..\JSonQueryRunTime\JsonQueryRunTime.csproj" />
   </ItemGroup>
 
 </Project>

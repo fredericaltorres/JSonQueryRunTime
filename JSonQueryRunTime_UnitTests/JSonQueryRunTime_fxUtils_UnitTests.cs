@@ -3,8 +3,8 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Diagnostics;
-using JSonQueryRunTimeNS;
-using JSonQueryRunTime;
+using JsonQueryRunTimeNS;
+using JsonQueryRunTime;
 using Newtonsoft.Json.Linq;
 
 namespace JSonQueryRunTime_UnitTests

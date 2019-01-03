@@ -3,9 +3,9 @@ using WildCardExercice.net;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
-using JSonQueryRunTimeNS;
+using JsonQueryRunTimeNS;
 
-namespace JSonQueryRunTime
+namespace JsonQueryRunTime
 {
     class fxPath : Function
     {

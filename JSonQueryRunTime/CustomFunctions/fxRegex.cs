@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using WildCardExercice.net;
 
-namespace JSonQueryRunTime
+namespace JsonQueryRunTime
 {
     public class fxRegex: Function
     {

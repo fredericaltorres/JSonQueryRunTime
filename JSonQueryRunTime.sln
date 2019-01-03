@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "hisystems_Interpreter_Core2
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JSonQueryRunTime_UnitTests", "JSonQueryRunTime_UnitTests\JSonQueryRunTime_UnitTests.csproj", "{A2B6A0C4-7E31-44EC-A3A4-BF330EA1B336}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JSonQueryRunTime", "JSonQueryRunTime\JSonQueryRunTime.csproj", "{2546265C-6987-40EE-BD29-F1EDE409779A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsonQueryRunTime", "JSonQueryRunTime\JsonQueryRunTime.csproj", "{2546265C-6987-40EE-BD29-F1EDE409779A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

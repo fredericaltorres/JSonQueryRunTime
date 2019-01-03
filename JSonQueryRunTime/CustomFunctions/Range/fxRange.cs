@@ -2,7 +2,7 @@
 using Newtonsoft.Json.Linq;
 using WildCardExercice.net;
 
-namespace JSonQueryRunTime
+namespace JsonQueryRunTime
 {
     class fxRange : Function
     {

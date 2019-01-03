@@ -1,7 +1,7 @@
 ﻿using HiSystems.Interpreter;
 using WildCardExercice.net;
 
-namespace JSonQueryRunTime
+namespace JsonQueryRunTime
 {
     class fxWildCard : Function
     {

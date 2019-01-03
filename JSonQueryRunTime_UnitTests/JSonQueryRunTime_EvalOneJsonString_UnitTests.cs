@@ -1,6 +1,6 @@
 ﻿using HiSystems.Interpreter;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using JSonQueryRunTimeNS;
+using JsonQueryRunTimeNS;
 
 namespace JSonQueryRunTime_UnitTests
 {
@@ -160,9 +160,9 @@ namespace JSonQueryRunTime_UnitTests
             Assert.IsFalse(new JsonQueryRuntime(@" Regex(wildText, ""^zBCDE$"") ").Execute(json0));
             Assert.IsFalse(new JsonQueryRuntime(@" Regex(wildText, "".B-D."") ").Execute(json0));
 
-            Assert.IsTrue(JSonQueryRunTime.fxRegex.RegexCache.Count == 14);
-            JSonQueryRunTime.fxRegex.RegexCache.Clear();
-            Assert.IsTrue(JSonQueryRunTime.fxRegex.RegexCache.Count == 0);
+            Assert.IsTrue(JsonQueryRunTime.fxRegex.RegexCache.Count == 14);
+            JsonQueryRunTime.fxRegex.RegexCache.Clear();
+            Assert.IsTrue(JsonQueryRunTime.fxRegex.RegexCache.Count == 0);
         }
 
         [TestMethod]

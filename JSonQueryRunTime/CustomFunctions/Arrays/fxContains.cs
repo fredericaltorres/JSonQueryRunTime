@@ -3,7 +3,7 @@ using WildCardExercice.net;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 
-namespace JSonQueryRunTime
+namespace JsonQueryRunTime
 {
     class fxContains: Function
     {

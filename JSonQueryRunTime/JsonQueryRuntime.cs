@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using HiSystems.Interpreter;
-using JSonQueryRunTime;
+using JsonQueryRunTime;
 using Newtonsoft.Json.Linq;
 
-namespace JSonQueryRunTimeNS
+namespace JsonQueryRunTimeNS
 {
     public class JsonQueryRuntime
     {
