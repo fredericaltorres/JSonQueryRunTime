@@ -32,7 +32,7 @@ returns true if the JSON properties match each expression
 
 `eyeColor = "blue" AND
 age = 37 AND
-Path("name.first") = "Nancy" AND 
+name.first = "Nancy" AND 
 Contains(tags, Array("laboris", "ea")) AND 
 EqualArray(range, Array(0,1,2,3,4,5,6,7,8,9))`
 
