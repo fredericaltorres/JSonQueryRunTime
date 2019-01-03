@@ -17,4 +17,10 @@
     <ProjectReference Include="..\JSonQueryRunTime\JsonQueryRunTime.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Test Files\jsonArrayOfObject.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

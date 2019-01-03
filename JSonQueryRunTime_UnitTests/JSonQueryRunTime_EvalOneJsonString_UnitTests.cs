@@ -102,7 +102,7 @@ namespace JSonQueryRunTime_UnitTests
         [TestMethod]
         public void Execute_Range_String()
         {
-            Assert.IsTrue(new JsonQueryRuntime(@" Range(""b"", ""a"", ""d"") ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Range('b', ""a"", ""d"") ").Execute(json0));
             Assert.IsTrue(new JsonQueryRuntime(@" Range(""aa"", ""a"", ""d"") ").Execute(json0));
             Assert.IsTrue(new JsonQueryRuntime(@" Range(name, ""o"", ""p"") ").Execute(json0));
             Assert.IsTrue(new JsonQueryRuntime(@" Range(name, ""oa"", ""p"") ").Execute(json0));
@@ -124,11 +124,11 @@ namespace JSonQueryRunTime_UnitTests
         [TestMethod]
         public void Execute_WildCardFunction()
         {
-            Assert.IsTrue(new JsonQueryRuntime(@" Wildcard(wildText, ""ABCDE"") ").Execute(json0));
-            Assert.IsTrue(new JsonQueryRuntime(@" Wildcard(wildText, ""?BCD?"") ").Execute(json0));
-            Assert.IsTrue(new JsonQueryRuntime(@" Wildcard(wildText, ""?B?D?"") ").Execute(json0));
-            Assert.IsTrue(new JsonQueryRuntime(@" Wildcard(wildText, ""A*E"") ").Execute(json0));
-            Assert.IsTrue(new JsonQueryRuntime(@" Wildcard(wildText, ""A*C*E"") ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Wildcard(wildText, 'ABCDE') ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Wildcard(wildText, '?BCD?') ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Wildcard(wildText, '?B?D?') ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Wildcard(wildText, 'A*E') ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Wildcard(wildText, 'A*C*E') ").Execute(json0));
 
             Assert.IsFalse(new JsonQueryRuntime(@" Wildcard(wildText, ""ABCDZ"") ").Execute(json0));
             Assert.IsFalse(new JsonQueryRuntime(@" Wildcard(wildText, ""?B-D?"") ").Execute(json0));
@@ -137,28 +137,28 @@ namespace JSonQueryRunTime_UnitTests
         [TestMethod]
         public void Execute_RegexFunction()
         {
-            Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, ""ABCDE"") ").Execute(json0));
-            Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, ""ABCDE"") ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, 'ABCDE') ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, 'ABCDE') ").Execute(json0));
 
-            Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, ""^ABCDE"") ").Execute(json0));
-            Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, ""^ABC"") ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, '^ABCDE') ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, '^ABC') ").Execute(json0));
 
-            Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, ""ABCDE$"") ").Execute(json0));
-            Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, ""CDE$"") ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, 'ABCDE$') ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, 'CDE$') ").Execute(json0));
 
-            Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, ""^ABCDE$"") ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, '^ABCDE$') ").Execute(json0));
 
-            Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, "".BCD."") ").Execute(json0));
-            Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, "".B.D."") ").Execute(json0));
-            Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, ""A.*E"") ").Execute(json0));
-            Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, ""A.*C.*E"") ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, '.BCD.') ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, '.B.D.') ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, 'A.*E') ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, 'A.*C.*E') ").Execute(json0));
 
-            Assert.IsFalse(new JsonQueryRuntime(@" Regex(wildText, "".B-D."") ").Execute(json0));
-            Assert.IsFalse(new JsonQueryRuntime(@" Regex(wildText, ""A.*-"") ").Execute(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@" Regex(wildText, '.B-D.') ").Execute(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@" Regex(wildText, 'A.*-') ").Execute(json0));
 
-            Assert.IsFalse(new JsonQueryRuntime(@" Regex(wildText, ""zBCDE$"") ").Execute(json0));
-            Assert.IsFalse(new JsonQueryRuntime(@" Regex(wildText, ""^zBCDE$"") ").Execute(json0));
-            Assert.IsFalse(new JsonQueryRuntime(@" Regex(wildText, "".B-D."") ").Execute(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@" Regex(wildText, 'zBCDE$') ").Execute(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@" Regex(wildText, '^zBCDE$') ").Execute(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@" Regex(wildText, '.B-D.') ").Execute(json0));
 
             Assert.IsTrue(JsonQueryRunTime.fxRegex.RegexCache.Count == 14);
             JsonQueryRunTime.fxRegex.RegexCache.Clear();
