@@ -2,7 +2,7 @@
 
 ## Overview
 
-JSonQueryRunTime is a .NET library to apply where clause like expression to 
+JsonQueryRunTime is a .NET library to apply where clause like expression to 
 - JSON string
 - JSON string list 
 - JSON-Lines file.
@@ -11,7 +11,7 @@ JSonQueryRunTime is a .NET library to apply where clause like expression to
 
 ## JSON Query Syntax
 
-- JSON sample
+**JSON sample**
 ```json
 { 
 	"n":1, "b":true, "s":"string", "timestamp":"2018-12-20T14:16:32.4573737-05:00", 
