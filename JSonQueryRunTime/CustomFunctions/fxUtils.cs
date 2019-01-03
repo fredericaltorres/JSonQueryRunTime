@@ -84,7 +84,7 @@ namespace JSonQueryRunTime
 
         public static Literal ResolveValueFromJToken(JToken lastValue)
         {
-            if (lastValue == null)
+            if (lastValue == null || lastValue.Type == JTokenType.Null)
                 return new HiSystems.Interpreter.Null(null);
 
             if (lastValue.Type == JTokenType.Float || lastValue.Type == JTokenType.Integer)

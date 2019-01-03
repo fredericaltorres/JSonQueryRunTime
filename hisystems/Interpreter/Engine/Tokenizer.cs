@@ -41,8 +41,10 @@ namespace HiSystems.Interpreter
 
             var whitespaceCharacters = new[] { ' ', '\t' };
             var numericCharacters = new[] { '.', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-            var identifierCharacters = new[] { '_', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
-            var identifierSecondaryCharacters = new[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };     // other characters that can be used as identifiers - but cannot be a starting character
+
+            // Identifier can contain . to support JSON Path
+            var identifierCharacters = new[] { '_', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+            var identifierSecondaryCharacters = new[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.' /* Fred*/ };     // other characters that can be used as identifiers - but cannot be a starting character
             var textDelimiters = new[] { '\"', '\'' };
             bool isNumericNegative = false;
             bool parsingText = false;
@@ -103,6 +105,10 @@ namespace HiSystems.Interpreter
                     characterTokenType = TokenType.Whitespace;
                     characterString = String.Empty;             // consume character
                 }
+                //else if(character == '.' && currentTokenType == TokenType.Identifier)
+                //{
+
+                //}
                 else if (identifierCharacters.Contains(character) || (currentTokenType == TokenType.Identifier && identifierSecondaryCharacters.Contains(character)))
                 {
                     characterTokenType = TokenType.Identifier;

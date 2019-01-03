@@ -175,6 +175,16 @@ namespace JSonQueryRunTimeNS
                     }
                 }
             }
+            // Look for variables name which are json path
+            foreach(var v in _expression.Variables)
+            {
+                if(v.Key.Contains("."))
+                {
+                    // Evaluate the expression using JSON.NET Path Api
+                    JToken lastValue = fxUtils.EvalJsonDotNetPath("$." + v.Key, _currentJsonObject);
+                    _expression.Variables[v.Key].Value = fxUtils.ResolveValueFromJToken(lastValue);
+                }
+            }
             bool result = _expression.Execute<HiSystems.Interpreter.Boolean>();
             return result;
         }

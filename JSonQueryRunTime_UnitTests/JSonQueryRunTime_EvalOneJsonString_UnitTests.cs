@@ -423,6 +423,9 @@ namespace JSonQueryRunTime_UnitTests
         [TestMethod]
         public void Execute_Path_String()
         {
+            Assert.IsTrue(new JsonQueryRuntime(@" obj0.name = ""okk"" ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" IsObject(obj0) AND obj0.name = ""okk"" ").Execute(json0));
+
             Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.name"")  = ""okk"" ").Execute(json0));
             Assert.IsTrue(new JsonQueryRuntime(@"IsObject(obj0) AND Path(""obj0.name"")  = ""okk"" ").Execute(json0));
         }
@@ -430,6 +433,11 @@ namespace JSonQueryRunTime_UnitTests
         [TestMethod]
         public void Execute_Path_DoubleNested_String()
         {
+            Assert.IsTrue(new JsonQueryRuntime(@" obj0.obj00.name = ""okkk"" ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" obj0.obj00.n = 1234 ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" obj0.obj00.name = ""okkk"" AND obj0.obj00.n = 1234 ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" ( obj0.obj00.name = ""okkk"" ) AND ( obj0.obj00.n = 1234 ) ").Execute(json0));
+
             Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.obj00.name"") = ""okkk"" ").Execute(json0));
             Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.obj00.n"") = 1234 ").Execute(json0));
             Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.obj00.name"") = ""okkk"" AND Path(""obj0.obj00.n"") = 1234 ").Execute(json0));
@@ -439,6 +447,10 @@ namespace JSonQueryRunTime_UnitTests
         [TestMethod]
         public void Execute_Path_Number()
         {
+            Assert.IsTrue(new JsonQueryRuntime(@" obj0.n = 124 ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" obj0.obj00.n = 1234 ").Execute(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@" obj0.n = 1246666 ").Execute(json0));
+
             Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.n"") = 124 ").Execute(json0));
             Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.obj00.n"") = 1234 ").Execute(json0));
             Assert.IsFalse(new JsonQueryRuntime(@" Path(""obj0.n"") = 1246666 ").Execute(json0));
@@ -451,9 +463,20 @@ namespace JSonQueryRunTime_UnitTests
             Assert.IsFalse(new JsonQueryRuntime(@" Path(""obj0.name"") = 123 ").Execute(json0));
         }
 
+        
+        [TestMethod, ExpectedException(typeof(System.InvalidOperationException))]
+        public void Execute_Path_ReturnsStringExpectNumber_Throw_2()
+        {
+            // Wrong type
+            Assert.IsFalse(new JsonQueryRuntime(@" obj0.name = 123 ").Execute(json0));
+        }
+
         [TestMethod]
         public void Execute_Path_Boolean()
         {
+            Assert.IsTrue(new JsonQueryRuntime(@" obj0.b = true ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" obj0.b ").Execute(json0));
+
             Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.b"") = true ").Execute(json0));
             // obj0.b return true, so Path() can be evaluate like that, only for boolean
             Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.b"")  ").Execute(json0));
@@ -507,8 +530,23 @@ namespace JSonQueryRunTime_UnitTests
         [TestMethod]
         public void Execute_IsNull()
         {
-            Assert.IsTrue(new JsonQueryRuntime(@" IsNull(null) ").Execute(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@" name = null ").Execute(json0));
+
             Assert.IsTrue(new JsonQueryRuntime(@" IsNull(nil) ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" nil = null ").Execute(json0));
+            
+
+            Assert.IsTrue(new JsonQueryRuntime(@" IsNull(obj0.nil) ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" obj0.nil = null ").Execute(json0));
+
+            Assert.IsTrue(new JsonQueryRuntime(@" IsNull(null) ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" null = null ").Execute(json0));
+            
+
+            Assert.IsFalse(new JsonQueryRuntime(@" nil = 1 ").Execute(json0));
+
+            Assert.IsFalse(new JsonQueryRuntime(@" name = null ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" name <> null ").Execute(json0));
 
             Assert.IsFalse(new JsonQueryRuntime(@" IsNull(name) ").Execute(json0));
             Assert.IsFalse(new JsonQueryRuntime(@" IsNull(n) ").Execute(json0));

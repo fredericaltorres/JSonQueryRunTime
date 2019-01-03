@@ -33,16 +33,6 @@ namespace JSonQueryRunTime
                     return new HiSystems.Interpreter.Boolean(true);
                 }
                 return new HiSystems.Interpreter.Boolean(false);
-                //else
-                //{
-                //    // If we passed a Path to evaluate
-                //    string jsonPath = base.GetTransformedArgument<Text>(arguments, argumentIndex: 0);
-                //    JToken lastValue = fxPath.EvalJsonDotNetPath(jsonPath);
-                //    if(lastValue == null) // The jsonString does not contains a path, but a property name that eval to something which is not an object
-                //        return new HiSystems.Interpreter.Boolean(false);
-                //    else
-                //        return new HiSystems.Interpreter.Boolean(lastValue.Type == JTokenType.String);                    
-                //}
             }
             catch(System.InvalidOperationException ioEx)
             {
