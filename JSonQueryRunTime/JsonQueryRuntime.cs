@@ -35,13 +35,16 @@ namespace JsonQueryRunTimeNS
             _engine.Register(new fxIsDate());
             _engine.Register(new fxIsBoolean());
             _engine.Register(new fxIsArray());
-            
-            
 
             _expression = _engine.Parse(whereClause.Replace(Environment.NewLine, ""));
         }
 
-
+        /// <summary>
+        /// Apply the where clause to list of JSON object defined in the file
+        /// </summary>
+        /// <param name="fileName">The name of the JSON file</param>
+        /// <param name="isJsonLine">If true the file contains JSON-LINES else the file must contain an array of JSON objects</param>
+        /// <returns>The list of JSON string that match the where clause</returns>
         public IEnumerable<string> ExecuteFile(string fileName, bool isJsonLine)
         {
             var json  = System.IO.File.ReadAllText(fileName);
@@ -70,10 +73,10 @@ namespace JsonQueryRunTimeNS
         }
 
         /// <summary>
-        /// Evaluate a list of JSON string
+        /// Apply the where clause to list of JSON strings
         /// </summary>
-        /// <param name="jsonStrings"></param>
-        /// <returns></returns>
+        /// <param name="jsonStrings">A list of JSON string</param>
+        /// <returns>The list of JSON string that match the where clause</returns>
         public IEnumerable<string> Execute(IEnumerable<string> jsonStrings)
         {
             var l = new List<string>();
@@ -82,7 +85,11 @@ namespace JsonQueryRunTimeNS
                     l.Add(jsonString);
             return l;
         }
-
+        /// <summary>
+        /// Apply the where clause to list of JSON objects
+        /// </summary>
+        /// <param name="jObjects"></param>
+        /// <returns>The list of JSON string that match the where clause</returns>
         public IEnumerable<string> Execute(List<JObject> jObjects)
         {
             var l = new List<string>();
@@ -92,16 +99,21 @@ namespace JsonQueryRunTimeNS
             return l;
         }
 
+        /// <summary>
+        /// Apply the where clause to the JSON string
+        /// </summary>
+        /// <param name="jsonString"></param>
+        /// <returns>true if the where clause apply to the JSON string</returns>
         public bool Execute(string jsonString)
         {
             return this.Execute(JObject.Parse(jsonString));
         }
 
         /// <summary>
-        /// Evaluate one JSON string
+        /// Apply the where clause to the JSON object
         /// </summary>
-        /// <param name="jsonString"></param>
-        /// <returns></returns>
+        /// <param name="o"></param>
+        /// <returns> true if the where clause apply to the JSON object</returns>
         public bool Execute(JObject o)
         {
             _currentJsonObject = o;

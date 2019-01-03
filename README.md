@@ -38,7 +38,7 @@ EqualArray(range, Array(0,1,2,3,4,5,6,7,8,9))`
 
 **C# Sample:**
 ```csharp
-bool b = new JsonQueryRuntime(@"n = 1 AND s = 'string' AND b = true").Execute(json0));
+bool b = new JsonQueryRuntime("n = 1 AND s = 'string' AND b = true").Execute(json0));
 ```
 
 **Operator supported:** 
@@ -147,19 +147,41 @@ JSonQueryRuntime use dot net core 2.1.
 
 ```cs
 public class JsonQueryRuntime {
-	public JsonQueryRuntime(string whereClause);
 	/// <summary>
-	/// Evaluate a list of JSON string
+	/// Apply the where clause to list of JSON object defined in the file
 	/// </summary>
-	/// <param name="jsonStrings"></param>
-	/// <returns></returns>
-	public IEnumerable<string> Eval( IEnumerable<string> jsonStrings);
+	/// <param name="fileName">The name of the JSON file</param>
+	/// <param name="isJsonLine">If true the file contains JSON-LINES else the file must contain an array of JSON objects</param>
+	/// <returns>The list of JSON string that match the where clause</returns>
+	public IEnumerable<string> ExecuteFile(string fileName, bool isJsonLine);
+
+	 /// <summary>
+	/// Apply the where clause to list of JSON strings
+	/// </summary>
+	/// <param name="jsonStrings">A list of JSON string</param>
+	/// <returns>The list of JSON string that match the where clause</returns>
+	public IEnumerable<string> Execute(IEnumerable<string> jsonStrings);
+
 	/// <summary>
-	/// Evaluate one JSON string
+	/// Apply the where clause to list of JSON objects
+	/// </summary>
+	/// <param name="jObjects"></param>
+	/// <returns>The list of JSON string that match the where clause</returns>
+	public IEnumerable<string> Execute(List<JObject> jObjects);
+
+   	/// <summary>
+	/// Apply the where clause to the JSON string
 	/// </summary>
 	/// <param name="jsonString"></param>
-	/// <returns></returns>	
-	public bool Eval(string jsonString);
+	/// <returns>true if the where clause apply to the JSON string</returns>
+	public bool Execute(string jsonString);
+
+	/// <summary>
+	/// Apply the where clause to the JSON object
+	/// </summary>
+	/// <param name="o"></param>
+	/// <returns> true if the where clause apply to the JSON object</returns>
+	public bool Execute(JObject o);
 }
 ```
 ```cs
@@ -172,13 +194,13 @@ public const string json0 = @"{
 [TestMethod]
 public void Test() {
 
-	Assert.IsTrue(new JsonQueryRuntime(@"name = ""ok"" ").Execute(json0));
-	Assert.IsTrue(new JsonQueryRuntime(@"name = ""ok"" AND b = true ").Execute(json0));
-	Assert.IsTrue(new JsonQueryRuntime(@"name = ""ok"" AND b = true AND n = 123").Execute(json0));
+	Assert.IsTrue(new JsonQueryRuntime(@"name = 'ok' ").Execute(json0));
+	Assert.IsTrue(new JsonQueryRuntime(@"name = 'ok' AND b = true ").Execute(json0));
+	Assert.IsTrue(new JsonQueryRuntime(@"name = 'ok' AND b = true AND n = 123").Execute(json0));
 
-	Assert.IsTrue(new JsonQueryRuntime(@"name = ""ok"" AND Wildcard(wildText, ""ABCDE"") ").Execute(json0));
+	Assert.IsTrue(new JsonQueryRuntime(@"name = 'ok' AND Wildcard(wildText, 'ABCDE') ").Execute(json0));
 
-	Assert.IsTrue(new JsonQueryRuntime(@"IsObject(obj0) AND Path(""obj0.name"")  = ""okk"" ").Execute(json0));
+	Assert.IsTrue(new JsonQueryRuntime(@"IsObject(obj0) AND obj0.name = 'okk' ").Execute(json0));
 }
 ```
 
