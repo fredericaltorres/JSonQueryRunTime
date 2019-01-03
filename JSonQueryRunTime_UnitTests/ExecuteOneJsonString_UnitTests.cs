@@ -5,7 +5,7 @@ using JsonQueryRunTimeNS;
 namespace JSonQueryRunTime_UnitTests
 {
     [TestClass]
-    public class JSonQueryRunTime_EvalOneJsonString_UnitTests
+    public class ExecuteOneJsonString_UnitTests
     {
         public const string json0 = @"{ ""name"" : ""ok"", ""b"":true, ""n"":123, ""wildText"" : ""ABCDE"", ""now"":""2018-12-25T20:23:49.0-05:00"", ""utcnow"" : ""2018-12-26T01:24:46.0"", ""nil"": null, arrNumber:[1,2,3], arrString:[""a"", ""b"", ""c""], arrBoolean:[true, false, true],
                                             ""obj0"": { ""name"" : ""okk"", ""b"":true, ""n"":124, ""wildText"" : ""ABCDE"", ""now"":""2018-12-25T20:23:49.0-05:00"", ""utcnow"" : ""2018-12-26T01:24:46.0"", ""nil"": null ,

@@ -8,7 +8,7 @@ using JsonQueryRunTimeNS;
 namespace JSonQueryRunTime_UnitTests
 {
     [TestClass]
-    public class JSonQueryRunTime_ExecuteFile_UnitTests
+    public class ExecuteFile_UnitTests
     {
         const string JsonArrayOfObjectFileName = @".\Test Files\jsonArrayOfObject.json";
         const string JsonLinesFileName = @".\Test Files\json-lines.json";

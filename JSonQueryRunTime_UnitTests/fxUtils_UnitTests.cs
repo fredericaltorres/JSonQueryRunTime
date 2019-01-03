@@ -10,7 +10,7 @@ using Newtonsoft.Json.Linq;
 namespace JSonQueryRunTime_UnitTests
 {
     [TestClass]
-    public class JSonQueryRunTime_fxUtils_UnitTests
+    public class fxUtils_UnitTests
     {
 
         [TestMethod]

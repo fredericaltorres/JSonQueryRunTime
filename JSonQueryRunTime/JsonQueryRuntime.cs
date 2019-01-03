@@ -20,23 +20,23 @@ namespace JsonQueryRunTimeNS
         public JsonQueryRuntime(string whereClause)
         {
             _engine = new Engine();
-            _engine.Register(new fxWildCard());
-            _engine.Register(new fxRange());
-            _engine.Register(new fxIn());
-            _engine.Register(new fxIsString());
-            _engine.Register(new fxContains());
-            _engine.Register(new fxIsObject());
-            _engine.Register(new fxPath());
-            _engine.Register(new fxRegex());
-            _engine.Register(new fxIsNull());
-            _engine.Register(new fxNot());
-            _engine.Register(new fxEqualArray());
-            _engine.Register(new fxIsNumber());
-            _engine.Register(new fxIsDate());
-            _engine.Register(new fxIsBoolean());
-            _engine.Register(new fxIsArray());
+            this._engine.Register(new fxWildCard());
+            this._engine.Register(new fxRange());
+            this._engine.Register(new fxIn());
+            this._engine.Register(new fxIsString());
+            this._engine.Register(new fxContains());
+            this._engine.Register(new fxIsObject());
+            this._engine.Register(new fxPath());
+            this._engine.Register(new fxRegex());
+            this._engine.Register(new fxIsNull());
+            this._engine.Register(new fxNot());
+            this._engine.Register(new fxEqualArray());
+            this._engine.Register(new fxIsNumber());
+            this._engine.Register(new fxIsDate());
+            this._engine.Register(new fxIsBoolean());
+            this._engine.Register(new fxIsArray());
 
-            _expression = _engine.Parse(whereClause.Replace(Environment.NewLine, ""));
+            this._expression = this._engine.Parse(whereClause.Replace(Environment.NewLine, ""));
         }
 
         /// <summary>
@@ -59,16 +59,12 @@ namespace JsonQueryRunTimeNS
                 {
                     var l = new List<string>();
                     JArray a = JArray.Parse(json);
-                    foreach(JObject jObject in a) {
+                    foreach(JObject jObject in a)
                         if(this.Execute(jObject))
                             l.Add(jObject.ToString());
-                    }
                     return l;
                 }
-                else
-                {
-                    throw new ArgumentException($"{fileName} does not contains an JSON array of object and is not a JSON-LINE file");
-                }
+                else throw new ArgumentException($"{fileName} does not contains an JSON array of object and is not a JSON-LINE file");
             }
         }
 
@@ -121,7 +117,7 @@ namespace JsonQueryRunTimeNS
             this.SetVariables();
             this.SetVariablesDefinedAsJsonNestedPath();
 
-            return _expression.Execute<HiSystems.Interpreter.Boolean>();
+            return this._expression.Execute<HiSystems.Interpreter.Boolean>();
         }
 
         /// <summary>
@@ -131,13 +127,13 @@ namespace JsonQueryRunTimeNS
         private void SetVariablesDefinedAsJsonNestedPath()
         {
             // Look for variables name which are json path
-            foreach (var v in _expression.Variables)
+            foreach (var v in this._expression.Variables)
             {
                 if (v.Key.Contains("."))
                 {
                     // Evaluate the expression using JSON.NET Path Api
                     JToken lastValue = fxUtils.EvalJsonDotNetPath("$." + v.Key, _currentJsonObject);
-                    _expression.Variables[v.Key].Value = fxUtils.ResolveValueFromJToken(lastValue);
+                    this._expression.Variables[v.Key].Value = fxUtils.ResolveValueFromJToken(lastValue);
                 }
             }
         }
@@ -150,30 +146,30 @@ namespace JsonQueryRunTimeNS
             foreach (JProperty prop in _currentJsonObject.Properties())
             {
                 var n = prop.Name;
-                if (_expression.Variables.ContainsKey(n))
+                if (this._expression.Variables.ContainsKey(n))
                 {
                     var v = prop.Value;
                     switch (v.Type)
                     {
                         case JTokenType.String:
-                            _expression.Variables[n].Value = new HiSystems.Interpreter.Text(v.ToString());
+                            this._expression.Variables[n].Value = new HiSystems.Interpreter.Text(v.ToString());
                             break;
                         case JTokenType.Integer:
                         case JTokenType.Float:
-                            _expression.Variables[n].Value = new HiSystems.Interpreter.Number((Decimal)v);
+                            this._expression.Variables[n].Value = new HiSystems.Interpreter.Number((Decimal)v);
                             break;
                         case JTokenType.Boolean:
-                            _expression.Variables[n].Value = new HiSystems.Interpreter.Boolean((bool)v);
+                            this._expression.Variables[n].Value = new HiSystems.Interpreter.Boolean((bool)v);
                             break;
                         case JTokenType.Date:
-                            _expression.Variables[n].Value = new HiSystems.Interpreter.DateTime((System.DateTime)v);
+                            this._expression.Variables[n].Value = new HiSystems.Interpreter.DateTime((System.DateTime)v);
                             break;
                         case JTokenType.Null:
-                            _expression.Variables[n].Value = new HiSystems.Interpreter.Null(null);
+                            this._expression.Variables[n].Value = new HiSystems.Interpreter.Null(null);
                             break;
                         case JTokenType.Object:
                             // Pass the sub object are the JSON represenation
-                            _expression.Variables[n].Value = new HiSystems.Interpreter.Text(v.ToString(Newtonsoft.Json.Formatting.None));
+                            this._expression.Variables[n].Value = new HiSystems.Interpreter.Text(v.ToString(Newtonsoft.Json.Formatting.None));
                             break;
                         // Assume that array contains the same item type Number, String or Boolean for all items
                         // Can only be used with Contains() and EqualArray()
@@ -182,7 +178,7 @@ namespace JsonQueryRunTimeNS
                             if (a.Count == 0)
                             {
                                 // Remark: I think empty HiSystems.Interpreter.Array throw an exception
-                                _expression.Variables[n].Value = new HiSystems.Interpreter.Array(new List<decimal>().ToArray());
+                                this._expression.Variables[n].Value = new HiSystems.Interpreter.Array(new List<decimal>().ToArray());
                             }
                             else
                             {
@@ -190,24 +186,24 @@ namespace JsonQueryRunTimeNS
                                 var isArrayOfTypeBooleam = a[0].Type == JTokenType.Boolean;
                                 if (isArrayOfTypeNumeric)
                                 {
-                                    var decList = new List<decimal>();
+                                    var decimalList = new List<decimal>();
                                     foreach (var tok in a.Children())
-                                        decList.Add(tok.Value<decimal>());
-                                    _expression.Variables[n].Value = new HiSystems.Interpreter.Array(decList.ToArray());
+                                        decimalList.Add(tok.Value<decimal>());
+                                    this._expression.Variables[n].Value = new HiSystems.Interpreter.Array(decimalList.ToArray());
                                 }
                                 else if (isArrayOfTypeBooleam)
                                 {
-                                    var booList = new List<IConstruct>();
+                                    var booleanList = new List<IConstruct>();
                                     foreach (var tok in a.Children())
-                                        booList.Add(new HiSystems.Interpreter.Boolean(tok.Value<bool>()));
-                                    _expression.Variables[n].Value = new HiSystems.Interpreter.Array(booList.ToArray());
+                                        booleanList.Add(new HiSystems.Interpreter.Boolean(tok.Value<bool>()));
+                                    this._expression.Variables[n].Value = new HiSystems.Interpreter.Array(booleanList.ToArray());
                                 }
                                 else
                                 {
-                                    var strList = new List<IConstruct>();
+                                    var stringList = new List<IConstruct>();
                                     foreach (var tok in a.Children())
-                                        strList.Add(new HiSystems.Interpreter.Text(tok.ToString()));
-                                    _expression.Variables[n].Value = new HiSystems.Interpreter.Array(strList.ToArray());
+                                        stringList.Add(new HiSystems.Interpreter.Text(tok.ToString()));
+                                    this._expression.Variables[n].Value = new HiSystems.Interpreter.Array(stringList.ToArray());
                                 }
                             }
                             break;

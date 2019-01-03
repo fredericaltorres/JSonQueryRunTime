@@ -8,14 +8,14 @@ using JsonQueryRunTimeNS;
 namespace JSonQueryRunTime_UnitTests
 {
     [TestClass]
-    public class JSonQueryRunTime_Performance_UnitTests
+    public class Performance_UnitTests
     {
         public IEnumerable<string> GetJsonLines1()
         {
             var l = new List<string>();
             for(var i=0; i< 50000; i++) {
-                l.Add(JSonQueryRunTime_EvalOneJsonString_UnitTests.json0);
-                l.Add(JSonQueryRunTime_EvalOneJsonString_UnitTests.json1);
+                l.Add(ExecuteOneJsonString_UnitTests.json0);
+                l.Add(ExecuteOneJsonString_UnitTests.json1);
             }
             return l;
         }
