@@ -46,8 +46,7 @@ bool b = new JsonQueryRuntime("n = 1 AND s = 'string' AND b = true").Execute(jso
 ```
 =, <>, <, <=, >, >=, OR, AND, (, ) 
 ```
-
-Operators and function names are case sensitive.
+Boolean operators AND and OR are case sensitive.
 
 **Date support:**
 

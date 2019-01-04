@@ -48,9 +48,9 @@ namespace JSonQueryRunTime_UnitTests
         [TestMethod]
         public void Execute_Sum()
         {
-            Assert.IsTrue(new JsonQueryRuntime(@" SUM(Array(1, 2)) = 3 ").Execute(json0));
-            Assert.IsTrue(new JsonQueryRuntime(@" SUM(arrNumber) = 6 ").Execute(json0));
-            Assert.IsTrue(new JsonQueryRuntime(@" AVG(arrNumber) = 2 ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Sum(Array(1, 2)) = 3 ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Sum(arrNumber) = 6 ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Avg(arrNumber) = 2 ").Execute(json0));
         }
 
         [TestMethod]
@@ -206,7 +206,7 @@ namespace JSonQueryRunTime_UnitTests
         [TestMethod]
         public void Execute_String_LenFunction()
         {
-            Assert.IsTrue(new JsonQueryRuntime(@"len(name) = 2").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@"Len(name) = 2").Execute(json0));
         }
 
         [TestMethod]
