@@ -23,8 +23,8 @@ namespace JsonQueryRunTimeNS
             this._engine.Register(new fxWildCard());
             this._engine.Register(new fxRange());
             this._engine.Register(new fxIn());
-            this._engine.Register(new fxIsString());
             this._engine.Register(new fxContains());
+            this._engine.Register(new fxIsString());
             this._engine.Register(new fxIsObject());
             this._engine.Register(new fxPath());
             this._engine.Register(new fxRegex());
@@ -35,6 +35,7 @@ namespace JsonQueryRunTimeNS
             this._engine.Register(new fxIsDate());
             this._engine.Register(new fxIsBoolean());
             this._engine.Register(new fxIsArray());
+            this._engine.Register(new fxWriteLine());
 
             this._expression = this._engine.Parse(whereClause.Replace(Environment.NewLine, ""));
         }

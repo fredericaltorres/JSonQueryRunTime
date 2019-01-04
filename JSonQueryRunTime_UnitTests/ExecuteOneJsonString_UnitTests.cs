@@ -427,6 +427,13 @@ namespace JSonQueryRunTime_UnitTests
             Assert.IsFalse(new JsonQueryRuntime(@"IsObject(#1964-12-11#)").Execute(json0));
         }
 
+        
+        [TestMethod]
+        public void Execute_WriteLine_String()
+        {
+            Assert.IsTrue(new JsonQueryRuntime(@" WriteLine(""Hello World"") ").Execute(json0));
+        }
+
         [TestMethod]
         public void Execute_Path_String()
         {
