@@ -101,8 +101,9 @@ Operators and function names are case sensitive.
 *Miscellaneous*:
 
 - `Not(expression)` returns the inversed boolean value
-
 - `len(name)` returns the length of the property name which is a string
+- `SUM(number-array)` returns the sum of the values in the array
+- `AVG(number-array)` returns the average values based on the values in the array
 
 ### The Path() function
 

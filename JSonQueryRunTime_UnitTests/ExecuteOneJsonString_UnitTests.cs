@@ -46,6 +46,14 @@ namespace JSonQueryRunTime_UnitTests
 }";
 
         [TestMethod]
+        public void Execute_Sum()
+        {
+            Assert.IsTrue(new JsonQueryRuntime(@" SUM(Array(1, 2)) = 3 ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" SUM(arrNumber) = 6 ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" AVG(arrNumber) = 2 ").Execute(json0));
+        }
+
+        [TestMethod]
         public void Execute_Date_Utc()
         {
             Assert.IsTrue(new JsonQueryRuntime(@" utcnow = #2018-12-26 01:24:46# ").Execute(json0));
