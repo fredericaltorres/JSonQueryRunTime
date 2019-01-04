@@ -400,17 +400,16 @@ namespace JSonQueryRunTime_UnitTests
         [TestMethod]
         public void Execute_EqualArrayBoolean()
         {
-            Assert.IsTrue(new JsonQueryRuntime(@"EqualArray(arrBoolean, Array(true, false, true))").Execute(json0));
-
-            Assert.IsFalse(new JsonQueryRuntime(@"EqualArray(arrBoolean, Array(true))").Execute(json0));
-            Assert.IsFalse(new JsonQueryRuntime(@"EqualArray(arrBoolean, Array(false))").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@"equalArray(arrBoolean, array(true, false, true))").Execute(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@"equalArray(arrBoolean, Array(true))").Execute(json0));
+            Assert.IsFalse(new JsonQueryRuntime(@"equalArray(arrBoolean, Array(false))").Execute(json0));
         }
 
         [TestMethod]
         public void Execute_ContainsArrayBoolean()
         {
             Assert.IsTrue(new JsonQueryRuntime(@"Contains(arrBoolean, Array(true, false))").Execute(json0));
-            Assert.IsTrue(new JsonQueryRuntime(@"Contains(arrBoolean, Array(true))").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@"contains(arrBoolean, Array(true))").Execute(json0));
             Assert.IsTrue(new JsonQueryRuntime(@"Contains(arrBoolean, Array(false))").Execute(json0));
         }
 
@@ -432,10 +431,10 @@ namespace JSonQueryRunTime_UnitTests
         public void Execute_Path_String()
         {
             Assert.IsTrue(new JsonQueryRuntime(@" obj0.name = ""okk"" ").Execute(json0));
-            Assert.IsTrue(new JsonQueryRuntime(@" IsObject(obj0) AND obj0.name = ""okk"" ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" isObject(obj0) AND obj0.name = ""okk"" ").Execute(json0));
 
-            Assert.IsTrue(new JsonQueryRuntime(@" Path(""obj0.name"")  = ""okk"" ").Execute(json0));
-            Assert.IsTrue(new JsonQueryRuntime(@"IsObject(obj0) AND Path(""obj0.name"")  = ""okk"" ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" path(""obj0.name"")  = ""okk"" ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@"isObject(obj0) AND Path(""obj0.name"")  = ""okk"" ").Execute(json0));
         }
 
         [TestMethod]
