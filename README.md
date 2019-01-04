@@ -100,7 +100,7 @@ Operators and function names are case sensitive.
 
 *Miscellaneous*:
 
-- `Not(other-expression)` returns the inversed boolean value
+- `Not(expression)` returns the inversed boolean value
 
 - `len(name)` returns the length of the property name which is a string
 

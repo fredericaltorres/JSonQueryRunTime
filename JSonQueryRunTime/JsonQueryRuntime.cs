@@ -40,6 +40,21 @@ namespace JsonQueryRunTimeNS
         }
 
         /// <summary>
+        /// Return one where clause which is the combination of all passed boolean expressions
+        /// </summary>
+        /// <param name="expressions"></param>
+        /// <returns></returns>
+        public static string CombineWhereClauseExpressions(IEnumerable<string> expressions, string booleanOperators = "AND") {
+            
+          // Create on giant where clause based on all above where clauses
+            var allString = new System.Text.StringBuilder(4096);
+            foreach(var expression in expressions)
+                allString.Append($"( {expression} ) {booleanOperators} ").AppendLine();
+            allString.Append($"1=1 ");
+            return allString.ToString();
+        }
+
+        /// <summary>
         /// Apply the where clause to list of JSON object defined in the file
         /// </summary>
         /// <param name="fileName">The name of the JSON file</param>

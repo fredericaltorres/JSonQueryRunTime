@@ -23,9 +23,7 @@ namespace JSonQueryRunTime_UnitTests
             {
                 @"name = 'ok'",
                 @"name = 'ok' AND utcnow >= #2018-12-26 01:24:46#",
-                @"name = 'ok' AND 
-                        utcnow >= #2018-12-01 01:24:46# AND 
-                        utcnow <= #2018-12-31 01:24:46# ",
+                @"name = 'ok' AND utcnow >= #2018-12-01 01:24:46# AND utcnow <= #2018-12-31 01:24:46# ",
                 @" Range(utcnow, #2018-12-01 01:24:46#, #2018-12-31 01:24:46#) ",
                 @" now = #2018-12-25 20:23:49# AND now <> #2018-12-25 20:23:50#",
                 @" Wildcard(wildText, 'ABCDE') AND 
@@ -36,13 +34,8 @@ namespace JSonQueryRunTime_UnitTests
                    Not( Wildcard(wildText, ""ABCDZ"") )
                 "
             };
-
-            // Create on giant where clause based on all above where clauses
-            var allString = string.Empty;
-            foreach(var whereClause in whereClauses)
-                allString += $"{whereClause} AND ";
-            allString += " 1 = 1 ";
-            whereClauses.Add(allString);
+            whereClauses.Add(JsonQueryRuntime.CombineWhereClauseExpressions(whereClauses, "AND"));
+            whereClauses.Add(JsonQueryRuntime.CombineWhereClauseExpressions(whereClauses, "OR"));
 
             foreach(var whereClause in whereClauses)
             {
