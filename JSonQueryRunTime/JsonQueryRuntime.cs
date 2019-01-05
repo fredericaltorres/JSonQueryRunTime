@@ -9,35 +9,44 @@ namespace JsonQueryRunTimeNS
     public class JsonQueryRuntime
     {
         private Expression _expression;
-        private Engine _engine;
+
+        /// <summary>
+        /// The HiSystems.Interpreter engine
+        /// </summary>
+        private Engine _engineSingleton;
 
         /// <summary>
         /// Contain the current JSON parsed object in process
         /// that can be access by function Parse()
         /// </summary>
         public static JObject _currentJsonObject;
+        public static JsonQueryRuntime SingletonInstance;
 
         public JsonQueryRuntime(string whereClause)
         {
-            _engine = new Engine();
-            this._engine.Register(new fxWildCard());
-            this._engine.Register(new fxRange());
-            this._engine.Register(new fxIn());
-            this._engine.Register(new fxContains());
-            this._engine.Register(new fxIsString());
-            this._engine.Register(new fxIsObject());
-            this._engine.Register(new fxPath());
-            this._engine.Register(new fxRegex());
-            this._engine.Register(new fxIsNull());
-            this._engine.Register(new fxNot());
-            this._engine.Register(new fxEqualArray());
-            this._engine.Register(new fxIsNumber());
-            this._engine.Register(new fxIsDate());
-            this._engine.Register(new fxIsBoolean());
-            this._engine.Register(new fxIsArray());
-            this._engine.Register(new fxWriteLine());
+            // Custom function Var() need access to the instance
+            SingletonInstance = this;
 
-            this._expression = this._engine.Parse(whereClause.Replace(Environment.NewLine, ""));
+            _engineSingleton = new Engine();
+            _engineSingleton.Register(new fxWildCard());
+            _engineSingleton.Register(new fxRange());
+            _engineSingleton.Register(new fxIn());
+            _engineSingleton.Register(new fxContains());
+            _engineSingleton.Register(new fxIsString());
+            _engineSingleton.Register(new fxIsObject());
+            _engineSingleton.Register(new fxPath());
+            _engineSingleton.Register(new fxRegex());
+            _engineSingleton.Register(new fxIsNull());
+            _engineSingleton.Register(new fxNot());
+            _engineSingleton.Register(new fxEqualArray());
+            _engineSingleton.Register(new fxIsNumber());
+            _engineSingleton.Register(new fxIsDate());
+            _engineSingleton.Register(new fxIsBoolean());
+            _engineSingleton.Register(new fxIsArray());
+            _engineSingleton.Register(new fxWriteLine());
+            _engineSingleton.Register(new fxVar());
+
+            this._expression = _engineSingleton.Parse(whereClause.Replace(Environment.NewLine, ""));
         }
 
         /// <summary>
@@ -45,11 +54,12 @@ namespace JsonQueryRunTimeNS
         /// </summary>
         /// <param name="expressions"></param>
         /// <returns></returns>
-        public static string CombineWhereClauseExpressions(IEnumerable<string> expressions, string booleanOperators = "AND") {
-            
-          // Create on giant where clause based on all above where clauses
+        public static string CombineWhereClauseExpressions(IEnumerable<string> expressions, string booleanOperators = "AND")
+        {
+
+            // Create on giant where clause based on all above where clauses
             var allString = new System.Text.StringBuilder(4096);
-            foreach(var expression in expressions)
+            foreach (var expression in expressions)
                 allString.Append($"( {expression} ) {booleanOperators} ").AppendLine();
             allString.Append($"1=1 ");
             return allString.ToString();
@@ -63,20 +73,20 @@ namespace JsonQueryRunTimeNS
         /// <returns>The list of JSON string that match the where clause</returns>
         public IEnumerable<string> ExecuteFile(string fileName, bool isJsonLine)
         {
-            var json  = System.IO.File.ReadAllText(fileName);
-            if(isJsonLine)
+            var json = System.IO.File.ReadAllText(fileName);
+            if (isJsonLine)
             {
                 return this.Execute(json.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries));
             }
             else
             {
                 // expect a JSON array of object
-                if(json.Trim().StartsWith("["))
+                if (json.Trim().StartsWith("["))
                 {
                     var l = new List<string>();
                     JArray a = JArray.Parse(json);
-                    foreach(JObject jObject in a)
-                        if(this.Execute(jObject))
+                    foreach (JObject jObject in a)
+                        if (this.Execute(jObject))
                             l.Add(jObject.ToString());
                     return l;
                 }
@@ -226,6 +236,13 @@ namespace JsonQueryRunTimeNS
                     }
                 }
             }
+        }
+        public void AddVariable(string name, Literal value)
+        {
+            if (this._expression.Variables.ContainsKey(name))
+                this._expression.Variables[name].Value = value;
+            else
+                this._expression.Variables.Add(name, new Variable(name, value));
         }
     }
 }

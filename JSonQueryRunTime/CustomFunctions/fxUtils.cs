@@ -63,6 +63,11 @@ namespace JsonQueryRunTime
                 Variable v = l as Variable;
                 return ConvertInterpreterTypeIntoJTokenType(v.Value);
             }
+            if (expectedValueType == "Operation")
+            {
+                var r = l.Transform();
+                return ConvertInterpreterTypeIntoJTokenType(r);
+            }
             if (expectedValueType == "FunctionOperation")
                 return ConvertInterpreterTypeIntoJTokenType(l.Transform());
             if (expectedValueType == "Array")

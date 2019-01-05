@@ -46,6 +46,38 @@ namespace JSonQueryRunTime_UnitTests
 }";
 
         [TestMethod]
+        public void Arithmetic_Operation_String()
+        {
+            Assert.IsTrue(new JsonQueryRuntime(@" name + '--' = 'ok--' ").Execute(json0));
+        }
+
+        [TestMethod]
+        public void Arithmetic_Operation_Date()
+        {
+            Assert.IsTrue(new JsonQueryRuntime(@" WriteLine(now - 1) ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" WriteLine(now - n) ").Execute(json0));
+            
+            // JSON date format
+            Assert.IsTrue(new JsonQueryRuntime(@" now - 1 = #2018-12-24 20:23:49# ").Execute(json0));
+            // .NET date format
+            Assert.IsTrue(new JsonQueryRuntime(@" now - 1 = #12/24/2018 8:23:49 PM# ").Execute(json0));
+            // Substract
+            Assert.IsTrue(new JsonQueryRuntime(@" now - n = #8/24/2018 8:23:49 PM# ").Execute(json0));
+        }
+
+        [TestMethod]
+        public void Arithmetic_Operation_Number()
+        {
+            Assert.IsTrue(new JsonQueryRuntime(@" 1 + 1 = 2 ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" n + 1 = 124 ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" n - 1 = 122 ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" n * 2 = (123*2) ").Execute(json0));
+            // Display the result
+            Assert.IsTrue(new JsonQueryRuntime(@" WriteLine(n/2) AND n/2 = 61.5 ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" n + obj0.n = (123+124) ").Execute(json0));
+        }
+
+        [TestMethod]
         public void Execute_Sum()
         {
             Assert.IsTrue(new JsonQueryRuntime(@" Sum(Array(1, 2)) = 3 ").Execute(json0));
@@ -171,6 +203,16 @@ namespace JSonQueryRunTime_UnitTests
             Assert.IsTrue(JsonQueryRunTime.fxRegex.RegexCache.Count == 14);
             JsonQueryRunTime.fxRegex.RegexCache.Clear();
             Assert.IsTrue(JsonQueryRunTime.fxRegex.RegexCache.Count == 0);
+        }
+
+        [TestMethod]
+        public void Execute_Var_DeclareVariable()
+        {
+            Assert.IsTrue(new JsonQueryRuntime(@"Var('newName','ok') AND name = newName ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@"Var('newN',123) AND n = newN ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@"Var('newNow',#2018-12-25T20:23:49.0-05:00#) AND now = newNow ").Execute(json0));
+
+            Assert.IsTrue(new JsonQueryRuntime(@"Var('newName','ok') AND WriteLine(newName) AND name = newName ").Execute(json0));
         }
 
         [TestMethod]

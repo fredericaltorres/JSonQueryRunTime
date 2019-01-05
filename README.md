@@ -23,6 +23,11 @@ JsonQueryRunTime is a .NET library to apply where clause like expression to
 `n = 1 AND s = "string" AND b = true`
 returns true if the JSON properties match each expression 
 
+**Arithmetic Operation**
+
+`( n * 3 = 3 ) AND ( n / 2 = 0.5 )`
+returns true if the JSON properties match each expression
+
 **Nested Objects**
 
 `o.name = 'foo' AND o.b = true AND o.nil = null`
@@ -41,13 +46,21 @@ EqualArray(range, Array(0,1,2,3,4,5,6,7,8,9))`
 bool b = new JsonQueryRuntime("n = 1 AND s = 'string' AND b = true").Execute(jsonString));
 ```
 
-**Operator supported:** 
+**Boolean Operator supported:** 
 
 ```
 =, <>, <, <=, >, >=, OR, AND, (, ) 
 ```
 Boolean operators AND and OR are case sensitive.
 Function names are not case sensitive.
+
+**Arithmetic Operator supported:** 
+
+```
++, -, *, /
+```
+- addition  (numbers, date/time + number, string concatenation)
+- subtraction (numbers, date/time - number)
 
 **Date support:**
 
@@ -102,8 +115,8 @@ Function names are not case sensitive.
 
 - `Not(expression)` returns the inversed boolean value
 - `len(name)` returns the length of the property name which is a string
-- `SUM(number-array)` returns the sum of the values in the array
-- `AVG(number-array)` returns the average values based on the values in the array
+- `Sum(number-array)` returns the sum of the values in the array
+- `Avg(number-array)` returns the average values based on the values in the array
 
 ### The Path() function
 
