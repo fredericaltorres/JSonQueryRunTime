@@ -656,11 +656,31 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
-        public void Format()
+        public void Format_Number()
         {
             Assert.IsTrue(new JsonQueryRuntime(@" WriteLine(Format(n, '0000.000')) AND Format(n, '0000.000') = '0123.000' ").Execute(json0));
             Assert.IsTrue(new JsonQueryRuntime(@" Format(123.1, '0000.000') = '0123.100' ").Execute(json0));
             Assert.IsTrue(new JsonQueryRuntime(@" Format(n, '0000.000') = '0123.000' ").Execute(json0));
+        }
+        [TestMethod]
+        public void Format_DateTime()
+        {
+            // 2018-12-25 08:23:49
+            Assert.IsTrue(new JsonQueryRuntime(@" WriteLine ( Format(now, 'yyyy-MM-dd hh:mm:ss') ) ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@"
+                Var('dateFormat', 'yyyy-MM-dd hh:mm:ss') AND
+                WriteLine ( Format(now, dateFormat) ) AND
+                Format(now, dateFormat) = '2018-12-25 08:23:49'
+            ").Execute(json0));
+
+            Assert.IsTrue(new JsonQueryRuntime(@"
+                WriteLine ( Format(now, dateFormat) ) AND
+                Format(now, dateFormat) = '2018-12-25 08:23:49'
+            ",
+            @"
+                Var('dateFormat', 'yyyy-MM-dd hh:mm:ss')
+            "
+            ).Execute(json0));
         }
     }
 }

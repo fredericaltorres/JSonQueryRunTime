@@ -31,7 +31,7 @@ namespace JsonQueryRunTimeNS
         /// </summary>
         public static JsonQueryRuntime SingletonInstance;
 
-        public JsonQueryRuntime(string whereClause)
+        public JsonQueryRuntime(string whereClause, string preClause = null)
         {
             // Custom function Var() need access to the instance
             JsonQueryRuntime.SingletonInstance = this;
@@ -55,7 +55,14 @@ namespace JsonQueryRunTimeNS
             _engineSingleton.Register(new fxWriteLine());
             _engineSingleton.Register(new fxVar());
 
-            this._expression = _engineSingleton.Parse(whereClause.Replace(Environment.NewLine, ""));
+            var whereClauseFinal = string.Empty;
+
+            if(preClause != null)
+                whereClauseFinal += $"( {preClause.Replace(Environment.NewLine, "")} ) AND ";
+
+            whereClauseFinal += whereClause.Replace(Environment.NewLine, "");
+
+            this._expression = _engineSingleton.Parse(whereClauseFinal);
         }
 
         /// <summary>
