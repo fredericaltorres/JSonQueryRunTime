@@ -82,6 +82,8 @@ returns true is property timestamp is in the date range (See Range() function as
 
 **Functions:**
 
+Remember that JsonQueryEngine evaluate boolean expression. All function returns true or false (no truthy support).
+
 *string*:
 
 ```js
@@ -184,12 +186,12 @@ Avg(number-array)
 returns the average values based on the values in the array
 
 ```js
-Var(name:string, value:any) : boolean
+Var(name:string, value:any) : true
 ```
 Declare a variable, that can be used later in the where clause
 
 ```js
-WriteLine(expression) : boolean
+WriteLine(expression) : true
 ```
 Display in the current output the expression
 
@@ -225,7 +227,7 @@ Path("main.?.z", 1)
 		} 
 	}
 ```
-The function Path() will run throuh all possible paths to evaluate `"main.?.z"` and stop 
+The function Path() will run through all possible paths to evaluate `"main.?.z"` and stop 
 at the first path that return the value 1 and return true
 
 ## .NET Framework
