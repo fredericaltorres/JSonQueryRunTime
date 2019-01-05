@@ -72,12 +72,12 @@ Function names are not case sensitive.
 
 **Date support:**
 
-```js 
+```
 timestamp = #2018-12-20T14:16:00#
 ```
 returns true is property timestamp is equal to the date+time value
 
-```js
+```
 timestamp >= #2018-12-20T14:16:00# and timestamp <= #2018-12-20T14:16:59#
 ```
 returns true is property timestamp is in the date range (See Range() function aslo).
@@ -103,7 +103,7 @@ returns true if the value of the property name contains the sub-string "substrin
 
 *Range*:
 
-```js
+```
 Range(timestamp, #2018-12-20T14:16:00#, #2018-12-20T14:16:59#)
 ```
 returns true if the date in property timestamp is between the 2 dates
@@ -151,20 +151,49 @@ returns true if property arrOfString which is an array of string contains the va
 
 *ArrayEqual*:
 
-- `ArrayEqual(arrOfNumber, Array(12, 24, 48))` returns true if property arrOfNumber which is an array of number contains and only contains the values 12, 24, 48 in that exact order.
+```js
+ArrayEqual(arrOfNumber, Array(12, 24, 48))
+```
+returns true if property arrOfNumber which is an array of number contains and only contains the values 12, 24, 48 in that exact order.
 
-- `ArrayEqual(arrOfString, Array("a", "b", "c"))` returns true if property arrOfString which is an array of string contains and only contains the values "a", "b", "c" in that exact order.
+```js
+ArrayEqual(arrOfString, Array("a", "b", "c"))
+```
+returns true if property arrOfString which is an array of string contains and only contains the values "a", "b", "c" in that exact order.
 
-- `ArrayEqual(arrOfBoolean, Array(true, false, true))` returns true if property arrOfBoolean which is an array of boolean contains the following values in the exact order true, false, true in that exact order.
+```js
+ArrayEqual(arrOfBoolean, Array(true, false, true))
+```
+returns true if property arrOfBoolean which is an array of boolean contains the following values in the exact order true, false, true in that exact order.
 
 *Miscellaneous*:
 
-- `Not(expression)` returns the inversed boolean value
-- `Len(name)` returns the length of the property name which is a string
-- `Sum(number-array)` returns the sum of the values in the array
-- `Avg(number-array)` returns the average values based on the values in the array
-- `Var(name:string, value:any) : boolean` Declare a variable, that can be used later in the where clause
-- `WriteLine(expression) : boolean` Display in the current output the expression
+```js
+Not(expression)
+```
+returns the inversed boolean value
+```js
+Len(name)
+```
+returns the length of the property name which is a string
+```js
+Sum(number-array)
+```
+returns the sum of the values in the array
+```js
+Avg(number-array)
+```
+returns the average values based on the values in the array
+
+```js
+Var(name:string, value:any) : boolean
+```
+Declare a variable, that can be used later in the where clause
+
+```js
+WriteLine(expression) : boolean
+```
+Display in the current output the expression
 
 ### The Path() function
 
