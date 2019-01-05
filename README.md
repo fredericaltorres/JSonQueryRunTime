@@ -187,6 +187,7 @@ returns the average values based on the values in the array
 
 ```js
 Var(name:string, value:any) : true
+Var('dateFormat', 'yyyy-MM-dd hh:mm:ss')
 ```
 Declare a variable, that can be used later in the where clause
 
@@ -197,6 +198,8 @@ Display in the current output the expression
 
 ```js
 Format(Number or Date expression, String Format) : string
+Var('dateFormat', 'yyyy-MM-dd hh:mm:ss') AND 
+Format(now, dateFormat) = '2018-12-25 08:23:49'
 ```
 Format a number or date based on .NET ToString() format.
 
