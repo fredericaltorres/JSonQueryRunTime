@@ -32,7 +32,7 @@ returns true if the JSON properties match each expression
 ```
 returns true if the JSON properties match each expression
 
-**Nested objects**
+**Nested object**
 
 ```js
 o.name = 'foo' AND o.b = true AND o.nil = null
@@ -42,9 +42,7 @@ returns true if the JSON properties match each expression
 **Advanced query**
 
 ```js
-eyeColor = 'blue' AND
-age = 37 AND
-name.first = "Nancy" AND 
+eyeColor = 'blue' AND age = 37 AND name.first = "Nancy" AND 
 Contains(tags, Array("laboris", "ea")) AND 
 EqualArray(range, Array(0,1,2,3,4,5,6,7,8,9))
 ```
