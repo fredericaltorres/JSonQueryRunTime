@@ -20,9 +20,8 @@ namespace JSonQueryRunTime_UnitTests
             return l;
         }
 
-
         [TestMethod]
-        public void Execute_String_Equal()
+        public void String_Equal()
         {
             var resultLines = new JsonQueryRuntime(@"name = ""ok"" ").Execute(GetJsonLines0()).ToList();
             Assert.AreEqual(3, resultLines.Count);
@@ -31,7 +30,7 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
-        public void Execute_String_Equal_Or()
+        public void String_Equal_Or()
         {
             var resultLines = new JsonQueryRuntime(@"name = ""ok"" OR name = ""ko"" ").Execute(GetJsonLines0()).ToList();
             Assert.AreEqual(4, resultLines.Count);
@@ -42,7 +41,7 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
-        public void Execute_String_Equal_And()
+        public void String_Equal_And()
         {
             var resultLines = new JsonQueryRuntime(@"name = ""ok"" AND b = true ").Execute(GetJsonLines0()).ToList();
             Assert.AreEqual(3, resultLines.Count);
@@ -52,7 +51,7 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
-        public void Execute_String_WildCard()
+        public void String_WildCard()
         {
             var resultLines = new JsonQueryRuntime(@" Wildcard(wildText, ""?BCD?"") ").Execute(GetJsonLines0()).ToList();
             Assert.AreEqual(3, resultLines.Count);

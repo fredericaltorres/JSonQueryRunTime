@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using HiSystems.Interpreter;
 using JsonQueryRunTime;
@@ -8,6 +9,9 @@ namespace JsonQueryRunTimeNS
 {
     public class JsonQueryRuntime
     {
+        /// <summary>
+        /// Parsed expression, ready to execute
+        /// </summary>
         private Expression _expression;
 
         /// <summary>
@@ -20,12 +24,17 @@ namespace JsonQueryRunTimeNS
         /// that can be access by function Parse()
         /// </summary>
         public static JObject _currentJsonObject;
+
+        /// <summary>
+        /// Make a current instance of JsonQueryRuntime available
+        /// used by custom function Var()
+        /// </summary>
         public static JsonQueryRuntime SingletonInstance;
 
         public JsonQueryRuntime(string whereClause)
         {
             // Custom function Var() need access to the instance
-            SingletonInstance = this;
+            JsonQueryRuntime.SingletonInstance = this;
 
             _engineSingleton = new Engine();
             _engineSingleton.Register(new fxWildCard());
@@ -56,7 +65,6 @@ namespace JsonQueryRunTimeNS
         /// <returns></returns>
         public static string CombineWhereClauseExpressions(IEnumerable<string> expressions, string booleanOperators = "AND")
         {
-
             // Create on giant where clause based on all above where clauses
             var allString = new System.Text.StringBuilder(4096);
             foreach (var expression in expressions)
@@ -80,7 +88,7 @@ namespace JsonQueryRunTimeNS
             }
             else
             {
-                // expect a JSON array of object
+                // Expect a JSON array of object
                 if (json.Trim().StartsWith("["))
                 {
                     var l = new List<string>();
@@ -138,7 +146,7 @@ namespace JsonQueryRunTimeNS
         /// <returns> true if the where clause apply to the JSON object</returns>
         public bool Execute(JObject o)
         {
-            _currentJsonObject = o;
+            JsonQueryRuntime._currentJsonObject = o;
 
             this.SetVariables();
             this.SetVariablesDefinedAsJsonNestedPath();
@@ -158,7 +166,7 @@ namespace JsonQueryRunTimeNS
                 if (v.Key.Contains("."))
                 {
                     // Evaluate the expression using JSON.NET Path Api
-                    JToken lastValue = fxUtils.EvalJsonDotNetPath("$." + v.Key, _currentJsonObject);
+                    JToken lastValue = fxUtils.EvalJsonDotNetPath("$." + v.Key, JsonQueryRuntime._currentJsonObject);
                     this._expression.Variables[v.Key].Value = fxUtils.ResolveValueFromJToken(lastValue);
                 }
             }
@@ -169,7 +177,7 @@ namespace JsonQueryRunTimeNS
         /// </summary>
         private void SetVariables()
         {
-            foreach (JProperty prop in _currentJsonObject.Properties())
+            foreach (JProperty prop in JsonQueryRuntime._currentJsonObject.Properties())
             {
                 var n = prop.Name;
                 if (this._expression.Variables.ContainsKey(n))
@@ -212,23 +220,17 @@ namespace JsonQueryRunTimeNS
                                 var isArrayOfTypeBooleam = a[0].Type == JTokenType.Boolean;
                                 if (isArrayOfTypeNumeric)
                                 {
-                                    var decimalList = new List<decimal>();
-                                    foreach (var tok in a.Children())
-                                        decimalList.Add(tok.Value<decimal>());
+                                    var decimalList = a.Children().Select( d => new HiSystems.Interpreter.Number(d.Value<decimal>() ) );
                                     this._expression.Variables[n].Value = new HiSystems.Interpreter.Array(decimalList.ToArray());
                                 }
                                 else if (isArrayOfTypeBooleam)
                                 {
-                                    var booleanList = new List<IConstruct>();
-                                    foreach (var tok in a.Children())
-                                        booleanList.Add(new HiSystems.Interpreter.Boolean(tok.Value<bool>()));
-                                    this._expression.Variables[n].Value = new HiSystems.Interpreter.Array(booleanList.ToArray());
+                                    var boolList = a.Children().Select( d => new HiSystems.Interpreter.Boolean(d.Value<bool>() ) );
+                                    this._expression.Variables[n].Value = new HiSystems.Interpreter.Array(boolList.ToArray());
                                 }
-                                else
+                                else // Fall back on text/string type
                                 {
-                                    var stringList = new List<IConstruct>();
-                                    foreach (var tok in a.Children())
-                                        stringList.Add(new HiSystems.Interpreter.Text(tok.ToString()));
+                                    var stringList = a.Children().Select( d => new HiSystems.Interpreter.Text(d.ToString() ) );
                                     this._expression.Variables[n].Value = new HiSystems.Interpreter.Array(stringList.ToArray());
                                 }
                             }
@@ -237,7 +239,7 @@ namespace JsonQueryRunTimeNS
                 }
             }
         }
-        public void AddVariable(string name, Literal value)
+        public void AddUpdateVariable(string name, Literal value)
         {
             if (this._expression.Variables.ContainsKey(name))
                 this._expression.Variables[name].Value = value;

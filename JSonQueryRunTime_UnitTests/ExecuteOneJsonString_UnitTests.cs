@@ -78,7 +78,7 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
-        public void Execute_Sum()
+        public void Sum()
         {
             Assert.IsTrue(new JsonQueryRuntime(@" Sum(Array(1, 2)) = 3 ").Execute(json0));
             Assert.IsTrue(new JsonQueryRuntime(@" Sum(arrNumber) = 6 ").Execute(json0));
@@ -86,7 +86,7 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
-        public void Execute_Date_Utc()
+        public void Date_Utc()
         {
             Assert.IsTrue(new JsonQueryRuntime(@" utcnow = #2018-12-26 01:24:46# ").Execute(json0));
             Assert.IsTrue(new JsonQueryRuntime(@" utcnow <> #2018-12-26 01:24:47# ").Execute(json0));
@@ -95,7 +95,7 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
-        public void Execute_Date_GreaterThan_OrEqual_Utc()
+        public void Date_GreaterThan_OrEqual_Utc()
         {
             Assert.IsTrue (new JsonQueryRuntime(@" utcnow >= #2018-12-26 01:24:46# ").Execute(json0));
             Assert.IsFalse(new JsonQueryRuntime(@" utcnow > #2018-12-26 01:24:46# ").Execute(json0));
@@ -105,7 +105,7 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
-        public void Execute_TimeStamp_Range_Utc()
+        public void TimeStamp_Range_Utc()
         {
             
             Assert.IsTrue(new JsonQueryRuntime(@" 
@@ -122,7 +122,7 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
-        public void Execute_TimeStamp_Range_With_Arithmetic_Operation_Utc()
+        public void TimeStamp_Range_With_Arithmetic_Operation_Utc()
         {
             // utcnow : 2018-12-26T01:24:46.0
             // utcnow - 20 : 2018-12-06T01:24:46.0
@@ -137,7 +137,7 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
-        public void Execute_DateNoTime_Range_Utc()
+        public void DateNoTime_Range_Utc()
         {
             Assert.IsTrue(new JsonQueryRuntime(@" 
                 utcnow >= #2018-12-01# AND
@@ -149,14 +149,14 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
-        public void Execute_DateRange_Utc()
+        public void DateRange_Utc()
         {
             Assert.IsTrue (new JsonQueryRuntime(@" Range(utcnow, #2018-12-01 01:24:46#, #2018-12-31 01:24:46#) ").Execute(json0));
             Assert.IsFalse(new JsonQueryRuntime(@" Range(utcnow, #2018-12-27 01:24:46#, #2018-12-31 01:24:46#) ").Execute(json0));
         }
 
         [TestMethod]
-        public void Execute_DateRange_ArithmeticOperation_Utc()
+        public void DateRange_ArithmeticOperation_Utc()
         {
             Assert.IsTrue (new JsonQueryRuntime(@"Range(utcnow - 20, #2018-12-05 01:24:46#, #2018-12-07 06:24:46# ) ").Execute(json0));
             Assert.IsTrue (new JsonQueryRuntime(@"Range(utcnow - 20, #2018-12-06 01:23:46# , #2018-12-06 06:25:46#  ) ").Execute(json0));
@@ -164,7 +164,7 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
-        public void Execute_Range_String()
+        public void Range_String()
         {
             Assert.IsTrue(new JsonQueryRuntime(@" Range('b', ""a"", ""d"") ").Execute(json0));
             Assert.IsTrue(new JsonQueryRuntime(@" Range(""aa"", ""a"", ""d"") ").Execute(json0));
@@ -177,7 +177,7 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
-        public void Execute_Date_Local()
+        public void Date_Local()
         {
             Assert.IsTrue(new JsonQueryRuntime(@" now = #2018-12-25 20:23:49# ").Execute(json0));
             Assert.IsTrue(new JsonQueryRuntime(@" now <> #2018-12-25 20:23:50# ").Execute(json0));
@@ -186,7 +186,7 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
-        public void Execute_WildCardFunction()
+        public void WildCardFunction()
         {
             Assert.IsTrue(new JsonQueryRuntime(@" Wildcard(wildText, 'ABCDE') ").Execute(json0));
             Assert.IsTrue(new JsonQueryRuntime(@" Wildcard(wildText, '?BCD?') ").Execute(json0));
@@ -199,7 +199,7 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
-        public void Execute_RegexFunction()
+        public void RegexFunction()
         {
             Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, 'ABCDE') ").Execute(json0));
             Assert.IsTrue(new JsonQueryRuntime(@" Regex(wildText, 'ABCDE') ").Execute(json0));
@@ -230,7 +230,7 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
-        public void Execute_Var_DeclareVariable()
+        public void Var_DeclareVariable()
         {
             Assert.IsTrue(new JsonQueryRuntime(@"Var('newName','ok') AND name = newName ").Execute(json0));
             Assert.IsTrue(new JsonQueryRuntime(@"Var('newN',123) AND n = newN ").Execute(json0));
@@ -240,7 +240,7 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
-        public void Execute_StringBooleanNumeric_Equal_AND()
+        public void StringBooleanNumeric_Equal_AND()
         {
             Assert.IsTrue(new JsonQueryRuntime(@"name = ""ok"" ").Execute(json0));
             Assert.IsTrue(new JsonQueryRuntime(@"name = ""ok"" AND b = true ").Execute(json0));
@@ -251,7 +251,7 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
-        public void Execute_StringBooleanNumeric_NotEqual_AND()
+        public void StringBooleanNumeric_NotEqual_AND()
         {
             Assert.IsTrue(new JsonQueryRuntime(@"name <> ""okk"" ").Execute(json0));
             Assert.IsTrue(new JsonQueryRuntime(@"name <> ""okk"" AND b <> false ").Execute(json0));
@@ -260,7 +260,7 @@ namespace JSonQueryRunTime_UnitTests
             Assert.IsFalse(new JsonQueryRuntime(@"name <> ""okk"" AND b <> true AND n <> 12.3").Execute(json0));
         }
         [TestMethod]
-        public void Execute_StringBooleanNumeric_Equal_OR()
+        public void StringBooleanNumeric_Equal_OR()
         {
             Assert.IsTrue(new JsonQueryRuntime(@"name = ""okkkk"" OR b = true").Execute(json0));
             Assert.IsTrue(new JsonQueryRuntime(@"name = ""ok"" AND (b = true OR b = false)").Execute(json0));
@@ -270,13 +270,13 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
-        public void Execute_String_LenFunction()
+        public void String_LenFunction()
         {
             Assert.IsTrue(new JsonQueryRuntime(@"Len(name) = 2").Execute(json0));
         }
 
         [TestMethod]
-        public void Execute_Numeric_LessThan_GreaterThan_OrEqual()
+        public void Numeric_LessThan_GreaterThan_OrEqual()
         {
             Assert.IsTrue(new JsonQueryRuntime(@"n < 124").Execute(json0));
             Assert.IsFalse(new JsonQueryRuntime(@"n > 124").Execute(json0));
@@ -298,28 +298,28 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
-        public void Execute_InString_Function()
+        public void InString_Function()
         {
             Assert.IsTrue(new JsonQueryRuntime(@"In(name, Array(""ok"", ""ko"")) ").Execute(json0));
             Assert.IsFalse(new JsonQueryRuntime(@"In(name, Array(""a"", ""b"")) ").Execute(json0));
         }
 
         [TestMethod]
-        public void Execute_InNumber_Function()
+        public void InNumber_Function()
         {
             Assert.IsTrue(new JsonQueryRuntime(@"In(n, Array(122, 123, 124)) ").Execute(json0));
             Assert.IsFalse(new JsonQueryRuntime(@"In(n, Array(122, 124)) ").Execute(json0));
         }
 
         [TestMethod]
-        public void Execute_NumberRangeFunction()
+        public void NumberRangeFunction()
         {
             Assert.IsTrue(new JsonQueryRuntime(@" Range(n, 122, 124) ").Execute(json0));
             Assert.IsFalse(new JsonQueryRuntime(@" Range(n, 100, 110) ").Execute(json0));
         }
 
         [TestMethod]
-        public void Execute_IsNumber()
+        public void IsNumber()
         {
             Assert.IsTrue(new JsonQueryRuntime(@"IsNumber(n)").Execute(json0));
             Assert.IsTrue(new JsonQueryRuntime(@"IsNumber(1)").Execute(json0));
@@ -332,7 +332,7 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
-        public void Execute_IsBoolean()
+        public void IsBoolean()
         {
             Assert.IsTrue(new JsonQueryRuntime(@"IsBoolean(b)").Execute(json0));
             Assert.IsTrue(new JsonQueryRuntime(@"IsBoolean(true)").Execute(json0));
@@ -349,7 +349,7 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
-        public void Execute_IsDate()
+        public void IsDate()
         {
             Assert.IsTrue(new JsonQueryRuntime(@"IsDate(#2018-12-26T01:24:46.0#)").Execute(json0));
             Assert.IsTrue(new JsonQueryRuntime(@"IsDate(now)").Execute(json0));
@@ -366,7 +366,7 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
-        public void Execute_IsArray()
+        public void IsArray()
         {
             Assert.IsTrue(new JsonQueryRuntime(@"IsArray(Array(1,2))").Execute(json0));
 
@@ -387,7 +387,7 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
-        public void Execute_IsString()
+        public void IsString()
         {
             Assert.IsTrue(new JsonQueryRuntime(@"IsString(name)").Execute(json0));
 
@@ -398,20 +398,20 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
-        public void Execute_IsString_WithPathFunctionAsParameter()
+        public void IsString_WithPathFunctionAsParameter()
         {
             Assert.IsTrue(new JsonQueryRuntime(@"IsString( Path( ""name"" ) )").Execute(json0));
             Assert.IsTrue(new JsonQueryRuntime(@"IsString( Path ( ""obj0.name"" ) )").Execute(json0));
         }
 
         [TestMethod, ExpectedException(typeof(System.InvalidOperationException))]
-        public void Execute_ContainsWithEmptyArrayAsParameter_ThrowArgumentException()
+        public void ContainsWithEmptyArrayAsParameter_ThrowArgumentException()
         {
             Assert.IsTrue(new JsonQueryRuntime(@"Contains(arrNumber, Array())").Execute(json0));
         }
 
         [TestMethod]
-        public void Execute_ContainsString()
+        public void ContainsString()
         {
             Assert.IsTrue(new JsonQueryRuntime(@"Contains(name, ""ok"")").Execute(json0));
             Assert.IsTrue(new JsonQueryRuntime(@"Contains(name, ""ok"")").Execute(json0));
@@ -420,13 +420,13 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod, ExpectedException(typeof(System.ArgumentException))]
-        public void Execute_ContainsString_FirstArgumentNotAStringThrowException()
+        public void ContainsString_FirstArgumentNotAStringThrowException()
         {
             Assert.IsFalse(new JsonQueryRuntime(@"Contains(n, ""ok"")").Execute(json0));
         }
 
         [TestMethod]
-        public void Execute_ContainsArrayNumber()
+        public void ContainsArrayNumber()
         {
             Assert.IsTrue(new JsonQueryRuntime(@"Contains(arrNumber, Array(1, 3))").Execute(json0));
             Assert.IsTrue(new JsonQueryRuntime(@"Contains(arrNumber, Array(1, 2, 3))").Execute(json0));
@@ -435,7 +435,7 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
-        public void Execute_EqualArrayNumber()
+        public void EqualArrayNumber()
         {
             Assert.IsTrue(new JsonQueryRuntime(@"EqualArray(arrNumber, Array(1, 2, 3))").Execute(json0));
 
@@ -445,7 +445,7 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
-        public void Execute_ContainsArrayString()
+        public void ContainsArrayString()
         {
             Assert.IsTrue(new JsonQueryRuntime(@"Contains(arrString, Array(""a"", ""c""))").Execute(json0));
             Assert.IsTrue(new JsonQueryRuntime(@"Contains(arrString, Array(""a"", ""c"", ""b""))").Execute(json0));
@@ -455,7 +455,7 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
-        public void Execute_EqualArrayString()
+        public void EqualArrayString()
         {
             Assert.IsTrue(new JsonQueryRuntime(@"EqualArray(arrString, Array(""a"", ""b"", ""c""))").Execute(json0));
 
@@ -464,7 +464,7 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
-        public void Execute_EqualArrayBoolean()
+        public void EqualArrayBoolean()
         {
             Assert.IsTrue(new JsonQueryRuntime(@"equalArray(arrBoolean, array(true, false, true))").Execute(json0));
             Assert.IsFalse(new JsonQueryRuntime(@"equalArray(arrBoolean, Array(true))").Execute(json0));
@@ -472,7 +472,7 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
-        public void Execute_ContainsArrayBoolean()
+        public void ContainsArrayBoolean()
         {
             Assert.IsTrue(new JsonQueryRuntime(@"Contains(arrBoolean, Array(true, false))").Execute(json0));
             Assert.IsTrue(new JsonQueryRuntime(@"contains(arrBoolean, Array(true))").Execute(json0));
@@ -480,7 +480,7 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
-        public void Execute_IsObject()
+        public void IsObject()
         {
             Assert.IsTrue(new JsonQueryRuntime(@"IsObject(obj0)").Execute(json0));
 
@@ -495,13 +495,13 @@ namespace JSonQueryRunTime_UnitTests
 
         
         [TestMethod]
-        public void Execute_WriteLine_String()
+        public void WriteLine_String()
         {
             Assert.IsTrue(new JsonQueryRuntime(@" WriteLine(""Hello World"") ").Execute(json0));
         }
 
         [TestMethod]
-        public void Execute_Path_String()
+        public void Path_String()
         {
             Assert.IsTrue(new JsonQueryRuntime(@" obj0.name = ""okk"" ").Execute(json0));
             Assert.IsTrue(new JsonQueryRuntime(@" isObject(obj0) AND obj0.name = ""okk"" ").Execute(json0));
@@ -511,7 +511,7 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
-        public void Execute_Path_DoubleNested_String()
+        public void Path_DoubleNested_String()
         {
             Assert.IsTrue(new JsonQueryRuntime(@" obj0.obj00.name = ""okkk"" ").Execute(json0));
             Assert.IsTrue(new JsonQueryRuntime(@" obj0.obj00.n = 1234 ").Execute(json0));
@@ -525,7 +525,7 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
-        public void Execute_Path_Number()
+        public void Path_Number()
         {
             Assert.IsTrue(new JsonQueryRuntime(@" obj0.n = 124 ").Execute(json0));
             Assert.IsTrue(new JsonQueryRuntime(@" obj0.obj00.n = 1234 ").Execute(json0));
@@ -537,7 +537,7 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod, ExpectedException(typeof(System.InvalidOperationException))]
-        public void Execute_Path_ReturnsStringExpectNumber_Throw()
+        public void Path_ReturnsStringExpectNumber_Throw()
         {
             // Wrong type
             Assert.IsFalse(new JsonQueryRuntime(@" Path(""obj0.name"") = 123 ").Execute(json0));
@@ -545,14 +545,14 @@ namespace JSonQueryRunTime_UnitTests
 
         
         [TestMethod, ExpectedException(typeof(System.InvalidOperationException))]
-        public void Execute_Path_ReturnsStringExpectNumber_Throw_2()
+        public void Path_ReturnsStringExpectNumber_Throw_2()
         {
             // Wrong type
             Assert.IsFalse(new JsonQueryRuntime(@" obj0.name = 123 ").Execute(json0));
         }
 
         [TestMethod]
-        public void Execute_Path_Boolean()
+        public void Path_Boolean()
         {
             Assert.IsTrue(new JsonQueryRuntime(@" obj0.b = true ").Execute(json0));
             Assert.IsTrue(new JsonQueryRuntime(@" obj0.b ").Execute(json0));
@@ -563,14 +563,14 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
-        public void Execute_Path_Empty()
+        public void Path_Empty()
         {
             Assert.IsTrue(new JsonQueryRuntime(@" Path("""") = null ").Execute(json0));
             Assert.IsTrue(new JsonQueryRuntime(@" IsNull( Path("""") ) ").Execute(json0));
         }
 
         [TestMethod]
-        public void Execute_Path_PatternMatching()
+        public void Path_PatternMatching()
         {
             // property n
             Assert.IsTrue(new JsonQueryRuntime(@" Path(""?"", 123)   ").Execute(json0));
@@ -585,7 +585,7 @@ namespace JSonQueryRunTime_UnitTests
 
 
         [TestMethod]
-        public void Execute_IsObject_Path()
+        public void IsObject_Path()
         {
             var queryManufacturer = "Manufacturers[?(@.Name == 'Acme Co')]";
             Assert.IsTrue(new JsonQueryRuntime($@" IsObject( Path(""{queryManufacturer}"") )  ").Execute(json_store));
@@ -593,7 +593,7 @@ namespace JSonQueryRunTime_UnitTests
 
 
         [TestMethod]
-        public void Execute_Path_QueryObjectInArray()
+        public void Path_QueryObjectInArray()
         {
             var queryManufacturer = "Manufacturers[?(@.Name == 'Acme Co')]";
             Assert.IsTrue(new JsonQueryRuntime($@" IsObject( Path(""{queryManufacturer}"") )  ").Execute(json_store));
@@ -608,7 +608,7 @@ namespace JSonQueryRunTime_UnitTests
         }
 
         [TestMethod]
-        public void Execute_IsNull()
+        public void IsNull()
         {
             Assert.IsFalse(new JsonQueryRuntime(@" name = null ").Execute(json0));
 
@@ -639,7 +639,7 @@ namespace JSonQueryRunTime_UnitTests
 
 
         [TestMethod]
-        public void Execute_Not()
+        public void Not()
         {
             Assert.IsTrue(new JsonQueryRuntime(@" Not(true) = false ").Execute(json0));
             Assert.IsTrue(new JsonQueryRuntime(@" Not(false) = true ").Execute(json0));
@@ -653,6 +653,14 @@ namespace JSonQueryRunTime_UnitTests
 
             Assert.IsFalse(new JsonQueryRuntime(@" Not(b) ").Execute(json0));
             Assert.IsFalse(new JsonQueryRuntime(@" Not(IsNull(nil)) ").Execute(json0));
+        }
+
+        [TestMethod]
+        public void Format()
+        {
+            Assert.IsTrue(new JsonQueryRuntime(@" WriteLine(Format(n, '0000.000')) AND Format(n, '0000.000') = '0123.000' ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Format(123.1, '0000.000') = '0123.100' ").Execute(json0));
+            Assert.IsTrue(new JsonQueryRuntime(@" Format(n, '0000.000') = '0123.000' ").Execute(json0));
         }
     }
 }

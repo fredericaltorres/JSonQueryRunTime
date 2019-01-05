@@ -195,6 +195,11 @@ WriteLine(expression) : true
 ```
 Display in the current output the expression
 
+```js
+Format(Number or Date expression, String Format) : string
+```
+Format a number or date based on .NET ToString() format.
+
 ### The Path() function
 
 The `Path(string-path)` function evaluate the string-path according to

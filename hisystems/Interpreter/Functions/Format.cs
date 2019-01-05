@@ -58,7 +58,11 @@ namespace HiSystems.Interpreter
                 if (format == null)
                     return (Text)((Number)value).ToString();
                 else
-                    return (Text)((Number)value).ToString(format);
+                {
+                    string s = ((Number)value).ToString(format);
+                    return (Text)s;
+                }
+                    
             }
             else if (value is HiSystems.Interpreter.DateTime)
             {
@@ -68,7 +72,7 @@ namespace HiSystems.Interpreter
                     return (Text)((HiSystems.Interpreter.DateTime)value).ToString(format);
             }
             else 
-                throw new NotImplementedException(value.GetType().Name);      
+                throw new System.ArgumentException($"{value.GetType().Name} type not supported by Format()");
         }
     }
 }

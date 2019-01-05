@@ -25,25 +25,25 @@ namespace JsonQueryRunTime
             if(jsonType == JTokenType.String)
             {
                 var value = base.GetTransformedArgument<Text>(arguments, argumentIndex: 1);
-                JsonQueryRunTimeNS.JsonQueryRuntime.SingletonInstance.AddVariable(varName, value);
+                JsonQueryRunTimeNS.JsonQueryRuntime.SingletonInstance.AddUpdateVariable(varName, value);
                 return new HiSystems.Interpreter.Boolean(true);
             }
             else if(jsonType == JTokenType.Integer || jsonType == JTokenType.Float)
             {
                 var value = base.GetTransformedArgument<Number>(arguments, argumentIndex: 1);
-                JsonQueryRunTimeNS.JsonQueryRuntime.SingletonInstance.AddVariable(varName, value);
+                JsonQueryRunTimeNS.JsonQueryRuntime.SingletonInstance.AddUpdateVariable(varName, value);
                 return new HiSystems.Interpreter.Boolean(true);
             }
             else if(jsonType == JTokenType.Date)
             {
                 var value = base.GetTransformedArgument<DateTime>(arguments, argumentIndex: 1);
-                JsonQueryRunTimeNS.JsonQueryRuntime.SingletonInstance.AddVariable(varName, value);
+                JsonQueryRunTimeNS.JsonQueryRuntime.SingletonInstance.AddUpdateVariable(varName, value);
                 return new HiSystems.Interpreter.Boolean(true);
             }
             else if(jsonType == JTokenType.Boolean)
             {
                 var value = base.GetTransformedArgument<Boolean>(arguments, argumentIndex: 1);
-                JsonQueryRunTimeNS.JsonQueryRuntime.SingletonInstance.AddVariable(varName, value);
+                JsonQueryRunTimeNS.JsonQueryRuntime.SingletonInstance.AddUpdateVariable(varName, value);
                 return new HiSystems.Interpreter.Boolean(true);
             }
             else throw new System.ArgumentException($"type {jsonType} not supported by WriteLine()");

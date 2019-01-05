@@ -1,5 +1,4 @@
 ﻿using HiSystems.Interpreter;
-using WildCardExercice.net;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 
