@@ -20,26 +20,34 @@ JsonQueryRunTime is a .NET library to apply where clause like expression to
 ```
 ### Query Samples
 
-`n = 1 AND s = "string" AND b = true`
+```js
+n = 1 AND s = "string" AND b = true
+```
 returns true if the JSON properties match each expression 
 
 **Arithmetic operation**
 
-`( n * 3 = 3 ) AND ( n / 2 = 0.5 )`
+```js
+( n * 3 = 3 ) AND ( n / 2 = 0.5 )
+```
 returns true if the JSON properties match each expression
 
 **Nested objects**
 
-`o.name = 'foo' AND o.b = true AND o.nil = null`
+```js
+o.name = 'foo' AND o.b = true AND o.nil = null
+```
 returns true if the JSON properties match each expression 
 
-**Complex query**
+**Advanced query**
 
-`eyeColor = 'blue' AND
+```js
+eyeColor = 'blue' AND
 age = 37 AND
 name.first = "Nancy" AND 
 Contains(tags, Array("laboris", "ea")) AND 
-EqualArray(range, Array(0,1,2,3,4,5,6,7,8,9))`
+EqualArray(range, Array(0,1,2,3,4,5,6,7,8,9))
+```
 
 **C# sample:**
 ```csharp
@@ -48,7 +56,7 @@ bool b = new JsonQueryRuntime("n = 1 AND s = 'string' AND b = true").Execute(jso
 
 **Boolean operator supported:** 
 
-```
+```js
 =, <>, <, <=, >, >=, OR, AND, (, ) 
 ```
 Boolean operators AND and OR are case sensitive.
@@ -56,7 +64,7 @@ Function names are not case sensitive.
 
 **Arithmetic operator supported:** 
 
-```
+```js
 +, -, *, /
 ```
 - Addition (numbers, date/time + number, string concatenation)
@@ -64,44 +72,82 @@ Function names are not case sensitive.
 
 **Date support:**
 
-- `timestamp = #2018-12-20T14:16:00#` returns true is property timestamp is equal to the date+time value
+```js 
+timestamp = #2018-12-20T14:16:00#
+```
+returns true is property timestamp is equal to the date+time value
 
-- `timestamp >= #2018-12-20T14:16:00# and timestamp <= #2018-12-20T14:16:59#` returns true is property timestamp is in the date range (See Range() function aslo).
+```js
+timestamp >= #2018-12-20T14:16:00# and timestamp <= #2018-12-20T14:16:59#
+```
+returns true is property timestamp is in the date range (See Range() function aslo).
 
 **Functions:**
 
 *string*:
 
-- `Wildcard(name,"s?r*")` returns true if the wildcard match the content of the string property name
+```js
+Wildcard(name,"s?r*")
+```
+returns true if the wildcard match the content of the string property name
 
-- `Regex(name, "s.r.*")` returns true if the regular expression match the content of the string property name
+```js
+Regex(name, "s.r.*")
+```
+returns true if the regular expression match the content of the string property name
 
-- `Contains(name, "substring")` returns true if the value of the property name contains the sub-string "substring"
+```js
+Contains(name, "substring")
+```
+returns true if the value of the property name contains the sub-string "substring"
 
 *Range*:
 
-- `Range(timestamp, #2018-12-20T14:16:00#, #2018-12-20T14:16:59#)` returns true if the date in property timestamp is between the 2 dates
+```js
+Range(timestamp, #2018-12-20T14:16:00#, #2018-12-20T14:16:59#)
+```
+returns true if the date in property timestamp is between the 2 dates
 
-- `Range(val, 1, 10)` returns true if the numeric value in property val is between 1 and 10
+```js
+Range(val, 1, 10)
+```
+returns true if the numeric value in property val is between 1 and 10
 
-- `Range(s, "a", "d")` returns true if the string value in property s is between "a" and "d"
+```js
+Range(s, "a", "d")
+```
+returns true if the string value in property s is between "a" and "d"
 
 *In*:
 
-- `In(name, Array("A", "B", "C"))` returns true if the value of the property name is included in the array
+```js
+In(name, Array("A", "B", "C"))
+```
+returns true if the value of the property name is included in the array
 
-- `In(amount, Array(12, 24, 48))` returns true if the value of the property amount is included in the array
+```js
+In(amount, Array(12, 24, 48))
+```
+returns true if the value of the property amount is included in the array
 
 *Is-xxxxx*:
 
-- `IsObject(o), IsNumber(n), IsString(s), IsBoolean(b), IsDate(d), IsNull(nil), IsArray(a)` returns true is the property value type match the function. 
+```js
+IsObject(o), IsNumber(n), IsString(s), IsBoolean(b), IsDate(d), IsNull(nil), IsArray(a)
+```
+returns true is the property value type match the function. 
 
 *Contains*:
 
+```js
+Contains(arrOfNumber, Array(12, 24, 48))
+```
+returns true if property arrOfNumber which is an array of number contains the values 12, 24, 48.
 
-- `Contains(arrOfNumber, Array(12, 24, 48))` returns true if property arrOfNumber which is an array of number contains the values 12, 24, 48.
-
-- `Contains(arrOfString, Array("a", "b", "c"))` returns true if property arrOfString which is an array of string contains the values "a", "b", "c".
+```js
+Contains(arrOfString, Array("a", "b", "c"))
+```
+returns true if property arrOfString which is an array of string contains the values "a", "b", "c".
 
 *ArrayEqual*:
 
@@ -240,3 +286,15 @@ www.hisystems.com.au - Toby Wicks
 github.com/hisystems/Interpreter
 Licensed under the Apache License, Version 2.0 (the "License");
 ```
+
+## Tweet
+
+Execute where clause like expression on JSON lines with #dotnet #csharp
+
+age = 37 AND name.first = "Nancy" AND Contains(tags, Array("laboris", "ea"))
+
+- Wildcard, regex
+- Boolean and arithmetic expression
+- Date support
+
+JsonQueryRunTime github: https://bit.ly/2QsFnL8
