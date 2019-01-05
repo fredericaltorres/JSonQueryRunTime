@@ -23,17 +23,17 @@ JsonQueryRunTime is a .NET library to apply where clause like expression to
 `n = 1 AND s = "string" AND b = true`
 returns true if the JSON properties match each expression 
 
-**Arithmetic Operation**
+**Arithmetic operation**
 
 `( n * 3 = 3 ) AND ( n / 2 = 0.5 )`
 returns true if the JSON properties match each expression
 
-**Nested Objects**
+**Nested objects**
 
 `o.name = 'foo' AND o.b = true AND o.nil = null`
 returns true if the JSON properties match each expression 
 
-**Complex Query**
+**Complex query**
 
 `eyeColor = 'blue' AND
 age = 37 AND
@@ -41,12 +41,12 @@ name.first = "Nancy" AND
 Contains(tags, Array("laboris", "ea")) AND 
 EqualArray(range, Array(0,1,2,3,4,5,6,7,8,9))`
 
-**C# Sample:**
+**C# sample:**
 ```csharp
 bool b = new JsonQueryRuntime("n = 1 AND s = 'string' AND b = true").Execute(jsonString));
 ```
 
-**Boolean Operator supported:** 
+**Boolean operator supported:** 
 
 ```
 =, <>, <, <=, >, >=, OR, AND, (, ) 
@@ -54,13 +54,13 @@ bool b = new JsonQueryRuntime("n = 1 AND s = 'string' AND b = true").Execute(jso
 Boolean operators AND and OR are case sensitive.
 Function names are not case sensitive.
 
-**Arithmetic Operator supported:** 
+**Arithmetic operator supported:** 
 
 ```
 +, -, *, /
 ```
-- addition  (numbers, date/time + number, string concatenation)
-- subtraction (numbers, date/time - number)
+- Addition (numbers, date/time + number, string concatenation)
+- Subtraction (numbers, date/time - number)
 
 **Date support:**
 
@@ -114,9 +114,11 @@ Function names are not case sensitive.
 *Miscellaneous*:
 
 - `Not(expression)` returns the inversed boolean value
-- `len(name)` returns the length of the property name which is a string
+- `Len(name)` returns the length of the property name which is a string
 - `Sum(number-array)` returns the sum of the values in the array
 - `Avg(number-array)` returns the average values based on the values in the array
+- `Var(name:string, value:any) : boolean` Declare a variable, that can be used later in the where clause
+- `WriteLine(expression) : boolean` Display in the current output the expression
 
 ### The Path() function
 

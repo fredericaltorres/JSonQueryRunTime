@@ -107,6 +107,7 @@ namespace JSonQueryRunTime_UnitTests
         [TestMethod]
         public void Execute_TimeStamp_Range_Utc()
         {
+            
             Assert.IsTrue(new JsonQueryRuntime(@" 
                 utcnow >= #2018-12-01 01:24:46# AND
                 utcnow <= #2018-12-31 01:24:46# ").Execute(json0));
@@ -118,6 +119,21 @@ namespace JSonQueryRunTime_UnitTests
             Assert.IsFalse(new JsonQueryRuntime(@" 
                 utcnow >= #2018-12-27 01:24:46# AND
                 utcnow <= #2018-12-31 01:24:46# ").Execute(json0));
+        }
+
+        [TestMethod]
+        public void Execute_TimeStamp_Range_With_Arithmetic_Operation_Utc()
+        {
+            // utcnow : 2018-12-26T01:24:46.0
+            // utcnow - 20 : 2018-12-06T01:24:46.0
+            Assert.IsTrue(new JsonQueryRuntime(@" 
+                utcnow - 20 >= #2018-12-05 01:24:46# AND
+                utcnow - 20 <= #2018-12-07 06:24:46# ").Execute(json0));
+
+            // Just difference in time/minute
+            Assert.IsTrue(new JsonQueryRuntime(@" 
+                utcnow - 20 >= #2018-12-06 01:23:46# AND
+                utcnow - 20 <= #2018-12-06 06:25:46# ").Execute(json0));
         }
 
         [TestMethod]
@@ -137,6 +153,14 @@ namespace JSonQueryRunTime_UnitTests
         {
             Assert.IsTrue (new JsonQueryRuntime(@" Range(utcnow, #2018-12-01 01:24:46#, #2018-12-31 01:24:46#) ").Execute(json0));
             Assert.IsFalse(new JsonQueryRuntime(@" Range(utcnow, #2018-12-27 01:24:46#, #2018-12-31 01:24:46#) ").Execute(json0));
+        }
+
+        [TestMethod]
+        public void Execute_DateRange_ArithmeticOperation_Utc()
+        {
+            Assert.IsTrue (new JsonQueryRuntime(@"Range(utcnow - 20, #2018-12-05 01:24:46#, #2018-12-07 06:24:46# ) ").Execute(json0));
+            Assert.IsTrue (new JsonQueryRuntime(@"Range(utcnow - 20, #2018-12-06 01:23:46# , #2018-12-06 06:25:46#  ) ").Execute(json0));
+            Assert.IsFalse (new JsonQueryRuntime(@"Range(utcnow - 20, #2018-12-07 01:23:46# , #2018-12-06 06:25:46#  ) ").Execute(json0));
         }
 
         [TestMethod]
