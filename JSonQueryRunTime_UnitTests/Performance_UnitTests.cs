@@ -31,7 +31,7 @@ namespace JSonQueryRunTime_UnitTests
 
             var expectedCount = lines.Count/2;
             Assert.AreEqual(expectedCount, resultLines.Count);
-            Assert.IsTrue(sw.Elapsed < new System.TimeSpan(0,0,4));            
+            Assert.IsTrue(sw.Elapsed < new System.TimeSpan(0,0,4, 200));            
         }    
     }
 }
