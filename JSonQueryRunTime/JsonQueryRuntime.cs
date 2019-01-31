@@ -7,6 +7,12 @@ using Newtonsoft.Json.Linq;
 
 namespace JsonQueryRunTimeNS
 {
+    public enum JsonQueryRuntimeTextType {
+        JSON = 1,
+        JSON_LINES = 2,
+        TEXT = 4,
+
+    };
     public class JsonQueryRuntime
     {
         /// <summary>
@@ -84,18 +90,23 @@ namespace JsonQueryRunTimeNS
         /// Apply the where clause to list of JSON object defined in the file
         /// </summary>
         /// <param name="fileName">The name of the JSON file</param>
-        /// <param name="isJsonLine">If true the file contains JSON-LINES else the file must contain an array of JSON objects</param>
+        /// <param name="type">Contains the type of the file and line in the file</param>
         /// <returns>The list of JSON string that match the where clause</returns>
-        public IEnumerable<string> ExecuteFile(string fileName, bool isJsonLine)
+        public IEnumerable<string> ExecuteFile(string fileName, JsonQueryRuntimeTextType type)
         {
             var json = System.IO.File.ReadAllText(fileName);
-            if (isJsonLine)
+            if (type == JsonQueryRuntimeTextType.JSON_LINES)
             {
-                return this.Execute(json.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries));
+                return this.Execute(json.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries), JsonQueryRuntimeTextType.JSON);
+            }
+            if (type == JsonQueryRuntimeTextType.TEXT)
+            {
+                return this.Execute(json.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries), JsonQueryRuntimeTextType.TEXT);
             }
             else
             {
                 // Expect a JSON array of object
+                // TODO:Refactor to convert the object inthe array to JSON lines
                 if (json.Trim().StartsWith("["))
                 {
                     var l = new List<string>();
@@ -105,7 +116,7 @@ namespace JsonQueryRunTimeNS
                             l.Add(jObject.ToString());
                     return l;
                 }
-                else throw new ArgumentException($"{fileName} does not contains an JSON array of object and is not a JSON-LINE file");
+                else throw new ArgumentException($"{fileName} does not contains an JSON array of object and is not a JSON-LINE file or defined as Text file");
             }
         }
 
@@ -114,7 +125,7 @@ namespace JsonQueryRunTimeNS
         /// </summary>
         /// <param name="jsonStrings">A list of JSON string</param>
         /// <returns>The list of JSON string that match the where clause</returns>
-        public IEnumerable<string> Execute(IEnumerable<string> jsonStrings)
+        public IEnumerable<string> Execute(IEnumerable<string> jsonStrings, JsonQueryRuntimeTextType type = JsonQueryRuntimeTextType.JSON_LINES)
         {
             var l = new List<string>();
             foreach (var jsonString in jsonStrings)
@@ -141,8 +152,12 @@ namespace JsonQueryRunTimeNS
         /// </summary>
         /// <param name="jsonString"></param>
         /// <returns>true if the where clause apply to the JSON string</returns>
-        public bool Execute(string jsonString)
+        public bool Execute(string jsonString, JsonQueryRuntimeTextType type = JsonQueryRuntimeTextType.JSON)
         {
+            if(type == JsonQueryRuntimeTextType.TEXT)
+            {
+                jsonString = $@"{{ text:""{jsonString}"" }}";
+            }
             return this.Execute(JObject.Parse(jsonString));
         }
 

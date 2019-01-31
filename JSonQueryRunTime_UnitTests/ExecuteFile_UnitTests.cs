@@ -39,7 +39,7 @@ namespace JSonQueryRunTime_UnitTests
             foreach (var whereClause in whereClauses)
             {
                 var resultLines = new JsonQueryRuntime(whereClause)
-                        .ExecuteFile(JsonLinesFileName, isJsonLine: true).ToList();
+                        .ExecuteFile(JsonLinesFileName, JsonQueryRuntimeTextType.JSON_LINES ).ToList();
                 Assert.AreEqual(expectedCount, resultLines.Count);
             }
         }
@@ -48,7 +48,7 @@ namespace JSonQueryRunTime_UnitTests
         [DeploymentItem(JsonArrayOfObjectFileName)]
         public void File_WithArrayOfObject()
         {
-            var resultLines = new JsonQueryRuntime(@" _id= ""5c2d299add266f6d68570885"" ").ExecuteFile(JsonArrayOfObjectFileName, isJsonLine: false).ToList();
+            var resultLines = new JsonQueryRuntime(@" _id= ""5c2d299add266f6d68570885"" ").ExecuteFile(JsonArrayOfObjectFileName, JsonQueryRuntimeTextType.JSON).ToList();
             Assert.AreEqual(1, resultLines.Count);
 
             resultLines = new JsonQueryRuntime(@"
@@ -57,7 +57,7 @@ namespace JSonQueryRunTime_UnitTests
                 name.first = 'Nancy' AND
                 Contains(tags, Array('laboris', 'ea')) AND
                 EqualArray(range, Array(0,1,2,3,4,5,6,7,8,9))
-            ").ExecuteFile(JsonArrayOfObjectFileName, isJsonLine: false).ToList();
+            ").ExecuteFile(JsonArrayOfObjectFileName, JsonQueryRuntimeTextType.JSON).ToList();
             Assert.AreEqual(1, resultLines.Count);
 
             resultLines = new JsonQueryRuntime(@" 
@@ -65,7 +65,7 @@ namespace JSonQueryRunTime_UnitTests
                 age = 37 AND 
                 Path('name.first') = ""Nancy"" AND 
                 Contains(tags, Array(""laboris"", ""ea"", ""BAD-VALUE""))
-            ").ExecuteFile(JsonArrayOfObjectFileName, isJsonLine: false).ToList();
+            ").ExecuteFile(JsonArrayOfObjectFileName, JsonQueryRuntimeTextType.JSON).ToList();
             Assert.AreEqual(0, resultLines.Count);
         }
 
@@ -75,7 +75,7 @@ namespace JSonQueryRunTime_UnitTests
             var resultLines = new JsonQueryRuntime(@"
                  IsObject ( Path ( ""friends[?(@.name == 'Harmon Blankenship')]"" ) ) OR
                  IsObject ( Path ( ""friends[?(@.name == 'Juanita Chapman')]"" ) ) 
-            ").ExecuteFile(JsonArrayOfObjectFileName, isJsonLine: false).ToList();
+            ").ExecuteFile(JsonArrayOfObjectFileName, JsonQueryRuntimeTextType.JSON).ToList();
             Assert.AreEqual(2, resultLines.Count);
         }
 
@@ -84,7 +84,7 @@ namespace JSonQueryRunTime_UnitTests
         {
             var resultLines = new JsonQueryRuntime(@"
                 In( company, Array('SQUISH', 'ZILLATIDE', 'SKINSERVE') )
-            ").ExecuteFile(JsonArrayOfObjectFileName, isJsonLine: false).ToList();
+            ").ExecuteFile(JsonArrayOfObjectFileName, JsonQueryRuntimeTextType.JSON).ToList();
             Assert.AreEqual(3, resultLines.Count);
         }
     }
