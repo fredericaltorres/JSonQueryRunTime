@@ -138,7 +138,7 @@ namespace JsonQueryRunTimeNS
         /// </summary>
         /// <param name="jObjects"></param>
         /// <returns>The list of JSON string that match the where clause</returns>
-        public IEnumerable<string> Execute(List<JObject> jObjects)
+        public IEnumerable<string> Execute(IEnumerable<JObject> jObjects)
         {
             var l = new List<string>();
             foreach (var jo in jObjects)
@@ -150,13 +150,13 @@ namespace JsonQueryRunTimeNS
         /// <summary>
         /// Apply the where clause to the JSON string
         /// </summary>
-        /// <param name="jsonString"></param>
+        /// <param name="type">Contains the type of the file and line</param>
         /// <returns>true if the where clause apply to the JSON string</returns>
         public bool Execute(string jsonString, JsonQueryRuntimeTextType type = JsonQueryRuntimeTextType.JSON)
         {
             if(type == JsonQueryRuntimeTextType.TEXT)
             {
-                jsonString = $@"{{ text:""{jsonString}"" }}";
+                jsonString = $@"{{ text:""{jsonString.Replace("\"", "\\\"")}"" }}";
             }
             return this.Execute(JObject.Parse(jsonString));
         }

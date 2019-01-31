@@ -254,26 +254,25 @@ public class JsonQueryRuntime {
 	/// <returns>The list of JSON string that match the where clause</returns>
 	public IEnumerable<string> ExecuteFile(string fileName, bool isJsonLine);
 
-	 /// <summary>
+	/// <summary>
 	/// Apply the where clause to list of JSON strings
 	/// </summary>
 	/// <param name="jsonStrings">A list of JSON string</param>
 	/// <returns>The list of JSON string that match the where clause</returns>
-	public IEnumerable<string> Execute(IEnumerable<string> jsonStrings);
-
+	public IEnumerable<string> Execute(IEnumerable<string> jsonStrings, JsonQueryRuntimeTextType type = JsonQueryRuntimeTextType.JSON_LINES);	
 	/// <summary>
 	/// Apply the where clause to list of JSON objects
 	/// </summary>
 	/// <param name="jObjects"></param>
 	/// <returns>The list of JSON string that match the where clause</returns>
-	public IEnumerable<string> Execute(List<JObject> jObjects);
+	public IEnumerable<string> Execute(IEnumerable<JObject> jObjects)
 
-   	/// <summary>
+	/// <summary>
 	/// Apply the where clause to the JSON string
 	/// </summary>
-	/// <param name="jsonString"></param>
+	/// <param name="type">Contains the type of the file and line</param>
 	/// <returns>true if the where clause apply to the JSON string</returns>
-	public bool Execute(string jsonString);
+	public bool Execute(string jsonString, JsonQueryRuntimeTextType type = JsonQueryRuntimeTextType.JSON);
 
 	/// <summary>
 	/// Apply the where clause to the JSON object
