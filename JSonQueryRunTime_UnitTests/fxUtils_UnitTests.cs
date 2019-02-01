@@ -2,8 +2,6 @@
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using System.Diagnostics;
-using JsonQueryRunTimeNS;
 using JsonQueryRunTime;
 using Newtonsoft.Json.Linq;
 

@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 
 namespace JsonQueryRunTimeNS
 {
-    public enum JsonQueryRuntimeTextType {
+    public enum TextType {
         JSON = 1,
         JSON_LINES = 2,
         TEXT = 4,
@@ -92,16 +92,16 @@ namespace JsonQueryRunTimeNS
         /// <param name="fileName">The name of the JSON file</param>
         /// <param name="type">Contains the type of the file and line in the file</param>
         /// <returns>The list of JSON string that match the where clause</returns>
-        public IEnumerable<string> ExecuteFile(string fileName, JsonQueryRuntimeTextType type)
+        public IEnumerable<string> ExecuteFile(string fileName, TextType type)
         {
             var json = System.IO.File.ReadAllText(fileName);
-            if (type == JsonQueryRuntimeTextType.JSON_LINES)
+            if (type == TextType.JSON_LINES)
             {
-                return this.Execute(json.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries), JsonQueryRuntimeTextType.JSON);
+                return this.Execute(json.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries), TextType.JSON);
             }
-            if (type == JsonQueryRuntimeTextType.TEXT)
+            if (type == TextType.TEXT)
             {
-                return this.Execute(json.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries), JsonQueryRuntimeTextType.TEXT);
+                return this.Execute(json.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries), TextType.TEXT);
             }
             else
             {
@@ -125,11 +125,11 @@ namespace JsonQueryRunTimeNS
         /// </summary>
         /// <param name="jsonStrings">A list of JSON string</param>
         /// <returns>The list of JSON string that match the where clause</returns>
-        public IEnumerable<string> Execute(IEnumerable<string> jsonStrings, JsonQueryRuntimeTextType type = JsonQueryRuntimeTextType.JSON_LINES)
+        public IEnumerable<string> Execute(IEnumerable<string> jsonStrings, TextType type = TextType.JSON_LINES)
         {
             var l = new List<string>();
             foreach (var jsonString in jsonStrings)
-                if (this.Execute(jsonString))
+                if (this.Execute(jsonString, type))
                     l.Add(jsonString);
             return l;
         }
@@ -152,9 +152,9 @@ namespace JsonQueryRunTimeNS
         /// </summary>
         /// <param name="type">Contains the type of the file and line</param>
         /// <returns>true if the where clause apply to the JSON string</returns>
-        public bool Execute(string jsonString, JsonQueryRuntimeTextType type = JsonQueryRuntimeTextType.JSON)
+        public bool Execute(string jsonString, TextType type = TextType.JSON)
         {
-            if(type == JsonQueryRuntimeTextType.TEXT)
+            if(type == TextType.TEXT)
             {
                 jsonString = $@"{{ text:""{jsonString.Replace("\"", "\\\"")}"" }}";
             }
